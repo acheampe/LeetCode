@@ -23,7 +23,7 @@ class Solution:
             
                 else:
                     currSum = currSum - code[(i  - 1) % arrlen] + code[(absK + i - 1) % arrlen]
-                    decryptCode[(k + i )% arrlen] = currSum # pythonic - disregards neg during modulo
+                    decryptCode[(k + i )% arrlen] = currSum # pythonic use - modulo
             
             # Address pos k condition
             if k > 0:
