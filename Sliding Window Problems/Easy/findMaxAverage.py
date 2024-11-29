@@ -3,30 +3,36 @@ from typing import List
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
         """
-        Returns the max average sum in an array
-        Time Complexity O(n)
-        Space Complexity (1)
+        Return max average of k window in an array
         """
+        
+        arrLen = len(nums)
 
-        # Eliminate edge case (len of num v k)
-        if k > len(nums):
-            print("Invalid - k length greater than length of nums")
-            return -1
+        if k > arrLen:
+            print(f'Invalid: {k} value greater than length of array --> {nums}')
+        
+        # Calc. val of current window
+        currVal = sum(nums[i] for i in range(0, k, 1))
 
-        # Find currSum of window size
-        currSum = sum(nums[:k])
+        maxVal = currVal
 
-        # Initialize maxSum to currSum
-        maxSum = currSum
+        # iterate using window to find max average
+        for i in range (1, arrLen - k):
+            
+            # calc next iterative sum 
+            dropVal = nums[i - 1]
+            addVal = nums[k + i -1]
 
-        # set a loop to iterate through the array
-        for i in range(len(nums) - k):
-            currSum = currSum - nums[i] + nums[i + k]
-            maxSum = max(maxSum, currSum)
+            currVal -= dropVal
+            currVal += addVal
 
-        # return maxAvgSum
-        return maxSum/k
+            maxVal = max(currVal, maxVal)
+        
+        return maxVal / k 
 
+sol = Solution()
+first = sol.findMaxAverage([2,4,6,8,10], 3)
+print(first)
 
 
         
