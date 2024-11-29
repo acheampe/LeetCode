@@ -1,6 +1,59 @@
 from typing import List
 # ## 1652. Defuse the Bomb
 
+class Solution:
+    def decrypt(self, code: List[int], k: int) -> List[int]:
+
+        #length of code
+        arrLength = len(code)
+
+        # Initialize decodedArr
+        decodedArr = [0] * arrLength
+
+        # edge case k == 0
+        if k == 0:
+            return decodedArr
+        
+        # Iteration condition based on k value
+        start, end, step = (1, k + 1, 1) if k > 0 else (arrLength + k, arrLength, 1)
+        
+        # Calculate current window sum
+        windowSum = sum(code[i % arrLength] for i in range(start, end, step))
+
+        # Calculate sum of respective index
+        for i in range(arrLength):
+            # Insert windowSum to curr index
+            decodedArr[i] = windowSum
+
+            # slide window
+            windowSum -= code[(start + i) % arrLength] # drop outgoing element
+            windowSum += code[(end + i) % arrLength] # add incoming element
+        
+        return decodedArr
+        
+
+        
+    
+sol = Solution()
+# first_dec = sol.decrypt([5,7,1,4], 3)
+# print(first_dec)
+fourth_dec = sol.decrypt([5,2,2,3,1], 3)
+print(fourth_dec)
+# Expected
+[7,6,9,8,9]
+# Expected
+# [12,10,16,13]
+# sec_dec = sol.decrypt([2,4,9,3], -2)
+# print(sec_dec)
+# third_dec = sol.decrypt([10,5,7,7,3,2,10,3,6,9,1,6], -4)
+# print(third_dec)
+# Output
+# [3,9,10,8]
+# Expected
+# [12,5,6,13]
+
+
+
 # class Solution:
 #     def decrypt(self, code: List[int], k: int) -> List[int]:
 #         """
@@ -63,44 +116,3 @@ from typing import List
 #             window_sum += code[(end + i + 1) % n]
         
 #         return decodedArr
-
-class Solution:
-    def decrypt(self, code: List[int], k: int) -> List[int]:
-
-        #length of code
-        arrLength = len(code)
-
-        # Initialize decodedArr
-        decodedArr = [0] * arrLength
-
-        # edge case k == 0
-        if k == 0:
-            return decodedArr
-        
-        # Iteration condition based on k value
-        start, end, step = (1, k, 1) if k > 0 else (arrLength - 1, arrLength + k - 1, -1)
-
-        # Calculate current window sum
-        windowSum = sum(code[i % arrLength] for i in range(start, end + 1, step))
-
-        # Calculate sum of respective index
-        for i in range(arrLength):
-            # Insert windowSum to curr index
-            decodedArr[i] = windowSum
-
-            # slide window
-            windowSum -= code[(start + i) % arrLength] # drop outgoing element
-            windowSum += code[(end + i + 1) % arrLength] # add incoming element
-        
-        return decodedArr
-        
-
-        
-    
-sol = Solution()
-first_dec = sol.decrypt([5,7,1,4], 3)
-print(first_dec)
-sec_dec = sol.decrypt([2,4,9,3], -2)
-print(sec_dec)
-# third_dec = sol.decrypt([10,5,7,7,3,2,10,3,6,9,1,6], -4)
-# print(third_dec)
