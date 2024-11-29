@@ -17,7 +17,7 @@ class Solution:
         maxVal = currVal
 
         # iterate using window to find max average
-        for i in range (1, arrLen - k):
+        for i in range (1, arrLen - k + 1):
             
             # calc next iterative sum 
             dropVal = nums[i - 1]
