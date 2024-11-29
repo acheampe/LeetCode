@@ -3,37 +3,35 @@ from typing import List
 
 class Solution:
     def decrypt(self, code: List[int], k: int) -> List[int]:
+        """
+        find sum of k window and place in respective index
+        """
 
-        #length of code
-        arrLength = len(code)
+        arrLen = len(code)
+        decryptedCode = [0] * arrLen
 
-        # Initialize decodedArr
-        decodedArr = [0] * arrLength
-
-        # edge case k == 0
         if k == 0:
-            return decodedArr
+            return decryptedCode
         
-        # Iteration condition based on k value
-        start, end, step = (1, k + 1, 1) if k > 0 else (arrLength + k, arrLength, 1)
-        
-        # Calculate current window sum
-        windowSum = sum(code[i % arrLength] for i in range(start, end, step))
+        # Sets up iteration logic // exclusive end var
+        start, end, step = (1, k + 1, 1) if k > 0 else (arrLen + k, arrLen, 1)
 
-        # Calculate sum of respective index
-        for i in range(arrLength):
-            # Insert windowSum to curr index
-            decodedArr[i] = windowSum
+        # Calc. current window
+        currWindowVal = sum(code[i % arrLen] for i in range (start, end, step))
 
-            # slide window
-            windowSum -= code[(start + i) % arrLength] # drop outgoing element
-            windowSum += code[(end + i) % arrLength] # add incoming element
-        
-        return decodedArr
-        
+        # Place iterative sum in respective index
+        for i in range(arrLen):
+            decryptedCode[i] = currWindowVal
 
+            # calc drop and added val based on index
+            dropVal = code[(start + i) % arrLen]
+            addVal = code[(end + i) % arrLen]
+
+            currWindowVal -= dropVal
+            currWindowVal += addVal
         
-    
+        return decryptedCode
+ 
 sol = Solution()
 # first_dec = sol.decrypt([5,7,1,4], 3)
 # print(first_dec)
