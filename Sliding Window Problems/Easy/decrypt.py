@@ -1,48 +1,79 @@
 from typing import List
 # ## 1652. Defuse the Bomb
 
+# class Solution:
+#     def decrypt(self, code: List[int], k: int) -> List[int]:
+#         """
+#         find sum of k window and place in respective index
+#         """
+
+#         arrLen = len(code)
+#         decryptedCode = [0] * arrLen
+
+#         if k == 0:
+#             return decryptedCode
+        
+#         # Sets up iteration logic // exclusive end var
+#         start, end, step = (1, k + 1, 1) if k > 0 else (arrLen + k, arrLen, 1)
+
+#         # Calc. current window
+#         currWindowVal = sum(code[i % arrLen] for i in range (start, end, step))
+
+#         # Place iterative sum in respective index
+#         for i in range(arrLen):
+#             decryptedCode[i] = currWindowVal
+
+#             # calc drop and added val based on index
+#             dropVal = code[(start + i) % arrLen]
+#             addVal = code[(end + i) % arrLen]
+
+#             currWindowVal -= dropVal
+#             currWindowVal += addVal
+        
+#         return decryptedCode
+
 class Solution:
     def decrypt(self, code: List[int], k: int) -> List[int]:
         """
-        find sum of k window and place in respective index
+        Calc. sum window size and place in respective index based on +/- k val
         """
 
-        arrLen = len(code)
-        decryptedCode = [0] * arrLen
+        arrlen = len(code)
+        decryptArr = [0] * arrlen
 
+        if k > arrlen:
+            print("Invalid")
+            return - 1
+        
         if k == 0:
-            return decryptedCode
+            return decryptArr
         
-        # Sets up iteration logic // exclusive end var
-        start, end, step = (1, k + 1, 1) if k > 0 else (arrLen + k, arrLen, 1)
-
-        # Calc. current window
-        currWindowVal = sum(code[i % arrLen] for i in range (start, end, step))
-
-        # Place iterative sum in respective index
-        for i in range(arrLen):
-            decryptedCode[i] = currWindowVal
-
-            # calc drop and added val based on index
-            dropVal = code[(start + i) % arrLen]
-            addVal = code[(end + i) % arrLen]
-
-            currWindowVal -= dropVal
-            currWindowVal += addVal
+        start, end, step = (1, k + 1, 1) if k > 0 else (arrlen + k, arrlen, 1)
         
-        return decryptedCode
+        currSumWindow = sum(code[i % arrlen] for i in range(start, end, step))
+
+        for i in range(arrlen):
+            decryptArr[i] = currSumWindow
+
+            dropVal = code[(start + i) % arrlen]
+            addVal = code[(end + i) % arrlen]
+
+            currSumWindow = currSumWindow - dropVal + addVal
+        
+        return decryptArr
+        
  
 sol = Solution()
 # first_dec = sol.decrypt([5,7,1,4], 3)
 # print(first_dec)
-fourth_dec = sol.decrypt([5,2,2,3,1], 3)
-print(fourth_dec)
+# fourth_dec = sol.decrypt([5,2,2,3,1], 3)
+# print(fourth_dec)
 # Expected
-[7,6,9,8,9]
+# [7,6,9,8,9]
 # Expected
 # [12,10,16,13]
-# sec_dec = sol.decrypt([2,4,9,3], -2)
-# print(sec_dec)
+sec_dec = sol.decrypt([2,4,9,3], -2)
+print(sec_dec)
 # third_dec = sol.decrypt([10,5,7,7,3,2,10,3,6,9,1,6], -4)
 # print(third_dec)
 # Output
