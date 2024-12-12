@@ -18,9 +18,9 @@ class Solution:
             return 1 # 1 is the min length we can find (so we can stop calc. early)
         
         sumWindow = sum(nums[leftIndex:rightIndex + 1]) # rightIndex is inclusive
+        windowLength = len(nums[leftIndex : rightIndex + 1])
         
-        while rightIndex < arrLen and minLenArr > 1:        
-            windowLength = len(nums[leftIndex : rightIndex + 1])
+        while rightIndex < arrLen and minLenArr > 1:         
             if sumWindow == target:
                 minLenArr = min(minLenArr, windowLength)
                 if rightIndex != arrLen -1:
@@ -35,19 +35,21 @@ class Solution:
                 minLenArr = min(minLenArr, windowLength)
                 sumWindow -= nums[leftIndex]
                 leftIndex += 1
+                windowLength -= 1
 
             elif sumWindow < target:
                 rightIndex += 1
                 if rightIndex <= arrLen - 1:
                     sumWindow += nums[rightIndex] 
+                    windowLength += 1
             
         return 0 if minLenArr == float('inf') else minLenArr
     
-# sol = Solution()
-# print(sol.minSubArrayLen(7, [2,3,1,2,4,3])) #Expected: 2
-# print(sol.minSubArrayLen(11, [1,1,1,1,1,1,1,1])) #Expected: 0
-# print(sol.minSubArrayLen(7, [5])) #Expected: 0
-# print(sol.minSubArrayLen(7, [10, 2, 3])) #Expected: 1
+sol = Solution()
+print(sol.minSubArrayLen(7, [2,3,1,2,4,3])) #Expected: 2
+print(sol.minSubArrayLen(11, [1,1,1,1,1,1,1,1])) #Expected: 0
+print(sol.minSubArrayLen(7, [5])) #Expected: 0
+print(sol.minSubArrayLen(7, [10, 2, 3])) #Expected: 1
 
 
 
