@@ -1,5 +1,8 @@
 from typing import List
 
+# Time complexity O(n^2) SC O(1)
+# First medium problem solved but inefficient - Took about 90 minutes
+
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         """
