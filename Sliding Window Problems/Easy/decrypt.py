@@ -48,7 +48,7 @@ class Solution:
         if k == 0:
             return decryptArr
         
-        start, end, step = (1, k + 1, 1) if k > 0 else (arrlen + k, arrlen, 1)
+        start, end, step = (1, k + 1, 1) if k > 0 else (arrlen + k, arrlen, 1) # picked starting positions to easily calc. val for previous index
         
         currSumWindow = sum(code[i % arrlen] for i in range(start, end, step))
 

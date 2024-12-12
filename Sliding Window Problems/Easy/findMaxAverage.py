@@ -49,7 +49,7 @@ class Solution:
         maxVal = currVal
 
         # Iterate to find max
-        for i in range(1, arrLen - k + 1):
+        for i in range(1, arrLen - k + 1): # +1 because end val is not inclusive during iteration, and we want to make sure to calc the last window
 
             dropVal = nums[i - 1]
             addVal = nums[(i - 1) + k]
