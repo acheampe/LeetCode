@@ -1,31 +1,30 @@
 from typing import List
 
-# Time Complexity O(n), Space Complexity O(1) - Completed in 20 minutes
 class Solution:
     def minSubArrayLen(self, target: int, nums: List[int]) -> int:
         """
-        return min subarray length were it's sum => target
+        return min length of subarray whose sum >= target
         """
 
-        # Initialize variables
-        minLenArr = float('inf')
-        leftIndex = 0
-        arrLen = len(nums)
+        #initiating basic variables
+        minLenSubArr = float('inf')
         currSum = 0
+        leftIndex = 0
 
-        # iterate through right index
-        for rightIndex in range(arrLen):
+        # Iterate through rightIndex if currSum < target
+        for rightIndex in range(len(nums)):
             currSum += nums[rightIndex]
 
-            # control desired window size through left index
             while currSum >= target:
-                minLenArr = min(minLenArr, rightIndex - leftIndex + 1)
+                minLenSubArr = min(minLenSubArr, rightIndex - leftIndex + 1)
 
-                # drop curr leftIndex val before iterating 
                 currSum -= nums[leftIndex]
                 leftIndex += 1
         
-        return 0 if minLenArr == float('inf') else minLenArr
+        return 0 if minLenSubArr == float('inf') else minLenSubArr
+
+        # Time complexity should be: O(n) Space Complexity should be O(1)
+        # Completed in 7 minutes and 38 seconds
     
 sol = Solution()
 print(sol.minSubArrayLen(7, [2,3,1,2,4,3])) #Expected: 2
