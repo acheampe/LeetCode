@@ -5,47 +5,53 @@ class Solution:
         """
         return the max number of subarr length of tree of two types
         """
-        
-        # Initiating variables
 
-        maxSubArrLength, currSubArrLength = 0, 0
+        # Initial Variables
+        typeCounter = 0  # track unique counts
         leftIndex, rightIndex = 0, 0
-        typeCounter = 0 # to track types of tree/fruit (2 types max)
         fruitTracker = set()
-        rightIndex = 0
-        fruitLength = len(fruits)
-
-        # Iterate for loop for right index driver:
-        while rightIndex < fruitLength:
+        maxRowLength = 0
+        currRowLength = 0
+        
+        while rightIndex < len(fruits):
+            #track fruit type and counter
             if fruits[rightIndex] not in fruitTracker:
                 fruitTracker.add(fruits[rightIndex])
-                typeCounter += 1
-
-                currTree = fruits[rightIndex]
-                while fruits[rightIndex] in fruitTracker and rightIndex < fruitLength:
-                    if fruits[rightIndex] == currTree:
-                        rightIndex += 1
-
-                if typeCounter == 2:
-                    # Track viable subarr lengths
-                    currSubArrLength = rightIndex - leftIndex
-                    maxSubArrLength = max(maxSubArrLength, currSubArrLength)
-
-                    removeFruit = fruits[leftIndex]
-                    
-                    while leftIndex < rightIndex and fruits[leftIndex] == removeFruit:
-                        leftIndex += 1
-
-                    fruitTracker.remove(removeFruit)
-                    typeCounter -= 1
-
-        # update to max viable length
-        maxSubArrLength = max(maxSubArrLength, currSubArrLength)
-        
-        return maxSubArrLength
+                while rightIndex < len(fruits) and fruits[rightIndex] in fruitTracker:
+                    rightIndex += 1
+                typeCounter = len(fruitTracker)
             
+            else:
+                rightIndex += 1
+            
+            while typeCounter >= 2:
+                # Track length after type counter == 2
+                if typeCounter == 2:
+                    currRowLength = max(currRowLength, (rightIndex) - leftIndex)
+                    maxRowLength = max(maxRowLength, currRowLength)
+            
+                # Track leftIndex 
+                removeFruit = fruits[leftIndex]
+                while fruits[leftIndex] == removeFruit:
+                    leftIndex += 1
+                    # Increment left Index and decrement typeCounter
+                    if fruits[leftIndex] != removeFruit:
+                        fruitTracker = set()
+                        typeCounter = 0
+            
+                # Jump left index, Add current fruit to tracker and increment count
+                leftIndex = rightIndex - 1
+                fruitTracker.add(fruits[leftIndex])
+                typeCounter = len(fruitTracker)
+            
+        return maxRowLength
+
+
+
+
+        
                 
 sol = Solution()
-# print(sol.totalFruit([1,2,1])) #Expected: 3
-# print(sol.totalFruit([0,1,2,2])) #Expected: 4
-print(sol.totalFruit([3,3,3,1,2,1,1,2,3,3,4]))
+print(sol.totalFruit([1,2,1])) # Expected: 3
+print(sol.totalFruit([0,1,2,2])) # Expected: 3
+print(sol.totalFruit([3,3,3,1,2,1,1,2,3,3,4])) # Expected: 5
