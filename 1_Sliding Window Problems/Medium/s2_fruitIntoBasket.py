@@ -12,6 +12,9 @@ class Solution:
         fruitTracker = set()
         maxRowLength = 0
         currRowLength = 0
+
+        if len(fruits) == 1:
+            return 1 # only one option 
         
         while rightIndex < len(fruits):
             #track fruit type and counter
@@ -45,7 +48,6 @@ class Solution:
                 typeCounter = len(fruitTracker)
             
         return maxRowLength
-
 
 
 
