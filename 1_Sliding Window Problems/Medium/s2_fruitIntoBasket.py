@@ -3,38 +3,48 @@ from typing import List
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         """
-        return the maxLenSubArr of two-type tree/fruit to pick from
+        return the max number of subarr length of tree of two types
         """
+        
+        # Initiating variables
 
-        # Basic Variables
-        maxLenSubArr = float('-inf')
-        typeCounter = 1  # To track types of fruit (max 2)
-        leftIndex = 0 
-        rightIndex = 1
-        typeFruit = set() # types of fruit in current Window
-        typeFruit.add(fruits[leftIndex])
+        maxSubArrLength, currSubArrLength = 0, 0
+        leftIndex, rightIndex = 0, 0
+        typeCounter = 0 # to track types of tree/fruit (2 types max)
+        fruitTracker = set()
+        rightIndex = 0
+        fruitLength = len(fruits)
 
-        # iterate through window: 
-        while rightIndex < len(fruits):
-            maxLenSubArr = max(maxLenSubArr, rightIndex - leftIndex)
-            if fruits[rightIndex] not in typeFruit: 
-                if typeCounter < 2:
-                    typeFruit.add(fruits[rightIndex])
-                    typeCounter += 1
+        # Iterate for loop for right index driver:
+        while rightIndex < fruitLength:
+            if fruits[rightIndex] not in fruitTracker:
+                fruitTracker.add(fruits[rightIndex])
+                typeCounter += 1
+
+                currTree = fruits[rightIndex]
+                while fruits[rightIndex] in fruitTracker and rightIndex < fruitLength:
+                    if fruits[rightIndex] == currTree:
+                        rightIndex += 1
+
+                if typeCounter == 2:
+                    # Track viable subarr lengths
+                    currSubArrLength = rightIndex - leftIndex
+                    maxSubArrLength = max(maxSubArrLength, currSubArrLength)
+
+                    removeFruit = fruits[leftIndex]
                     
-                else:
-                    while fruits[leftIndex] in typeFruit:
-                        typeFruit.remove(fruits[leftIndex])
+                    while leftIndex < rightIndex and fruits[leftIndex] == removeFruit:
                         leftIndex += 1
-                        typeCounter -= 1 
+
+                    fruitTracker.remove(removeFruit)
+                    typeCounter -= 1
+
+        # update to max viable length
+        maxSubArrLength = max(maxSubArrLength, currSubArrLength)
+        
+        return maxSubArrLength
+            
                 
-            while rightIndex < len(fruits) and fruits[rightIndex] in typeFruit:
-                    rightIndex += 1 if rightIndex < len(fruits) else rightIndex      
-
-        return maxLenSubArr
-                
-
-
 sol = Solution()
 # print(sol.totalFruit([1,2,1])) #Expected: 3
 # print(sol.totalFruit([0,1,2,2])) #Expected: 4
