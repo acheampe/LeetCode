@@ -1,5 +1,6 @@
 from typing import List
 
+# Time Complexity O(n). Space Complexity O(1).
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         """
@@ -12,11 +13,11 @@ class Solution:
         while start < end:
             startLetter, endLetter = s[start].lower(), s[end].lower()
 
-            while start < end and startLetter.isalpha() == False and startLetter.isdigit() == False:
+            while start < end and not startLetter.isalnum():
                 start += 1
                 startLetter = s[start].lower()
             
-            while end > start and endLetter.isalpha() == False and endLetter.isdigit() == False:
+            while end > start and not endLetter.isalnum():
                 end -= 1
                 endLetter = s[end].lower()
             
@@ -29,9 +30,7 @@ class Solution:
         
         return True
 
-        
-   
-
+    
 sol = Solution()
 print(sol.isPalindrome("A man, a plan, a canal: Panama")) # Expected: true
 print(sol.isPalindrome("race a car")) # Expected: false
