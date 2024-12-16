@@ -1,7 +1,6 @@
 from typing import List
 from collections import defaultdict
 
-# Time Complexity O(n) .  Space Complexity O(k) = 2 == O(1)
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         """
