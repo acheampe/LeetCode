@@ -25,25 +25,25 @@ class Solution:
             missingVal = 0 - (nums[leftIndex]) - (nums[rightIndex])
 
             # checks index correspondent to make sure it is unique
-            if missingVal in sumMap and sumMap[missingVal] > 0:
-                currTuple = (nums[leftIndex], nums[rightIndex], missingVal)
-                leftIndex += 1
-                rightIndex += 1
-                sumMap[missingVal] -= 1
+            if leftIndex != rightIndex and rightIndex != missingVal and leftIndex != missingVal:
+                if sumMap[missingVal] > 0:
+                    currTuple = (nums[leftIndex], nums[rightIndex], missingVal)
+                    sumMap[missingVal] -= 1
 
-                sortedCurrTuple = tuple(sorted(currTuple))
-                if sortedCurrTuple not in trackSet:
-                    trackSet.add(sortedCurrTuple)
-                    listResult.append(list(sortedCurrTuple))
+                    sortedCurrTuple = tuple(sorted(currTuple))
+                    if sortedCurrTuple not in trackSet:
+                        trackSet.add(sortedCurrTuple)
+                        listResult.append(list(sortedCurrTuple))
 
-            else:
-                leftIndex += 1
-                rightIndex += 1
+           
+            leftIndex += 1
+            rightIndex += 1
 
         return listResult
 
 sol = Solution()
-print(sol.threeSum([-1,0,1,2,-1,-4])) # Expected: [[-1,-1,2],[-1,0,1]]
-print(sol.threeSum([0,1,1])) # Expected: []
-print(sol.threeSum([0,0,0])) # Expected: [[0,0,0]]
-print(sol.threeSum([3,-2,1,0])) # Expected: []
+# print(sol.threeSum([-1,0,1,2,-1,-4])) # Expected: [[-1,-1,2],[-1,0,1]]
+# print(sol.threeSum([0,1,1])) # Expected: []
+# print(sol.threeSum([0,0,0])) # Expected: [[0,0,0]]
+# print(sol.threeSum([3,-2,1,0])) # Expected: []
+print(sol.threeSum([1,-1,0])) # Expected: [[-1,0,1]]
