@@ -42,8 +42,6 @@ class Solution:
 
         return listResult
 
-
-
 sol = Solution()
 print(sol.threeSum([-1,0,1,2,-1,-4])) # Expected: [[-1,-1,2],[-1,0,1]]
 print(sol.threeSum([0,1,1])) # Expected: []
