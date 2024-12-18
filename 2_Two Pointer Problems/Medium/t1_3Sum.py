@@ -10,13 +10,13 @@ class Solution:
         Notice that the solution set must not contain duplicate triplets.
         """
         # Sort nums to optimize two pointer usage
-        nums.sort()
+        nums.sort() # Makes it easy to resolve/avoid duplicates
         resultList = []
         
         for i in range(len(nums)):
             # Skip duplicate fixed elements to avoid duplicate triplets
             if i > 0 and nums[i] == nums[i - 1]:
-                continue
+                continue # return to iteration 
 
             fixed_num = nums[i]
             rightIndex = len(nums) - 1
