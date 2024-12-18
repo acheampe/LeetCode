@@ -1,5 +1,4 @@
 from typing import List
-from collections import defaultdict
 
 # Best complexity for 3SUM is O(n^2), SC O(1) if using two pointer + sort
 # For 4SUM, TC is O(n^3)
@@ -9,43 +8,41 @@ class Solution:
         return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
         Notice that the solution set must not contain duplicate triplets.
         """
-        # Sort nums to optimize two pointer usage
-        nums.sort() # Makes it easy to resolve/avoid duplicates
-        resultList = []
-        
+        result = []
+        nums.sort() # To ease ability to handle duplicates = O(n Log n)     
+
         for i in range(len(nums)):
-            # Skip duplicate fixed elements to avoid duplicate triplets
-            if i > 0 and nums[i] == nums[i - 1]:
-                continue # return to iteration 
+            # Handle fixed index duplicate
+            if i > 0 and nums[i] == nums[i-1]:
+                continue #iterate to the next index (ignore or conditions below)
 
-            fixed_num = nums[i]
-            rightIndex = len(nums) - 1
-            leftIndex = i + 1
-            
-            while leftIndex < rightIndex:
-                
-                threeSum = fixed_num + nums[leftIndex ]+ nums[rightIndex]
+            fixedVal = nums[i]
+            startIndex = i + 1
+            endIndex = len(nums) - 1
 
-                if threeSum == 0:
-                    resultList.append([fixed_num, nums[leftIndex], nums[rightIndex]])
+            while startIndex < endIndex:
                 
-                    #iterate points while skipping duplicates
-                    while leftIndex < rightIndex and nums[leftIndex] == nums[leftIndex + 1]:
-                        leftIndex += 1
+                totalVal = nums[startIndex] + nums[endIndex] + fixedVal
+                if totalVal == 0:
+                    result.append([nums[startIndex], nums[endIndex], fixedVal])
+                
+                    while startIndex < endIndex and nums[endIndex] == nums[endIndex - 1]:
+                        endIndex -= 1 # To avoid duplicate calc
+
+                    while startIndex < endIndex and nums[startIndex] == nums[startIndex + 1]:
+                        startIndex += 1 # To avoid duplicates calc
                     
-                    while leftIndex < rightIndex and nums[rightIndex] == nums[rightIndex -1]:
-                        rightIndex -= 1
+                    startIndex += 1
+                    endIndex -1
+                
+                elif totalVal < 0:
+                    startIndex += 1
 
-                    leftIndex += 1
-                    rightIndex -= 1
-                
-                elif threeSum < 0:
-                    leftIndex += 1
-                
                 else:
-                    rightIndex -= 1
-                
-        return resultList
+                    endIndex -= 1
+            
+        return result
+
 
 sol = Solution()
 print(sol.threeSum([-1,0,1,2,-1,-4])) # Expected: [[-1,-1,2],[-1,0,1]]
@@ -53,6 +50,10 @@ print(sol.threeSum([0,1,1])) # Expected: []
 print(sol.threeSum([0,0,0])) # Expected: [[0,0,0]]
 print(sol.threeSum([3,-2,1,0])) # Expected: []
 print(sol.threeSum([1,-1,0])) # Expected: [[-1,0,1]]
+print(sol.threeSum([1,2,-2,-1])) # Expected: []
+print(sol.threeSum([1,-1,-1,0])) # Expected: [[-1,0,1]]
+print(sol.threeSum([-2,0,1,1,2])) # Expected: [[-2,0,2],[-2,1,1]]
+
 
 #########################################
 ### Complexity Explanation:
