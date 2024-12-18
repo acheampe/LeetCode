@@ -33,7 +33,7 @@ class Solution:
                         startIndex += 1 # To avoid duplicates calc
                     
                     startIndex += 1
-                    endIndex -1
+                    endIndex -=1
                 
                 elif totalVal < 0:
                     startIndex += 1
