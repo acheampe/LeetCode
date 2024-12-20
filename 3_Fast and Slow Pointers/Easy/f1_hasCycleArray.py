@@ -1,5 +1,6 @@
 from typing import Optional
 
+# TC = O (n) and SC = O(1)
 class ListNode:
     def __init__(self, value=0, next=None):
         self.value = value
