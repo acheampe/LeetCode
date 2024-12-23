@@ -1,46 +1,32 @@
 from typing import List
 
-# TC = O (n2) and SC = O(1)
+# TC = O (n + m) and SC = O(1)
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         """
         Do not return anything, modify nums1 in-place instead...Only in Leetcode
         """
 
-        # Define start and end pos for both nums
-        nums1Start, nums2Start = 0, 0
+        # Work array backwards
+        i = m - 1 # end position of nums1 arr
+        j = n - 1 # end position of nums2 arr
+        k = m + n - 1 # last arr position of nums1
 
-        # 1) while num2 iter has not ended @ m - 1:
-        while nums2Start < n and nums1Start < m:
-            if nums1[nums1Start] > nums2[nums2Start]:
-                nums1[nums1Start], nums2[nums2Start] = nums2[nums2Start], nums1[nums1Start]
-                nums1Start += 1
-
-                if nums2Start <= n - 2 and nums2[nums2Start] > nums2[nums2Start + 1]:
-                    while nums2Start + 1 < n and nums2[nums2Start] > nums2[nums2Start + 1]:
-                        nums2[nums2Start], nums2[nums2Start + 1] = nums2[nums2Start + 1], nums2[nums2Start]
-                        nums2Start += 1
-
-                nums2Start = 0 
-
-            # else
+        while i >= 0 and j >= 0:
+            if nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
             else:
-                # iter to next num1 val
-                nums1Start += 1
-
-    #2) Redefine variables
-    #  startpos1 = endpos + 1
-        nums1Start, nums1End = m, m + n 
-    #  start2, end2 = 0
-        nums2Start, nums2End = 0, n
-
-    #3) Initiate another while loop
-    # while startpos < endpos and start2 < end2:
-        while nums1Start < nums1End and nums2Start < nums2End:
-            nums1[nums1Start] = nums2[nums2Start]
-            nums1Start += 1
-            nums2Start += 1
+                nums1[k] = nums2[j]
+                j -= 1
+            
+            k -= 1
         
+        # if there are some values left on nums1 arr
+        while j >= 0:
+            nums1[k] = nums2[j]
+            j -= 1
+            k -= 1
         
         return nums1
 
