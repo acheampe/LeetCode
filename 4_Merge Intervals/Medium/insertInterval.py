@@ -1,13 +1,13 @@
 from typing import List
 
-class Solution:
+class Solution: #TC = O(n)  SP = O(n)
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         """
         Insert a new interval and merge if necessary.
         """
 
         if not intervals or not intervals[0]:
-            return newInterval
+            return [newInterval]
         
         resultIntervals = []
 
