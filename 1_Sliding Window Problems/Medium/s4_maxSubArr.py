@@ -2,7 +2,7 @@ from typing import List
 
 class Solution: # Utilizing Kadane's Algorithm - where you continuously decide 
     # whether to extend current subarray or to reset it based on evaluation condition (Not a typical expanding and reducing window technique)
-    def maxSubArray(self, nums: List[int]) -> int:
+    def maxSubArray(self, nums: List[int]) -> int: #TC == O(n) and SC == O(1)
         """
         Find max subarray with largest sum and return the sum
         """
