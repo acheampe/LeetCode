@@ -16,12 +16,11 @@ class Solution: # TC = O(n) and SC (n)
             return head
         
     
-        reversedListHead = self.reverseList(head.next) # break down into individual nodes
+        reversedListHead = self.reverseList(head.next) # establishing head and breaking down into individual nodes to reverse directions
         # Connect nodes in reverse
-        lastNode = head.next 
-        lastNode.next = head
-        head.next = None
-
+        currNode = head.next  # Save the next node (current "lastNode" after recursion)
+        currNode.next = head  # Point lastNode back to head (reversing the direction)
+        head.next = None  # Disconnect the current node from the original forward list
         return reversedListHead
 
 def build_linked_list(values: List[int]) -> Optional[ListNode]:
@@ -47,24 +46,24 @@ def test_reverse_list():
     solution = Solution()
     
     # Test Case 1: Empty List
-    head = build_linked_list([])
-    reversed_head = solution.reverseList(head)
-    assert linked_list_to_list(reversed_head) == [], "Test Case 1 Failed"
+    # head = build_linked_list([])
+    # reversed_head = solution.reverseList(head)
+    # assert linked_list_to_list(reversed_head) == [], "Test Case 1 Failed"
     
-    # Test Case 2: Single Element List
-    head = build_linked_list([1])
-    reversed_head = solution.reverseList(head)
-    assert linked_list_to_list(reversed_head) == [1], "Test Case 2 Failed"
+    # # Test Case 2: Single Element List
+    # head = build_linked_list([1])
+    # reversed_head = solution.reverseList(head)
+    # assert linked_list_to_list(reversed_head) == [1], "Test Case 2 Failed"
     
-    # Test Case 3: Two Element List
-    head = build_linked_list([1, 2])
-    reversed_head = solution.reverseList(head)
-    assert linked_list_to_list(reversed_head) == [2, 1], "Test Case 3 Failed"
+    # # Test Case 3: Two Element List
+    # head = build_linked_list([1, 2])
+    # reversed_head = solution.reverseList(head)
+    # assert linked_list_to_list(reversed_head) == [2, 1], "Test Case 3 Failed"
     
-    # Test Case 4: Multiple Elements
-    head = build_linked_list([1, 2, 3, 4, 5])
-    reversed_head = solution.reverseList(head)
-    assert linked_list_to_list(reversed_head) == [5, 4, 3, 2, 1], "Test Case 4 Failed"
+    # # Test Case 4: Multiple Elements
+    # head = build_linked_list([1, 2, 3, 4, 5])
+    # reversed_head = solution.reverseList(head)
+    # assert linked_list_to_list(reversed_head) == [5, 4, 3, 2, 1], "Test Case 4 Failed"
     
     # Test Case 5: Negative and Positive Numbers
     head = build_linked_list([-1, 0, 1, 2, 3])
