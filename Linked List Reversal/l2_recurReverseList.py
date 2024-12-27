@@ -20,7 +20,7 @@ class Solution: # TC = O(n) and SC (n)
         # Connect nodes in reverse
         currNode = head.next  # Save the next node (current "lastNode" after recursion)
         currNode.next = head  # Point lastNode back to head (reversing the direction)
-        head.next = None  # Disconnect the current node from the original forward list
+        head.next = None  # Disconnect the current node from the original forward list and to prevent a cycle
         return reversedListHead
 
 def build_linked_list(values: List[int]) -> Optional[ListNode]:
