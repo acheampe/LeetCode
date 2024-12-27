@@ -1,5 +1,29 @@
 from typing import List
 
+class Solution:  # TC = O(n), SC = O(1)
+    def missingNumber(self, nums: List[int]) -> int:
+        # Sorting Phase
+        n = len(nums)
+        for i in range(n):
+            while 0 <= nums[i] < n and nums[i] != nums[nums[i]]:
+                nums[nums[i]], nums[i] = nums[i], nums[nums[i]]
+
+        # Find Missing Number
+        for i in range(n):
+            if nums[i] != i:
+                return i
+
+        # If no mismatch is found, the missing number is `n`
+        return n
+
+sol = Solution()
+print(sol.missingNumber([3, 0, 1]))  # Expected: 2
+print(sol.missingNumber([0, 1]))    # Expected: 2
+print(sol.missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]))  # Expected: 8
+
+
+# from typing import List
+
 # class Solution: # TC = O(n). SC = O(1)
 #     def missingNumber(self, nums: List[int]) -> int:
 #         """
@@ -37,26 +61,3 @@ from typing import List
 # print(sol.missingNumber([0,1])) # Expected: 2
 # print(sol.missingNumber([9,6,4,2,3,5,7,0,1])) # Expected: 8
 
-
-from typing import List
-
-class Solution:  # TC = O(n), SC = O(1)
-    def missingNumber(self, nums: List[int]) -> int:
-        # Sorting Phase
-        n = len(nums)
-        for i in range(n):
-            while 0 <= nums[i] < n and nums[i] != nums[nums[i]]:
-                nums[nums[i]], nums[i] = nums[i], nums[nums[i]]
-
-        # Find Missing Number
-        for i in range(n):
-            if nums[i] != i:
-                return i
-
-        # If no mismatch is found, the missing number is `n`
-        return n
-
-sol = Solution()
-print(sol.missingNumber([3, 0, 1]))  # Expected: 2
-# print(sol.missingNumber([0, 1]))    # Expected: 2
-# print(sol.missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]))  # Expected: 8
