@@ -8,24 +8,23 @@ class Solution: # TC = O(n) and SC = O(1) - Sign Marking Approach
 
         n = len(nums)
 
-        # Edge Case: 
+        # Edge case of single arr:
         if n == 1:
-            return [] # No duplicates
+            return []
         
-        # variable to catch duplicates
         duplicateElements = []
         
-        # Use Sign marking to tease out duplicates - No sorting needed
-        # sign marking especially appropriate due to zero indexing
         for i in range(n):
-            index = abs(nums[i]) - 1 # Get index that should match value
 
-            if nums[index] < 0:
+            # Mark corresponding Index
+            corrIndex = abs(nums[i]) - 1
+
+            if nums[corrIndex] < 0:
+                # It means a similar value has tagged it so append duplicate
                 duplicateElements.append(abs(nums[i]))
             
-            else: # Tag with a negative sign
-                nums[index] = -nums[index]
-
+            else:
+                nums[corrIndex] = - nums[corrIndex]
 
         return duplicateElements
 
