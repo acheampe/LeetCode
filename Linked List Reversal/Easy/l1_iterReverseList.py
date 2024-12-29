@@ -21,11 +21,17 @@ class Solution: # TC = O(n) and SC (1)
         while currNode: # Iterative Approach
             nextNode = currNode.next # save point of next node (or we will lose link)
             currNode.next = prevNode # reversing node direction
-            prevNode = currNode # Update prevNode
+            prevNode = currNode # Update prevNode 
             currNode = nextNode # Updating currNode to process
         
         # Return prevNode (new head now)
         return prevNode
+    
+    # Lesson Points: 
+    # make sure to return the head (after reversing, the tailend will be our
+    # return head, prevNode
+    # take care of edge cases where (what if edge is empty?)
+    # pay attention to variable names 
 
 def build_linked_list(values: List[int]) -> Optional[ListNode]:
     """Helper function to build a linked list from a list of values."""
