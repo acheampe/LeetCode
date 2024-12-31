@@ -36,38 +36,36 @@ class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         """ return list including reversed sublist """
 
-        currNode = head
-        pos = 1
-
-        # iterate till one node away from left target
-        while pos < left:
-            currNode = currNode.next
-            pos += 1
+        # Edge cases:
+        if not head or left == right: 
+            return head # no need for reversal
         
-        print(currNode.val) # Debugging purpose
+        # Create a dummy node to mark head
+        dummy = ListNode(0)
+        dummy.next = head  # return variable after sublist reversal
+        beforeLeft = dummy # initiation point
 
-        # Save reversed section and detach prior link
-        attachLeft = currNode
-        reverseEnd = attachLeft.next #starting point of reversing nodes till right
-        attachLeft.next = None # detach prior link to reattach later
-        reverseEndNext = reverseEnd # To reattach later (original left node )
-        prevNode = None
-
-        while pos < right + 1 and reverseEnd:
-            nextNode = reverseEnd.next # save next node
-            reverseEnd.next = prevNode
-            prevNode = reverseEnd
-            reverseEnd = nextNode
-            pos += 1
+        # Find node before left
+        for _ in range(left - 1): # Calc steps to before left
+            beforeLeft = beforeLeft.next
         
-        # Save detached
-        detachedEnd = reverseEnd
+        # Reverse desired sublist
+        prev = None # sublist reversal direction
+        curr = beforeLeft.next
 
-        # Reattach detached links
-        attachLeft.next = prevNode
-        reverseEndNext.next = detachedEnd
+        for _ in range(right - left + 1): # how many steps taken to reverse list
 
-        return head
+            nextNode = curr.next # save next link (will be sad to lose it)
+            curr.next = prev  # reverses link
+            prev = curr # update previous
+            curr = nextNode # update current Node
+        
+        # Relink before and after sublist reversals
+        beforeLeft.next.next = curr # important to link this first
+        beforeLeft.next = prev 
+
+        return dummy.next # for actual head of List
+
 
             
 def test_reverse_between():

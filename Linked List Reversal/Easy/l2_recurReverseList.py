@@ -14,7 +14,6 @@ class Solution: # TC = O(n) and SC (n)
         # Establish Base Case/ termination:
         if not head or not head.next:
             return head
-        
     
         reversedListHead = self.reverseList(head.next) # establishing head and breaking down into individual nodes to reverse directions
         # Connect nodes in reverse
@@ -41,6 +40,7 @@ def linked_list_to_list(head: Optional[ListNode]) -> List[int]:
         result.append(head.val)
         head = head.next
     return result
+
 
 def test_reverse_list():
     solution = Solution()
