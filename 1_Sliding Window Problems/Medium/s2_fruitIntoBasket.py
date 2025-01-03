@@ -37,4 +37,4 @@ sol = Solution()
 # print(sol.totalFruit([0,1,2,2])) # Expected: 3
 # print(sol.totalFruit([3,3,3,1,2,1,1,2,3,3,4])) # Expected: 5
 # print(sol.totalFruit([1,1])) # Expected: 2
-print(sol.totalFruit([3,1,3,2,2])) # Expected: 4
+# print(sol.totalFruit([3,1,3,2,2])) # Expected: 4
