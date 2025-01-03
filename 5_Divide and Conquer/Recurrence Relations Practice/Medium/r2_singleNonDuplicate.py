@@ -12,20 +12,51 @@ class Solution:
         mid = len(nums) // 2
         compareLeft = self.singleNonDuplicate(nums[:mid])
         compareRight = self.singleNonDuplicate(nums[mid:])
+    
+        # Conquer and return non-duplicates
+        nonDuplicateList = self.findNonDuplicate(compareLeft, compareRight)
 
-        if compareLeft == None or compareRight == None:
-            return compareRight if compareRight != None else compareLeft
+        return nonDuplicateList
+
+        
     
-        # Conquer to find duplicate
-        return self.findDuplicate(compareLeft, compareRight)
-    
-    def findDuplicate(self, leftArr, rightArr):
-        """compare right end val to left start val to find NonDuplicate, if none
-            return -1
+    def findNonDuplicate(self, leftArr, rightArr):
+        """compare right and left array and return only non-duplicate list
         """
-        if leftArr[-1] != rightArr[0]:
-            return [leftArr[-1]] if len(rightArr) > 1 and rightArr[0] == rightArr[1] else [leftArr[-1]]
 
+        if len(leftArr) == 1 and len(rightArr) == 1:
+            return leftArr + rightArr
+        
+        elif len(leftArr) == 1 or len(rightArr) == 1:
+
+            singleLenArr = leftArr if len(leftArr) == 1 else rightArr
+            twoLenArr = leftArr if len(leftArr) == 2 else rightArr
+            
+            if twoLenArr[0] == twoLenArr[1]:
+                return singleLenArr # leftArr holds the unique val
+            
+            # return the non-duplicate
+            elif singleLenArr[0] == twoLenArr[0] or singleLenArr[0] == twoLenArr[1]:
+                return [twoLenArr[1]] if singleLenArr[0] == twoLenArr[0] else [twoLenArr[0]]
+        
+        else: # Cases where both left and right arrLen = 2
+
+            # Eliminate arr with duplicate
+            if leftArr[0] == leftArr[1]:
+                return rightArr
+            
+            elif rightArr[0] == rightArr[1]:
+                return leftArr
+            
+            # create new arr of nonduplicates
+            elif rightArr[0] == leftArr[-1]:
+                return [leftArr[0], rightArr[1]]
+    
+# Recurrence relations: T(n) = 2T(n / 2) + O(n) - Time Complexity = n log n and space complexity = n
+            
+
+    
+            
 sol = Solution()
 print(sol.singleNonDuplicate([1,1,2,3,3,4,4,8,8])) # Expected Output: 2
 print(sol.singleNonDuplicate([3,3,7,7,10,11,11])) # Expected Output: 10
