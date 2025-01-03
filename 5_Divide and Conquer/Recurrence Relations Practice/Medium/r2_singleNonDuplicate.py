@@ -14,11 +14,7 @@ class Solution:
         compareRight = self.singleNonDuplicate(nums[mid:])
     
         # Conquer and return non-duplicates
-        nonDuplicateList = self.findNonDuplicate(compareLeft, compareRight)
-
-        return nonDuplicateList
-
-        
+        return self.findNonDuplicate(compareLeft, compareRight)
     
     def findNonDuplicate(self, leftArr, rightArr):
         """compare right and left array and return only non-duplicate list
@@ -51,11 +47,9 @@ class Solution:
             # create new arr of nonduplicates
             elif rightArr[0] == leftArr[-1]:
                 return [leftArr[0], rightArr[1]]
-    
-# Recurrence relations: T(n) = 2T(n / 2) + O(n) - Time Complexity = n log n and space complexity = n
-            
 
-    
+# Does not meet problem contraints but used this approach to practice recursive approach
+# Recurrence relations: T(n) = 2T(n / 2) + O(n) - Time Complexity = n log n and space complexity = n
             
 sol = Solution()
 print(sol.singleNonDuplicate([1,1,2,3,3,4,4,8,8])) # Expected Output: 2
