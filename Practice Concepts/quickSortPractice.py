@@ -1,13 +1,13 @@
 from typing import List
 
-class Solution:  # Time Complexity: O(n log n), Space Complexity: O(n)
+class Solution:  # Time Complexity: O(n), Space Complexity: O(1)
     def sortArray(self, nums: List[int], pivot: int) -> List[int]:
         """
         Practice quick sort - returns element greater than pivot
         to it's right and less than pivot to its left
         """
 
-        i = - 1
+        i = - 1 # track position of the next smaller element compared to pivot
 
         for j in range(len(nums) - 1): # exclusing pivot position
             
@@ -16,6 +16,7 @@ class Solution:  # Time Complexity: O(n log n), Space Complexity: O(n)
                 continue # j increments
 
             else: # increment i and swap with j val to partition
+                # if ival is <= pivot val
                 i += 1
                 nums[i], nums[j] = nums[j], nums[i]
                 # j increments automatically
