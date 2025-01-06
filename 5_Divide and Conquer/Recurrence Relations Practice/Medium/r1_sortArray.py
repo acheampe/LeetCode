@@ -1,6 +1,6 @@
 from typing import List
 
-class Solution:  # Time Complexity: O(n log n), Space Complexity: O(n)
+class Solution:  # Time Complexity: O(n log n), Space Complexity: O(n)...
     def sortArray(self, nums: List[int]) -> List[int]:
         """Sorting array using divide and conquer"""
         # Base/Termination case:
