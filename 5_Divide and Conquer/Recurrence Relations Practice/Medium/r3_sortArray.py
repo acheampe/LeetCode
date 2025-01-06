@@ -1,97 +1,44 @@
 from typing import List
 
-class Solution:  # Time Complexity: O(n log n), Space Complexity: O(n)
+class Solution: # Best/Average TC = O(n log n), worse case O(n^2), if partition point is the largest or smallest in the group array, and SC = O(log n), worse case O(n)
     def sortArray(self, nums: List[int]) -> List[int]:
-        """Sorting array using divide and conquer"""
+        """Sort array using quicksort (in-place)."""
         
-        # Using quicksort approach
-        arrLen = len(nums)
-
-        # Step 1: Establish base/termination case
-        if arrLen <= 1:
-            return nums
-        
-        # Steo 2: quicksort current arr
-        pivot = len(nums) - 1
-        index = self.quicksort(nums, pivot)
-        
-        # Step 3: Division to sort right and to the left of index
-        if nums[ : index]:
-            self.sortArray(nums[ : index]) # left of index to quicksort, # SLICING CREATES A NEW ARRAY
-        if nums[index + 1: ]:
-            self.sortArray(nums[index + 1: ]) # right of index to quicksort
+        self.quicksort(nums, 0, len(nums) - 1)
 
         return nums
 
-    def quicksort(self, sortArr, pivot):
-        """
-        quicksort left and right array and return 
-        """
+    def quicksort(self, arr, low, high):
+        """quicksort using partitioning"""
 
-        i = -1
-        for j in range(len(sortArr) - 1):
+        if low < high:
+            pivotIndex = self.partition(arr, low, high)
+            self.quicksort(arr, low, pivotIndex - 1)
+            self.quicksort(arr, pivotIndex + 1, high) # avoid slicing since that creates a new array
 
-            if sortArr[j] <= sortArr[pivot]:
+
+    def partition(self, arr, low, high):
+        """partition to return index"""
+
+        # step 1: track pivot placement ( i + 1 index)
+        i = low - 1
+        pivot = high
+        
+        # step 2: iter for pivot point placement
+        for j in range(low, high):
+
+            if arr[j] <= arr[pivot]:
                 i += 1
-                sortArr[j], sortArr[i] = sortArr[i], sortArr[j]
+                arr[j], arr[i] = arr[i], arr[j]
         
-        # reposition pivot
-        sortArr[pivot], sortArr[i + 1] = sortArr[i + 1], sortArr[pivot]
+        # step 3: Place pivot value in it's true position
+        arr[i + 1], arr[pivot] = arr[pivot], arr[i + 1]
 
+        # Step 4: return pivot index
         return i + 1
-        
+
 sol = Solution()
-# print(sol.sortArray([5, 2, 3, 1]))  # Expected: [1, 2, 3, 5]
-print(sol.sortArray([5, 1, 1, 2, 0, 0]))  # Expected: [0, 0, 1, 1, 2, 5]
+print(sol.sortArray([5, 2, 3, 1]))  # Expected: [1, 2, 3, 5] 
+# print(sol.sortArray([5, 1, 1, 2, 0, 0]))  # Expected: [0, 0, 1, 1, 2, 5]
 # print(sol.sortArray([-2, 3, -5]))  # Expected: [-5, -2, 3]
-
-
-
-
-
-
-
-# IN PLACE SORT APPROACH TO LEARN FOR LEAST SPACE USED:
-# from typing import List
-
-# class Solution:
-#     def sortArray(self, nums: List[int]) -> List[int]:
-#         """
-#         In-place Merge Sort with O(1) additional space
-#         """
-#         def mergeSort(nums, left, right):
-#             # Base case: single-element array is sorted
-#             if left >= right:
-#                 return
-
-#             # Divide
-#             mid = (left + right) // 2
-#             mergeSort(nums, left, mid)
-#             mergeSort(nums, mid + 1, right)
-
-#             # Conquer: In-place merge
-#             merge(nums, left, mid, right)
-
-#         def merge(nums, left, mid, right):
-#             i, j = left, mid + 1
-
-#             # Use a pointer-based approach to merge two sorted halves
-#             while i <= mid and j <= right:
-#                 if nums[i] <= nums[j]:
-#                     # Element in left half is in correct position
-#                     i += 1
-#                 else:
-#                     # nums[j] is smaller, needs to be inserted before nums[i]
-#                     value = nums[j]
-#                     # Shift all elements in left half to make space for nums[j]
-#                     for k in range(j, i, -1):
-#                         nums[k] = nums[k - 1]
-#                     nums[i] = value
-
-#                     # Update pointers
-#                     i += 1
-#                     mid += 1
-#                     j += 1
-
-#         mergeSort(nums, 0, len(nums) - 1)
-#         return nums
+        
