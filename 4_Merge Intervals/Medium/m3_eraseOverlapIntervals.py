@@ -1,6 +1,6 @@
 from typing import List
 
-class Solution: # TC O(n log n) . SC O(n)
+class Solution: # TC O(n log n) SC O(1)
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> List[List[int]]:
         """
         return the minimum number of intervals you need to remove to make the 
@@ -13,28 +13,31 @@ class Solution: # TC O(n log n) . SC O(n)
         
         # Step 2: Variable track min overlaps and sort intervals
         minOverLaps = 0
-        prevIndex, currIndex = 0, 0
         intervals.sort(key=lambda x: x[0]) # Introduces Complexity of O(n long n)
-        
+        currFixedInterval = intervals[0]
+        currIndex = 1
+
         while currIndex < len(intervals):
-            currIndex += 1
 
-            while currIndex < len(intervals) and intervals[currIndex] == intervals[prevIndex]: 
-                # Count overlap
+            # Step 3: check if intervals are equal 
+            if intervals[currIndex] == currFixedInterval:
                 minOverLaps += 1
                 currIndex += 1
 
-            prevIndex = currIndex - 1
-            tempCount = 0 # count current overlaps with previous index
-            while currIndex < len(intervals) and intervals[currIndex][0] < intervals[prevIndex][1]:
-                tempCount += 1
-                currIndex += 1
-                prevIndex += 1
+            # Step 4: check if there is an overlap between fixed val and iter val
+            elif intervals[currIndex][0] < currFixedInterval[1]:
 
-            if tempCount > 0:
+                # assign the lesser of end interval to current fixed
+                currFixedInterval = intervals[currIndex] if intervals[currIndex][1] \
+                < currFixedInterval[1] else currFixedInterval
                 minOverLaps += 1
-                prevIndex = currIndex
-                
+                currIndex += 1
+
+            else:
+                # Step 5: update fixInterval if no overlap
+                currFixedInterval = intervals[currIndex]
+                currIndex += 1
+        
 
         return minOverLaps
 
