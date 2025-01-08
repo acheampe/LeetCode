@@ -9,44 +9,23 @@ class TreeNode:
 class Solution:
     ## TIME COMPLEXITY: O(n) because each node is traversed once
     ## SPACE COMPLEXITY: Worst Case O(n) if tree heavily leans on one side, if it is balanced well the best case will be O(log n) due to stack of recursion
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
-        return the inOrder traversal of this tree
-        NOTE: inOrder is used to validate a binary search tree or 
-        to retrieve nodes in sorted order
+        return a post order traversal
+        NOTE: post oder is ofter used as an approach to delete tree
         """
-        # Recursive approach: preOrder: parent --> left, --> right
 
         if not root:
             return []
         
-        inOrderResult = []
-        
-        self.helperInOder(root, inOrderResult)
+        return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val] ### Note using list concatenation can be less efficient than appending to a single shared list.
 
-        return inOrderResult
-    
-    def helperInOder(self, node, result):
-        """
-        helper function to return in-order sort
-        """
-
-        if not node:
-            return 
-        
-        self.helperInOder(node.left, result)
-        result.append(node.val)
-        self.helperInOder(node.right, result)
-
-        return result
-
-
-def test_inorder_traversal():
+def test_postorder_traversal():
     # Test case 1: root = [1, null, 2, 3]
     root1 = TreeNode(1)
     root1.right = TreeNode(2)
     root1.right.left = TreeNode(3)
-    expected_output1 = [1, 3, 2]
+    expected_output1 = [3, 2, 1]
 
     # Test case 2: root = [1,2,3,4,5,null,8,null,null,6,7,9]
     root2 = TreeNode(1)
@@ -58,7 +37,7 @@ def test_inorder_traversal():
     root2.left.right.left = TreeNode(6)
     root2.left.right.right = TreeNode(7)
     root2.right.right.left = TreeNode(9)
-    expected_output2 = [4, 2, 6, 5, 7, 1, 3, 9, 8]
+    expected_output2 = [4, 6, 7, 5, 2, 9, 8, 3, 1]
 
     # Test case 3: root = []
     root3 = None
@@ -72,25 +51,13 @@ def test_inorder_traversal():
     solution = Solution()
 
     # Assertions
-    assert solution.inorderTraversal(root1) == expected_output1, f"Test case 1 failed"
-    assert solution.inorderTraversal(root2) == expected_output2, f"Test case 2 failed"
-    assert solution.inorderTraversal(root3) == expected_output3, f"Test case 3 failed"
-    assert solution.inorderTraversal(root4) == expected_output4, f"Test case 4 failed"
+    assert solution.postorderTraversal(root1) == expected_output1, "Test case 1 failed"
+    assert solution.postorderTraversal(root2) == expected_output2, "Test case 2 failed"
+    assert solution.postorderTraversal(root3) == expected_output3, "Test case 3 failed"
+    assert solution.postorderTraversal(root4) == expected_output4, "Test case 4 failed"
 
     print("All test cases passed!")
 
 
 # Run the tests
-test_inorder_traversal()
- 
-# class Solution:  # Concise variant
-#     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
-#         """
-#         Perform inOrder traversal: left --> root --> right
-#         """
-#         if not root:
-#             return []
-
-#         # Inorder traversal: Combine left subtree, root, and right subtree results
-#         return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right)
-
+test_postorder_traversal()
