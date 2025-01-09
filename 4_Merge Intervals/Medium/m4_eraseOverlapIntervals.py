@@ -25,7 +25,6 @@ class Solution:
                 fixedIndex = currIndex
                 currIndex += 1
                 
-        
         return eraseMin
         
         # # Step 1: Sort intervals by end time
