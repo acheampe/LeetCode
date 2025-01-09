@@ -1,4 +1,5 @@
 from typing import List, Optional
+from collections import deque
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -7,50 +8,66 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
-    ## TIME COMPLEXITY: O(n) because each node is traversed once
-    ## SPACE COMPLEXITY: Worst Case O(n) if tree heavily leans on one side, if it is balanced well the best case will be O(log n) due to stack of recursion
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
-        return the preOrder traversal of this tree
-        NOTE: preOrder is usually used to copy a tree
-        """
-        # Recursive approach: preOrder: parent --> left, --> right
-
-        if not root:
-            return root
-
-        preOrderResult = []
-        # Step 1: Establish a helper function 
-        self.helpTrackPreOrder(root, preOrderResult) # for storing result
-
-        return preOrderResult
-
-    def helpTrackPreOrder(self, root, result):
-        """
-        return result of preOrder tree
+        return the preorder traversal of it's node value
+        NOTE: Pre-order traversal is used in cases where we need to copy a tree
+        Iterative Approach
         """
 
         if not root:
-            return
+            return []
         
-        result.append(root.val)
+        # Space needed for operation:
+        stack = []
+        result = []
+        currNode = root
 
-        self.helpTrackPreOrder(root.left, result) 
-        self.helpTrackPreOrder(root.right, result)
+        while stack or currNode:
+
+            while currNode: # explore left branches
+                stack.append(currNode)
+                result.append(currNode.val)
+                currNode = currNode.left
+            
+            # Explore it's right branch
+            currNode = stack.pop()
+
+            currNode = currNode.right
         
         return result
+
+        # Time Complexity: O(n) as we navigated each node just once
+        # Space Complexity: Worst Case O(n) if tree is heavily skewed, Average Case: O(log n) for recursive stack.
 
 ## EASIER APPROACH
 # class Solution:
 #     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
 #         """
-#         Recursive preOrder traversal: parent --> left --> right
+#         Iterative preorder traversal: root --> left --> right
 #         """
 #         if not root:
 #             return []
+        
+#         # Initialize stack and result list
+#         stack = [root]
+#         result = []
 
-#         # Preorder: Process current node, then left, then right
-#         return [root.val] + self.preorderTraversal(root.left) + self.preorderTraversal(root.right)
+#         # Process nodes using a stack
+#         while stack:
+#             currNode = stack.pop()
+#             result.append(currNode.val)
+
+#             # Push right child first, so left child is processed first
+#             if currNode.right:
+#                 stack.append(currNode.right)
+#             if currNode.left:
+#                 stack.append(currNode.left)
+        
+#         return result
+
+#         # Time Complexity: O(n) as we navigate each node just once
+#         # Space Complexity: Worst Case O(n) if the tree is heavily skewed, Average Case: O(log n) for a balanced tree.
 
 
 

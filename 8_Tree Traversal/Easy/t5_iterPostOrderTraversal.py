@@ -1,24 +1,38 @@
 from typing import List, Optional
 
-# Definition for a binary tree node.
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 class Solution:
-    ## TIME COMPLEXITY: O(n) because each node is traversed once
-    ## SPACE COMPLEXITY: Worst Case O(n) if tree heavily leans on one side, if it is balanced well the best case will be O(log n) due to stack of recursion
     def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
-        return a post order traversal
-        NOTE: post oder is ofter used as an approach to delete tree
+        iterative approach
+        left --> right --> root
         """
 
         if not root:
             return []
         
-        return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val] ### Note using list concatenation can be less efficient than appending to a single shared list.
+        # Establish space needed for operation
+        stack = [root]
+        result =[]
+
+        while stack:
+            
+            currNode = stack.pop()
+
+            result.append(currNode.val) # append root note first
+
+            if currNode.left:
+                stack.append(currNode.left)
+            if currNode.right:
+                stack.append(currNode.right)
+        
+        return result[::-1] # return reverse result
+
 
 def test_postorder_traversal():
     # Test case 1: root = [1, null, 2, 3]
