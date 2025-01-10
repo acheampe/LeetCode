@@ -6,6 +6,7 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+        
 class Solution:
     ## TIME COMPLEXITY: O(n) because each node is traversed once
     ## SPACE COMPLEXITY: Worst Case O(n) if tree heavily leans on one side, 
@@ -74,9 +75,9 @@ def test_inorder_traversal():
 
     # Assertions
     assert solution.inorderTraversal(root1) == expected_output1, f"Test case 1 failed"
-    # assert solution.inorderTraversal(root2) == expected_output2, f"Test case 2 failed"
-    # assert solution.inorderTraversal(root3) == expected_output3, f"Test case 3 failed"
-    # assert solution.inorderTraversal(root4) == expected_output4, f"Test case 4 failed"
+    assert solution.inorderTraversal(root2) == expected_output2, f"Test case 2 failed"
+    assert solution.inorderTraversal(root3) == expected_output3, f"Test case 3 failed"
+    assert solution.inorderTraversal(root4) == expected_output4, f"Test case 4 failed"
 
     print("All test cases passed!")
 
