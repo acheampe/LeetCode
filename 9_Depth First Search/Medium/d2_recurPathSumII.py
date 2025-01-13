@@ -9,31 +9,41 @@ class TreeNode:
         self.right = right
 
 class Solution:
+    # Time Complexity: Average case O(n) space complexity O(log n) in an average case scenario
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        """
-        reurn all paths with it's list of val's that sums up to target
-        """
-
-        if not root:
-            return []
-
-        return self.pathSumHelper(root, targetSum, [])
-    
-    def pathSumHelper(self, root, targetSum, result):
         """
         return all paths with it's list of val's that sums up to target
         """
 
-        if not root.left and not root.right:
-            if targetSum == root.val:
-                return result.append(root.val) 
-
-        result.append(root.val)
+        if not root:
+            return []
         
-        return [self.pathSumHelper(root.left, targetSum - root.val, result), self.pathSumHelper(root.right, targetSum - root.val, result)]
+        result, path = [], []
+        self.pathSumHelper(root, targetSum, result, path)
 
+        return result
 
+    def pathSumHelper(self, node, targetSum, result, path):
+        """
+        return all paths with it's list of val's that sums up to target
+        """
+        
+        if not node:
+            return
+        
+        path.append(node.val)
 
+        # Condition for leaf node and for meeting target sum
+        if not node.left and not node.right and targetSum == node.val:
+            result.append(path[:]) # we want to append a copy, if we reference via memory, values will pop during backtracking
+        
+        self.pathSumHelper(node.left, targetSum - node.val, result, path)
+        self.pathSumHelper(node.right, targetSum - node.val, result, path)
+
+        # back track if condition is not met
+        path.pop() 
+        
+    
 # Helper function to build a binary tree from a list
 def build_tree(values: List[Optional[int]]) -> Optional[TreeNode]:
     if not values:
@@ -59,34 +69,34 @@ def run_tests():
             },
             "expected": [[5, 4, 11, 2], [5, 8, 4, 5]]
         },
-        # {
-        #     "input": {
-        #         "root": [1, 2, 3],
-        #         "targetSum": 5
-        #     },
-        #     "expected": []
-        # },
-        # {
-        #     "input": {
-        #         "root": [1, 2],
-        #         "targetSum": 0
-        #     },
-        #     "expected": []
-        # },
-        # {
-        #     "input": {
-        #         "root": [],
-        #         "targetSum": 0
-        #     },
-        #     "expected": []
-        # },
-        # {
-        #     "input": {
-        #         "root": [1, -2, -3, 1, 3, -2, None, -1],
-        #         "targetSum": -1
-        #     },
-        #     "expected": [[1, -2, 1, -1], [1, -3]]
-        # }
+        {
+            "input": {
+                "root": [1, 2, 3],
+                "targetSum": 5
+            },
+            "expected": []
+        },
+        {
+            "input": {
+                "root": [1, 2],
+                "targetSum": 0
+            },
+            "expected": []
+        },
+        {
+            "input": {
+                "root": [],
+                "targetSum": 0
+            },
+            "expected": []
+        },
+        {
+            "input": {
+                "root": [1, -2, -3, 1, 3, -2, None, -1],
+                "targetSum": -1
+            },
+            "expected": [[1, -2, 1, -1], [1, -3]]
+        }
     ]
 
     solution = Solution()
