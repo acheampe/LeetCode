@@ -31,7 +31,7 @@ class Solution:
             if currNode.right:
                 stack.append((currNode.right, path + [currNode.right.val], remainingSum - currNode.right.val))
             if currNode.left:
-                stack.append((currNode.left, path + [currNode.left.val], remainingSum - currNode.left.val))
+                stack.append((currNode.left, path + [currNode.left.val], remainingSum - currNode.left.val)) # creates own copy of path
 
         return result
 
