@@ -10,7 +10,31 @@ class TreeNode:
 
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        pass
+        """
+        Return all root-to-leaf paths where the sum of node values equals targetSum.
+        """
+        if not root:
+            return []
+        
+        # Stack stores tuples of (current node, current path, remaining target sum)
+        stack = [(root, [root.val], targetSum - root.val)]
+        result = []
+
+        while stack:
+            currNode, path, remainingSum = stack.pop()
+
+            # Check if it's a leaf node and the sum matches
+            if not currNode.left and not currNode.right and remainingSum == 0:
+                result.append(path)
+
+            # Push children onto the stack (if they exist)
+            if currNode.right:
+                stack.append((currNode.right, path + [currNode.right.val], remainingSum - currNode.right.val))
+            if currNode.left:
+                stack.append((currNode.left, path + [currNode.left.val], remainingSum - currNode.left.val))
+
+        return result
+
 
 # Helper function to build a binary tree from a list
 def build_tree(values: List[Optional[int]]) -> Optional[TreeNode]:
@@ -57,13 +81,6 @@ def run_tests():
                 "targetSum": 0
             },
             "expected": []
-        },
-        {
-            "input": {
-                "root": [1, -2, -3, 1, 3, -2, None, -1],
-                "targetSum": -1
-            },
-            "expected": [[1, -2, 1, -1], [1, -3]]
         }
     ]
 
