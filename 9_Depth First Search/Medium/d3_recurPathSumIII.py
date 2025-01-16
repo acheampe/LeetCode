@@ -1,5 +1,5 @@
 from typing import Optional, List
-from collections import deque
+from collections import defaultdict
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -60,41 +60,36 @@ class Solution:
         """
         Return the number of paths where the sum of the values equals targetSum.
         """
+        self.count = 0
+        trackSum = defaultdict(int) # Keeps track of cumulative sum.
+        trackSum[0] = 1 # Accounts for case where a single full path == target (0 = fullpath - targetSum)
 
-        if not root:
-            return 0 
-        
-        self.pathCount = 0
+        def deepSearch(node, currSum):
+            """
+            track current Sum and to accumulate self.count when appropriate
+            """
 
-        if root.val == targetSum:
-            self.pathCount += 1
-        
-        return self.trackValidPaths(root, targetSum + root.val)
+            if not node:
+                return
+            
+            currSum += node.val # Update to currSum
 
-    def trackValidPaths(self, currNode, sumTarget):
-        """
-        Count valid paths and return count
-        """
+            # Add to count if there exist a node/path that will meet our target
+            self.count += trackSum[currSum - targetSum]
 
-        if not currNode:
-            return
-        
-        if currNode.val == sumTarget:
-            print(currNode.val)
-            self.pathCount += 1
-        
-        if currNode.left:
-            print(currNode.left.val)
-            currNode.left.val = currNode.val + currNode.left.val 
+            trackSum[currSum] += 1 # update this currSum 
 
-        if currNode.right:
-            print(currNode.right.val)
-            currNode.right.val = currNode.val + currNode.right.val
-        
-        self.trackValidPaths(currNode.left, sumTarget)
-        self.trackValidPaths(currNode.right, sumTarget)
+            # Explore the left and right children
+            deepSearch(node.left, currSum)
+            deepSearch(node.right, currSum)
 
-        return self.pathCount
+            trackSum[currSum] -= 1 # backtrack because we no longer want to factor it in our path 
+
+
+        deepSearch(root, 0) # Initiate search
+
+        return self.count
+
 
 # Helper function to build a binary tree from a list
 def build_tree(values: List[Optional[int]]) -> Optional[TreeNode]:
@@ -114,13 +109,13 @@ def build_tree(values: List[Optional[int]]) -> Optional[TreeNode]:
 # Test cases
 def run_tests():
     tests = [
-        # {
-        #     "input": {
-        #         "root": [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1],
-        #         "targetSum": 8
-        #     },
-        #     "expected": 3
-        # },
+        {
+            "input": {
+                "root": [10, 5, -3, 3, 2, None, 11, 3, -2, None, 1],
+                "targetSum": 8
+            },
+            "expected": 3
+        },
         {
             "input": {
                 "root": [5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1],
@@ -128,27 +123,27 @@ def run_tests():
             },
             "expected": 3
         },
-        # {
-        #     "input": {
-        #         "root": [],
-        #         "targetSum": 0
-        #     },
-        #     "expected": 0
-        # },
-        # {
-        #     "input": {
-        #         "root": [1, -2, -3, 1, 3, -2, None, -1],
-        #         "targetSum": -1
-        #     },
-        #     "expected": 4
-        # },
-        # {
-        #     "input": {
-        #         "root": [1],
-        #         "targetSum": 1
-        #     },
-        #     "expected": 1
-        # }
+        {
+            "input": {
+                "root": [],
+                "targetSum": 0
+            },
+            "expected": 0
+        },
+        {
+            "input": {
+                "root": [1, -2, -3, 1, 3, -2, None, -1],
+                "targetSum": -1
+            },
+            "expected": 4
+        },
+        {
+            "input": {
+                "root": [1],
+                "targetSum": 1
+            },
+            "expected": 1
+        }
     ]
 
     solution = Solution()
