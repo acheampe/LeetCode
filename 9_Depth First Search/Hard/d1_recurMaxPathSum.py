@@ -28,6 +28,9 @@ class Solution:
         return the maximum path sum of a given tree
         """
 
+        # TIME COMPLEXITY  = O(n) visits all nodes ones
+        # SPACE COMPLEXITY = Average case O(log n) --> O(n) if tree is skewed
+
         def deepSearch(currNode):
             """
             deep tree traversal for max path Sum
