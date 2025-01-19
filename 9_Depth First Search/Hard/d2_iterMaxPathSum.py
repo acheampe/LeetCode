@@ -38,20 +38,7 @@ class Solution:
         self.maxSum = float('-inf')
 
         while currNode or stack:
-
-            # s1: explore leftmost branch
-            while currNode.left and currNode.right:
-                stack.append(currNode, currNode.right, currNode.left)
-                currNode = currNode.left
-            
-            # s2: Update maxSum
-            currNode = stack.pop()
-            leftSum = max(currNode.val, 0) # ignore negative
-
-
-            
-             
-
+            pass
 
 
 # Test cases
