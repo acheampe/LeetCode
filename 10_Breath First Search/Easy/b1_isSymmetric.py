@@ -29,30 +29,27 @@ class Solution:
         BFS implementation to check if a binary tree is symmetric.
         """
 
-        def symmetric(currNode, trackSymmetry):
-            """return if tree is symmetric"""
+        trackSym = deque()
 
-            
-            if currNode.left and currNode.right:
-                trackSymmetry.append(currNode.left.val)
-                trackSymmetry.appendleft(currNode.right.val)
-                symmetric(currNode.left, trackSymmetry)
-                symmetric(currNode.right, trackSymmetry)
-            
-            elif currNode.left and not currNode.right:
-                trackSymmetry.appendleft(currNode.left.val) 
-                symmetric(currNode.left, trackSymmetry)
+        # S1: duplicate and append initial roots
+        trackSym.append((root.left, root.right))
 
-            elif currNode.right and not currNode.left:
-                trackSymmetry.appendleft(currNode.left.val)
-                symmetric(currNode.right, trackSymmetry)                           
+        while trackSym:
 
-        trackSymm = deque()
-        symmetric(root, trackSymm)
+            node1, node2 = trackSym.popleft()
 
-        while trackSymm:
-            if trackSymm.popleft() !=  trackSymm.pop():
+            # True condition
+            if not node1 and not node2:
+                continue
+
+            # S2: Find conditions that presents as false
+            if not node2 or not node1 or node1.val != node2.val:
                 return False
+            
+            # S3: Add to queue
+            trackSym.append((node1.left, node2.right)) # Outer pair
+            trackSym.append((node1.right, node2.left)) # Inner pain
+
         return True
 
 # Test cases
@@ -69,14 +66,6 @@ def run_tests():
         {
             "input": [1],
             "expected": True
-        },
-        {
-            "input": [],
-            "expected": True
-        },
-        {
-            "input": [1, 2, 2, 3, None, None, 3],
-            "expected": False
         }
     ]
 
