@@ -23,7 +23,7 @@ class Solution:
 
         # Terminantion condition:
         if len(currPermute) == len(arr):
-            result.append(currPermute[:])
+            result.append(currPermute[:]) #  each permutation requires O(n) work thus O(n! * n)
             return 
 
         for i in range(len(arr)):
