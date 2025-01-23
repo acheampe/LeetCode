@@ -24,6 +24,7 @@
         
         
 from typing import List
+import unittest
 # Optimal Approach:
 # TC == O(n) . SC == O(1)
 class Solution:
@@ -52,11 +53,31 @@ class Solution:
         
         return slowPointer
 
-            
-sol = Solution()
-print(sol.findDuplicate([1,3,4,2,2])) # Expected: 2
-print(sol.findDuplicate([3,1,3,4,2])) # Expected: 3
-print(sol.findDuplicate([3,3,3,3,3])) # Expected: 3
+class TestFindDuplicate(unittest.TestCase):
+
+    def setUp(self):
+        self.sol = Solution()
+    
+    def test_1(self):
+        nums = [1, 2, 4, 2, 2]
+
+        expectedOutput = 2
+
+        self.assertEqual(self.sol.findDuplicate(nums), expectedOutput)
+
+    def test_1(self):
+        nums = [3, 1, 3, 4, 2]
+
+        expectedOutput = 3
+
+        self.assertEqual(self.sol.findDuplicate(nums), expectedOutput)
+
+if __name__ == "__main__":
+    unittest.main()
+# sol = Solution()
+# print(sol.findDuplicate([1,3,4,2,2])) # Expected: 2
+# print(sol.findDuplicate([3,1,3,4,2])) # Expected: 3
+# print(sol.findDuplicate([3,3,3,3,3])) # Expected: 3
 
         
         
