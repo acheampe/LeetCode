@@ -1,5 +1,6 @@
 from typing import List
 from collections import defaultdict
+import unittest
 
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
@@ -32,9 +33,40 @@ class Solution:
 
     
       
-sol = Solution()
+# sol = Solution()
 # print(sol.totalFruit([1,2,1])) # Expected: 3
 # print(sol.totalFruit([0,1,2,2])) # Expected: 3
 # print(sol.totalFruit([3,3,3,1,2,1,1,2,3,3,4])) # Expected: 5
 # print(sol.totalFruit([1,1])) # Expected: 2
 # print(sol.totalFruit([3,1,3,2,2])) # Expected: 4
+
+class TestTotalFruit(unittest.TestCase):
+    def setUp(self):
+        self.sol = Solution()
+    
+    def test_1(self):
+        nums = [1, 2, 1]
+
+        expected = 3
+
+        self.assertEqual(self.sol.totalFruit(nums), expected)
+
+    def test_2(self):
+
+        nums = [0,1,2,2]
+
+        expected = 3
+
+        self.assertEqual(self.sol.totalFruit(nums), expected)
+
+    def test_3(self):
+
+        nums = [3,3,3,1,2,1,1,2,3,3,4]
+
+        expected = 5
+
+        self.assertEqual(self.sol.totalFruit(nums), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
