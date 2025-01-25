@@ -8,54 +8,25 @@ class Solution:
         return the next greater element in input array nums
         """
 
-        # S1: Establish memory for operation:
-        stack = [] 
-        resultArr = [-1] * len(nums) # returns outcome
-        CountAppends = len(resultArr) - 1
+        # Establishing memory needed for operation
+        stack = []
+        resultArr = [-1] * len(nums)
 
-        # S2: iterate through input arr
-        for i in range(len(nums)):
+        for i in range(len(nums) * 2): # for passing 2x through array (stimulates a circular arr)
 
-            circularIndex = i
+            circularIndex = i % len(nums)
 
-            if stack:
-                stackElement, stackIndex = stack[-1]
+            # Logic loop to maintain monotonic stack
+            while stack and nums[stack[-1]] < nums[circularIndex]:
 
-            while stack and stackElement <= nums[circularIndex]:
-                
-                # ignore equal elements and process to next index
-                if stackElement == nums[circularIndex]:
-                    circularIndex = (circularIndex + 1) % len(nums)
-                    continue
-
-                # append next greater element and count append
-                resultArr[stackIndex] = nums[circularIndex]
-                CountAppends -= 1
-
-                # early return condition
-                if CountAppends == 0:
-                    return resultArr # we've found all over next greater values
-                
-                # pop stack to maintain decreasing monotonic constraint
-                stack.pop()
-                # append and update stack[-1] variable
-                stack.append((nums[circularIndex], circularIndex))
-                stackElement, stackIndex = stack[-1]
-
-                # increment circular index
-                circularIndex = (circularIndex + 1) % len(nums)
-
-            else:
-                stack.append((nums[circularIndex], circularIndex))
+                # found our next greater value
+                resultArr[stack.pop()] = nums[circularIndex]
 
             
+            if i < len(nums):
+                stack.append(i)
+        
         return resultArr
-
-
-
-
-
-                
 
 
 
@@ -90,3 +61,53 @@ class testNextGreaterElement(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+# class Solution:
+#     def nextGreaterElements(self, nums: List[int]) -> List[int]:
+#         """
+#         return the next greater element in input array nums
+#         """
+
+#         # S1: Establish memory for operation:
+#         stack = [] 
+#         resultArr = [-1] * len(nums) # returns outcome
+#         CountAppends = len(resultArr) - 1
+
+#         # S2: iterate through input arr
+#         for i in range(len(nums)):
+
+#             circularIndex = i
+
+#             if stack:
+#                 stackElement, stackIndex = stack[-1]
+
+#             while stack and stackElement <= nums[circularIndex]:
+                
+#                 # ignore equal elements and process to next index
+#                 if stackElement == nums[circularIndex]:
+#                     circularIndex = (circularIndex + 1) % len(nums)
+#                     continue
+
+#                 # append next greater element and count append
+#                 resultArr[stackIndex] = nums[circularIndex]
+#                 CountAppends -= 1
+
+#                 # early return condition
+#                 if CountAppends == 0:
+#                     return resultArr # we've found all over next greater values
+                
+#                 # pop stack to maintain decreasing monotonic constraint
+#                 stack.pop()
+#                 # append and update stack[-1] variable
+#                 stack.append((nums[circularIndex], circularIndex))
+#                 stackElement, stackIndex = stack[-1]
+
+#                 # increment circular index
+#                 circularIndex = (circularIndex + 1) % len(nums)
+
+#             else:
+#                 stack.append((nums[circularIndex], circularIndex))
+
+            
+#         return resultArr
