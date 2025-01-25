@@ -1,37 +1,37 @@
 from typing import List
 from collections import deque
 
-# class Solution:
-#     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-#         """Return the maximum values in each sliding window of size k."""
-#         n = len(nums)
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        """Return the maximum values in each sliding window of size k."""
+        n = len(nums)
 
-#         # Not necassary due to constraints
-#         if n * k == 0:  # Edge case: empty nums or k = 0
-#             return []
+        # Not necassary due to constraints
+        if n * k == 0:  # Edge case: empty nums or k = 0
+            return []
         
-#         result = []
-#         subWindow = deque()  # Store indices of elements in the current window
+        result = []
+        subWindow = deque()  # Store indices of elements in the current window
         
-#         for i in range(n):
-#             # Remove indices of elements not in the current window
-#             currWindow = i - k + 1
-#             if subWindow and subWindow[0] < currWindow:
-#                 subWindow.popleft()
+        for i in range(n):
+            # Remove indices of elements not in the current window
+            currWindow = i - k + 1
+            if subWindow and subWindow[0] < currWindow:
+                subWindow.popleft()
             
-#             # Remove indices of elements smaller than the current element
-#             # (They are useless because they cannot be the max)
-#             while subWindow and nums[subWindow[-1]] < nums[i]:
-#                 subWindow.pop()
+            # Remove indices of elements smaller than the current element
+            # (They are useless because they cannot be the max)
+            while subWindow and nums[subWindow[-1]] < nums[i]:
+                subWindow.pop()
             
-#             # Add current element's index to the deque
-#             subWindow.append(i)
+            # Add current element's index to the deque
+            subWindow.append(i)
             
-#             # Append the maximum value to the result once the first window is complete
-#             if i >= k - 1:
-#                 result.append(nums[subWindow[0]])  # Front of the deque is the max
+            # Append the maximum value to the result once the first window is complete
+            if i >= k - 1:
+                result.append(nums[subWindow[0]])  # Front of the deque is the max
         
-#         return result
+        return result
 
 from typing import List
 from collections import defaultdict
