@@ -8,24 +8,53 @@ class Solution:
         return the next greater element in input array nums
         """
 
-        # memory needed for operation
-        stack = [(nums[0], 0)]
-        result = [-1] * len(nums)
-    
+        # S1: Establish memory for operation:
+        stack = [] 
+        resultArr = [-1] * len(nums) # returns outcome
+        CountAppends = len(resultArr) - 1
 
-        # establish iteration:
-        for i in range(1, len(nums)):
+        # S2: iterate through input arr
+        for i in range(len(nums)):
 
-            stackElement, index = stack[-1]
-            # maintain decreasing monotonic stack
-            while stack and stackElement < nums[i]: # no longer decreasing if added
+            circularIndex = i
 
-                result[index] = nums[i] # we have found our next greater element
-                stack.pop() # remove element to maintain monotonic decreasing stack
+            if stack:
+                stackElement, stackIndex = stack[-1]
+
+            while stack and stackElement <= nums[circularIndex]:
+                
+                # ignore equal elements and process to next index
+                if stackElement == nums[circularIndex]:
+                    circularIndex = (circularIndex + 1) % len(nums)
+                    continue
+
+                # append next greater element and count append
+                resultArr[stackIndex] = nums[circularIndex]
+                CountAppends -= 1
+
+                # early return condition
+                if CountAppends == 0:
+                    return resultArr # we've found all over next greater values
+                
+                # pop stack to maintain decreasing monotonic constraint
+                stack.pop()
+                # append and update stack[-1] variable
+                stack.append((nums[circularIndex], circularIndex))
+                stackElement, stackIndex = stack[-1]
+
+                # increment circular index
+                circularIndex = (circularIndex + 1) % len(nums)
+
+            else:
+                stack.append((nums[circularIndex], circularIndex))
+
             
-            stack.append((nums[i], i))
-        
-        return result
+        return resultArr
+
+
+
+
+
                 
 
 
@@ -43,13 +72,21 @@ class testNextGreaterElement(unittest.TestCase):
 
         self.assertEqual(self.sol.nextGreaterElements(nums), expectedOutput)
     
-    # def test2(self):
+    def test2(self):
         
-    #     nums = [1,2,3,4,3]
+        nums = [1,2,3,4,3]
 
-    #     expectedOutput = [2,3,4,-1,4]
+        expectedOutput = [2,3,4,-1,4]
 
-    #     self.assertTrue(self.sol.nextGreaterElements(nums), expectedOutput)
+        self.assertTrue(self.sol.nextGreaterElements(nums), expectedOutput)
+
+    def test3(self):
+        
+        nums = [1,2,3,4,5]
+
+        expectedOutput = [2,3,4,5,-1]
+
+        self.assertTrue(self.sol.nextGreaterElements(nums), expectedOutput)
 
 if __name__ == '__main__':
     unittest.main()
