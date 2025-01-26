@@ -3,91 +3,36 @@ from collections import deque
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        """Return the maximum values in each sliding window of size k."""
-        n = len(nums)
+        """
+        Return the maximum values in each sliding window of size k
+        Time Complexity = O(n)
+        Space Complexity = O(k)
+        NOTE: This is a great example of seperation of concerns that yields
+        desired output
+        """
 
-        # Not necassary due to constraints
-        if n * k == 0:  # Edge case: empty nums or k = 0
-            return []
-        
-        result = []
-        subWindow = deque()  # Store indices of elements in the current window
-        
-        for i in range(n):
-            # Remove indices of elements not in the current window
-            currWindow = i - k + 1
-            if subWindow and subWindow[0] < currWindow:
-                subWindow.popleft()
+        # Monotonic deque to store indices of elements in decreasing order
+        stack = deque()
+        maxValues = []
+
+        for i in range(len(nums)):
+
+            # Make sure we are in valid sliding window range:
+            if stack and stack[0] < i - k + 1: # for a valid starting window range
+                stack.popleft() # no longer in valid window range
             
-            # Remove indices of elements smaller than the current element
-            # (They are useless because they cannot be the max)
-            while subWindow and nums[subWindow[-1]] < nums[i]:
-                subWindow.pop()
+            # To maintain a decreasing monotonic order
+            while stack and nums[stack[-1]] < nums[i]:
+                stack.pop()
             
-            # Add current element's index to the deque
-            subWindow.append(i)
-            
-            # Append the maximum value to the result once the first window is complete
+            # Append current in monotonic order
+            stack.append(i)
+
+            # only append after we have iterated through atleast our first window
             if i >= k - 1:
-                result.append(nums[subWindow[0]])  # Front of the deque is the max
+                maxValues.append(nums[stack[0]])
         
-        return result
-
-from typing import List
-from collections import defaultdict
-
-
-class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        """
-        return the maxVal in a sliding Window of k in nums
-        Time Complexity: O(n)  and Space Complexity: O(k), if exclusing the returned result
-        """
-
-        # S1: Establish memory needed for most of the operation
-        currWindow = defaultdict(int)
-        maxVal = float('-inf')
-        result = [] 
-
-        # S2: Add val to Current Window
-        for i in range(k):
-            if not currWindow[nums[i]]:
-                currWindow[nums[i]] = 0
-            currWindow[nums[i]] += 1
-
-        leftIndex = 0 # for window reduction logic 
-
-        # iterate expansion
-        for right in range(k, len(nums)):
-            currMax = self.findCurrMax(currWindow, maxVal)
-            result.append(currMax)
-
-            if not currWindow[nums[right]]:
-                currWindow[nums[right]] = 0
-            currWindow[nums[right]] += 1
-
-            # window reduction
-            currWindow[nums[leftIndex]] -= 1
-            if currWindow[nums[leftIndex]] == 0:
-                del currWindow[nums[leftIndex]] # To maintain key at length 3
-            leftIndex += 1
-
-        # To consider the last Window
-        currMax = self.findCurrMax(currWindow, maxVal)
-        result.append(currMax)
-        return result 
-
-    def findCurrMax(self, currWindow, currMaxVal):
-        """
-        return current MaxVal
-        """
-
-        # length of key should always be 3
-        # space operation here: O(k)
-        for key in currWindow.keys():
-            currMaxVal = max(currMaxVal, key)
-        
-        return currMaxVal
+        return maxValues
 
 
 sol = Solution()
