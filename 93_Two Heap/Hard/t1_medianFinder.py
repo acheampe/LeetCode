@@ -3,7 +3,10 @@ import unittest
 import heapq
 
 class MedianFinder:
-
+    """
+    Time complexity: O(log n)
+    Space Complexity: O(n)
+    """
     def __init__(self):
         # Two heaps: max-heap for the lower half and min-heap for the upper half
         self.maxHeap = []  # Simulated max-heap (negative values)
