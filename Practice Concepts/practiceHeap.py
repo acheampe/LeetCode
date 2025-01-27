@@ -23,3 +23,4 @@ print(heapq.nsmallest(3, nums)) # O(n log k), k being the size requested
 # essentially a heap of size k is created, and the root of that k-sized heap is compared
 # to n-k heap to decided if we have our desired output
 # if we need to update k heap, we add it and heapify the list each time. 
+
