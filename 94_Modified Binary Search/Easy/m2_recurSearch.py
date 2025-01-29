@@ -4,41 +4,24 @@ import unittest
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         """
-        Performs binary search on a sorted list to find the target index.
-
-        Args:
-            nums (List[int]): Sorted list of integers.
-            target (int): The integer to search for.
-
-        Returns:
-            int: The index of the target in nums, or -1 if not found.
-
+        Recursive binary search implementation.
         Time Complexity: O(log n)
-        Space Complexity: O(log n) for recursive stack
+        Space Complexity: O(log n) due to recursion stack.
         """
-
-        def recursiveSearch(left, right):
-            
-            # edge case:
+        def binarySearch(left: int, right: int) -> int:
             if left > right:
-                return - 1
-            
-            mid = left + ((right - left) // 2)
+                return -1  # Base case: Target not found
+
+            mid = left + (right - left) // 2
 
             if nums[mid] == target:
                 return mid
-            
             elif nums[mid] > target:
-                return recursiveSearch(left, mid - 1)
-            
-            else: 
-                return recursiveSearch(mid + 1, right) 
+                return binarySearch(left, mid - 1)
+            else:
+                return binarySearch(mid + 1, right)
 
-        return recursiveSearch(0, len(nums) - 1)
-
-        
-
-
+        return binarySearch(0, len(nums) - 1)
 
 class TestSearch(unittest.TestCase):
 
