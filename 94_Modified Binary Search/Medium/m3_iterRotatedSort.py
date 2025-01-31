@@ -17,7 +17,7 @@ class Solution:
         
         startIndex, endIndex = 0, len(nums) - 1 # inclusive boundaries
 
-        while startIndex < endIndex:
+        while startIndex <= endIndex:
 
             # calculate current mid
             mid = startIndex + ((endIndex - startIndex) // 2)
@@ -44,7 +44,7 @@ class Solution:
 
 
         # if target is not found, check last val at startIndex
-        return -1 if nums[startIndex] != target else startIndex
+        return -1 
 
 ### Point of struggle here was not considering add constraint to find the ordered
 ### side first to see if target is in that side, if it is search that side, if not
