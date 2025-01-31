@@ -81,3 +81,14 @@ print(sol.insert([[1,3],[6,9]], [3,6]))  # Expected: [[1,9]]
 
 # Edge case: inserting an interval that spans the entire existing intervals
 print(sol.insert([[2,3],[4,5],[6,7]], [1,8]))  # Expected: [[1,8]]
+
+
+### Approach thought Process 
+
+# Problem can seem initially daunting to address about when you take a step back #
+# You realize that all you need is to seperate concerns to address the problem #
+# First, is figuring out how to place all the intervals the comes before merging/inserting newInterval #
+# Second, is figuring out the conditions that places all intervals after interval
+# Lastly, is merging intervals when needed. This part can seem complicated but if you just
+# update the min value of interval[0] and newInterval[0] in question and max value of 
+# interval[1] and newInterval[1] in question, it will populate the desired output. 
