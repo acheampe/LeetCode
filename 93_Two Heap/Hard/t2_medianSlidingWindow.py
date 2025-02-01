@@ -60,6 +60,15 @@ class Solution:
         
         return (-largeHeap[0] + smallHeap[0]) / 2
 
+    def approachUsed(self):
+        """
+        define approach used for problem
+
+        NOTE:
+        
+        """
+        pass
+
 # Unit Tests
 class TestMedianSlidingWindow(unittest.TestCase):
     def test_median_sliding_window(self):

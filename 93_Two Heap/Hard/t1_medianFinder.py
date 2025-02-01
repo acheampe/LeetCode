@@ -9,8 +9,8 @@ class MedianFinder:
     """
     def __init__(self):
         # Two heaps: max-heap for the lower half and min-heap for the upper half
-        self.maxHeap = []  # Simulated max-heap (negative values)
-        self.minHeap = []  # Min-heap (positive values)
+        self.maxHeap = []  # Simulated max-heap (negative, smaller values)
+        self.minHeap = []  # Min-heap (positive, larger values)
 
     def addNum(self, num: int) -> None:
         """
@@ -38,6 +38,32 @@ class MedianFinder:
             return -self.maxHeap[0]
         # If even, return the average of roots
         return (-self.maxHeap[0] + self.minHeap[0]) / 2
+
+    def approachUsed(self):
+        """
+        define approach used for problem
+
+        NOTE:
+        This problem is easy to address if using the appropriate data structure,
+        just like many leetcode problems.
+
+        To find the median appropriately. 
+
+        First, add the numbers opposite value to maxheap - maxHeap will contain
+        the minimum half of the input
+
+        Second, check to see if top of -maxHeap > top of minHeap, if so, we want
+        the top of -maxheap to be moved to minHeap since it belongs to that half
+
+        Third, make sure the length of both heap is nearly equal, at most, length
+        of maxHeap can only be longer than minHeap by one.
+
+        After all nums have been called, then calculate median.
+        This is done by checking if length of maxHeap is longer than minHeap, 
+        if so, return top of maxheap, else find the float average of the two top
+        heap values and return that. 
+        """
+        pass
         
 
 
