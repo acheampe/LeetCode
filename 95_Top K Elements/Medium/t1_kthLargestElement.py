@@ -1,14 +1,28 @@
 from typing import List
 import unittest
+import heapq
 
 class Solution: 
     def findKthLargest(self, nums: List[int], k: int) -> int:
         """
         Return the Kth largest element
+        Time Complexity - O(n log k)
+        Space complexity - O(k)
         """
+        kLengthArray = [] # O (k) space operation
 
-        pass
+        for i in range(len(nums)):
 
+            # adds current val to kLength heap array
+            heapq.heappush(kLengthArray, nums[i])
+
+            # keeps heap array at k length to maintain the k largest values
+            if len(kLengthArray) > k:
+
+                heapq.heappop(kLengthArray)
+            
+        # returns the kth's input
+        return kLengthArray[0]
 
 
 class TestKthLargestFunc(unittest.TestCase):
