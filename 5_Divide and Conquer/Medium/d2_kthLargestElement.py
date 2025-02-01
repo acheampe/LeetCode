@@ -70,7 +70,7 @@ class Solution: # Aeverage Case Complexity: O(n), Worse Case: O(n^2) if pivot
 
 
 sol = Solution()
-# print(sol.findKthLargest([3,2,1,5,6,4], 2)) # Expected: 5
+print(sol.findKthLargest([3,2,1,5,6,4], 2)) # Expected: 5
 print(sol.findKthLargest([3,2,3,1,2,4,5,5,6], 4)) # Expected: 4
 # Passes 41/42 test cases
 
