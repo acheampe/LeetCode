@@ -62,6 +62,10 @@ class MedianFinder:
         This is done by checking if length of maxHeap is longer than minHeap, 
         if so, return top of maxheap, else find the float average of the two top
         heap values and return that. 
+
+        Space complexity = O(n) for addNum since we add all numbers to array.
+        Time complexity = O(log n) for all the insertion operations. 
+        O(1) operation for calculating the average.
         """
         pass
         
