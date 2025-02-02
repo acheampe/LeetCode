@@ -56,6 +56,27 @@ class Solution:
 
         return self.maxSum
 
+    def approachSummary(self):
+        """
+        Summary approach: Time complexity - O(n), Avg Space complexity - O(h)
+
+        1) Developing a great understanding is imperative to solve this problem.
+        we are looking for a maximum path, that doesn't always have to pass through
+        the base root. Path can only involve one of adjacent leave nodes sharing a parent.
+        It took me awhile to understand this. 
+
+        2) First initiate a global variable to track maxSum in a viable path
+        3) After initiate DFS, with a base condition to return 0 (we are looking to sum the path)
+        4) leftSum recursion will return the max of left branch recursion, 
+        if negative we return 0 instead to negate against finding our max
+        5) do the same as step 4 with rightSum recursion
+        6) Next compare the current MaxPath to the sum of rightSum, leftSum, and currentNode and 
+        update maxPath accordingly
+        7) Lastly return the branch with the greater value + it's parent node val 
+        to define a path 
+        
+        Finally, this will repeat till all nodes are explored and we should have our maxSum by end of iteration. 
+        """
 # Test cases
 def run_tests():
     tests = [
