@@ -23,6 +23,29 @@ class Solution:
             
         # returns the kth's input
         return kLengthArray[0]
+    
+    def approachStrategy(self):
+        """
+        There are two ways to approach this using heap. The first and more
+        efficient way when considering space complexity is utilizing a maxheap,
+        however make sure to ask if values can be modified before using this 
+        approach.
+
+        To use maxheap, first, iterate through the array and convert values to
+        its opposite value
+
+        Second, heapify array, then pop off k-1, then return the kths value.
+        This will return the kth largest in n log k TC and O(1) SC.
+
+        If values cant be modified, establish new K length array.
+        Iterate through array and heappush to K length array, if K length array 
+        > than k, then heappop. 
+
+        when array iteration is done, it will have the kth largest array, return 
+        the first value of that kthlength araay and you will have your kth largest.
+        The TC == O (n log k) and SC == O (k)
+        """
+        pass
 
 
 class TestKthLargestFunc(unittest.TestCase):
