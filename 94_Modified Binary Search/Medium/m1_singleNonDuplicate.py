@@ -40,9 +40,33 @@ class Solution:
                 return modifiedBinarySearch(start, midIndex - 1)
             
             else: # otherwise checks right
-                return modifiedBinarySearch(midIndex + 1, end)
+                return modifiedBinarySearch(midIndex + 1, end)   
 
         return modifiedBinarySearch(0, len(nums) - 1)
+    
+    def approachStrategy(self):
+        """
+        Summary Approach: 
+
+        To solve this is log n, we will need a modified binary search.
+
+        To approach this, we will need to define boundaries of our array at
+        every iteration.
+
+        After that, we define our midpoint;
+        then compare midpoint values to it's left val and right val to see 
+        if there is an equal value to either side.
+
+        if there isn't, then we have found our unique value, if there is then we
+        determine which side we need to search to find the nonduplicate value
+        by looking to see if index pattern is off
+
+        if index of middle is even and it has an equivalent value to its right adjacent
+        index, then the pattern still holds and we can check the right side, otherwise we check the 
+        left side. 
+        """
+
+        pass
     
             
 sol = Solution()
