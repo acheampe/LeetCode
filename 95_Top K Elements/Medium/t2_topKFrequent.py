@@ -37,6 +37,29 @@ class Solution:
             kFrequent.append(val) # O(k) space
         
         return kFrequent
+    
+    def approachStrategy(self):
+        """
+        To solve this problem efficiently, we first need a dictionary, to track 
+        frequency of each value, this is performed in O(n), you can use
+        Counter from collections to perform this to maintain code simplicity
+
+        Following this we want to iterate through the freq, val of the dictionary
+        and push to a new array as heappush by converting freq, val to a tuple (freq, val)
+
+        As we heappush we track min_heap to make sure len is never > k, if it is,
+        we heappop. By the end of this cycle we should have all top K frequent.
+
+        From here iterate through min_heap to append val to result array.
+
+        **Time Complexity:** O(n log k)
+            - O(n) to count frequencies
+            - O(n log k) to push into the heap and maintain size k
+            - O(k log k) for extracting results (optional sorting step, but not necessary)
+    
+        **Space Complexity:** O(k)
+            - O(k) for the heap storing the top k elements
+        """
 
 
 class TestTopKFrequent(unittest.TestCase):
