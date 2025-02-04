@@ -15,6 +15,9 @@ class Solution:
         Args: List containg LL
 
         Output: One sorted Linked List
+
+        Time Complexity: O (n log k)
+        Space Complexity: O (k) for min_heap operation space
         """
 
         # Edge case
