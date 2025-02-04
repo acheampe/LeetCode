@@ -41,6 +41,38 @@ class Solution: # Best/Average TC = O(n log n), worse case O(n^2), if partition 
 
         return i + 1 # for correct location of pivot
 
+    def summary(self):
+        """
+        QuickSelect is an efficient algorithm for finding the kth smallest or kth largest 
+        element in an unsorted array. It is similar to QuickSort but only recurses on 
+        one side of the partitioned array, reducing unnecessary work.
+
+        Approach:
+        1. Select a pivot (commonly the last element).
+        2. Partition the array such that:
+        - Elements smaller than the pivot go to the left.
+        - Elements larger than the pivot go to the right.
+        - The pivot is placed at its correct sorted position.
+        3. Check the pivot index:
+        - If it matches k, return the value.
+        - If k is smaller, recurse on the left half.
+        - If k is larger, recurse on the right half.
+
+        Time Complexity:
+        - Average case: O(n) (Each partition reduces the search space)
+        - Worst case: O(n²) (Occurs when the worst pivot is always chosen)
+        
+        Space Complexity:
+        - O(1) for iterative implementations.
+        - O(log n) recursion depth (best case), O(n) in the worst case.
+
+        Key Insight:
+        - QuickSelect is preferred for kth order statistics (kth smallest/largest)
+        since it avoids full sorting (O(n log n)) and achieves O(n) expected time.
+        """
+
+        pass
+
 
        
 
