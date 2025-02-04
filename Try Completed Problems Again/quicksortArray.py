@@ -73,9 +73,6 @@ class Solution: # Best/Average TC = O(n log n), worse case O(n^2), if partition 
 
         pass
 
-
-       
-
 sol = Solution()
 print(sol.sortArray([5, 2, 3, 1]))  # Expected: [1, 2, 3, 5] 
 print(sol.sortArray([5, 1, 1, 2, 0, 0]))  # Expected: [0, 0, 1, 1, 2, 5]
