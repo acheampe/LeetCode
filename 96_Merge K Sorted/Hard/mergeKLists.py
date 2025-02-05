@@ -20,33 +20,72 @@ class Solution:
         Space Complexity: O (k) for min_heap operation space
         """
 
-        # Edge case
-        if not lists or all(l is None for l in lists):
-            return None  # Correctly return None when all lists are empty
+        # Edge Case:
+        if not lists or not all(l for l in lists):
+            return None # for returning an empty tree
         
-        # Establish memory needed for operation
-        mergedResult = ListNode(0)
-        tail = mergedResult
+        # Establish min_heap of eventual size
         min_heap = []
-
-        # heappush first value of each array
-        for i in range(len(lists)): # O(k) operations
-
-            if lists[i]: # if not None (edge case within list)
-                heapq.heappush(min_heap, (lists[i].val, i, lists[i])) # index necessary to maintain uniqueness
         
-        # Add min val to output and update heap if it's next LL val
+        # Add first node of each tree in list
+        for index, node in enumerate(lists):
+
+            if node: # incases where tree is empty
+                # Push node.val, index, and node onto min_heap
+                heapq.heappush(min_heap, (node.val, index, node))
+        
+        # Establish return tree
+        dummyNode = ListNode(0) # return dummyNode.next
+        tailNode = dummyNode # current iteration of tree
+
         while min_heap:
-            
-            _, index, currNode = heapq.heappop(min_heap) # O(log k)
 
-            tail.next = currNode
-            tail = tail.next
+            # To return top of tree O(log k) operation
+            _, treeIndex, node = heapq.heappop(min_heap)
 
-            if currNode.next:
-                heapq.heappush(min_heap, (currNode.next.val, index, currNode.next)) 
+            # Add to new ordered tree
+            tailNode.next = node # add the node itself, not the value
+            tailNode = tailNode.next
+
+            if node.next:
+                # Push new val and node to min_heap from the tree of recent heappop()
+                heapq.heappush(min_heap, (node.next.val, treeIndex, node.next))
         
-        return mergedResult.next
+        return dummyNode.next
+
+    def approachSummary(self):
+        """
+        Summary of approach strategy.
+
+        Solution: 
+        Time Complexity = O(n log k)
+        Space Complexity = O(k)
+
+        Approaching this solution is a better of separating concerns to derive
+        to the solution.
+
+        Step 1: The first concern is to address the edge case of no list present 
+        or no trees within the list. 
+
+        Step 2: Is to set up a min_heap of the first nodes in each tree within 
+        the list. The values in the min_heap should contain the value, the index 
+        of the array (important to maintain uniqueness to negate exception error)
+        and the node itself)
+
+        Step 3: Set up a dummy Node that returns dummyNode.next
+
+        Step 4: Is to pop min_heap and add it's value to dummy tree
+
+        Step 5: push the next node of the same tree of the node that was added to 
+        dummy to min_heap to maintain K nodes  and repeat cycle.
+
+        Step 6: return dummy.next 
+
+        TIme Complexity: O(n log k)
+        Space Complexity (if not accounting for returned tree): O(k)
+        """
+
+        pass 
 
 
 class TestMergeKList(unittest.TestCase):
