@@ -21,7 +21,7 @@ class Solution:
         """
 
         # Edge Case:
-        if not lists or not all(l for l in lists):
+        if not lists or all(l is None for l in lists): # checks if all trees in list is empty
             return None # for returning an empty tree
         
         # Establish min_heap of eventual size
