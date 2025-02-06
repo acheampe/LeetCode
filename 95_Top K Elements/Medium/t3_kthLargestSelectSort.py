@@ -61,7 +61,46 @@ class Solution: # SELECT SORT APPROACH
         
         else:
             return self.selectSort(nums, index + 1, high, k)
+    
+    def approachSolution(self):
+        """
+        Utilizing select sort approach for this problem is a viable option if 
+        dataset is small, ideally less than 10^6...for large dataset, consider
+        min_heap approach
 
+        To solve this question optimally with select sort strategy, we much strategically
+        separate functions to own one responsibility.
+
+        First, we must create a partition function that will strictly be within 
+        viable Inclusive boundaries. 
+
+        Then define our pivot, most commonly by selecting the last index (do note that
+        this has it's inconveniece if pivot is the largest or smallest value). 
+        From here we initiate a partition index at -1 and then iterate a for loop
+        through our our current array window. if current iteratio is less than or equal
+        to pivot val we perform a switch value with current index and partition index to allow
+        all values less than or equal pivot to be on its left.
+
+        This will occur till end of our iteration then we perform a switch between 
+        partition + 1 index with pivot and then return partition + 1 index.
+
+        At this point we should no the kth index (len(arr) - k).
+
+        We then create a select sort function that will compare if we have found our 
+        index, if not, we recursively call selectsort if or desired index is to the right or left, with
+        its appropriate boundaries, that will initiate the partition again, till select sort returns 
+        or desired value.
+
+        This approach is space efficient O(1) and Time complexity is O(n)
+
+        sticky situation:
+        The point of difficulty i encountered was due to trying to be smart with my partition boundaries during 
+        for loop iteration. I figured all i have to return is i if range is from (low to high + 1) but this introduced
+        unneed difficulty. KISS - Keep it simple stupid. stick with the inclusive range (low to high) and at then end of loop
+        juft return partition index + 1 after switching thier vals with pivot val to avoid introducing bugs or complications. 
+        """
+
+        pass
 
 class TestKthLargestFunc(unittest.TestCase):
 

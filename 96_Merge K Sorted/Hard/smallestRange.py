@@ -56,6 +56,29 @@ class Solution:
         
         return result
 
+    def approachSolution(self):
+        """
+        The best way to approach this problem, and any problem regarding kth-somthing
+        is through a heap data structure. 
+
+        First thing to consider is to make sure that list and all the list within 
+        the list is not empty
+
+        After, we want to add the first index of each list within the array to a min_heap, 
+        while tracking which of the k_list has the max value. Tracking max here will simplify our
+        approach
+
+        we also want to track what our min_range is
+
+        from here, we initiate while min_heap, and heappop or min value, calculate
+        the min difference with our max Value and update or range if min is lower
+
+        Then we heappush the next value from the list that we we just popped of min_heap,
+        update our max value if needed with the value that we will push, and repeat. 
+
+        we will go through this while cycle till min_heap is false and then simply return 
+        the minRange that we found through the iteration as a list
+        """
 class TestSmallestRange(unittest.TestCase):
 
     def setUp(self):
