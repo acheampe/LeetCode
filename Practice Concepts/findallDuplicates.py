@@ -32,6 +32,32 @@ class Solution:
                 nums[associatedIndex] = -nums[associatedIndex]
         
         return duplicateResult
+    
+    def approachSolution(self):
+        """
+        The best way to address this problem while meeting constraint is to use sign marker. 
+
+        There are a couple way to go about using sign marker but to realize this, you must communicate
+        with your interviewer. 
+            - Establish if you are allowed to manipute the input values.
+            - if not, then copy the whole input value, but establish that this will take O(n) space.
+        
+        If iinterviewer expects auxillary space of O(1) then estalish that the only way
+        to do this is to manipulate values in input array with sign
+
+        So essentially, to find all duplicated in range 1 - n. Treat values within the
+        input array as index pointers (nums[nums - 1]), and if the value in that 
+        index is > 0, change sign to negative (we are taking advantage of positive contraint values).
+        Then iterate to the next, if we come to the next iteration and it's pointer leads to a negative
+        value, then we know we have found one duplicate, which is then added to result array.
+
+        If input array cannot be manipulated and have established that space of O(n) is fine to use, 
+        then either copy input array to a new array and use establish solution above, or you can 
+        make an array == length input array with bolean false values of length of array [False] * len(inputArray)
+
+        Then iterate through input array, and use it's respective value pointer to see if boleanArray has been checked,
+        if not check (false), turn to True, if True, then we add our input array value to resultArr to return. 
+        """
 
 # # Different approach if input preservation is required:
 # def findDuplicates(nums: List[int]) -> List[int]:
