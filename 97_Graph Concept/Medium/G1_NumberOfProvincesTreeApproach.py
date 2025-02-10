@@ -13,30 +13,35 @@ class Solution:
         """
         
         # Establish variables needed for operation
-        countProvince = 0 # increment/decrement province when conditions are met
-        adjMatrix = defaultdict(int)
-        visitedSet = set()
+        disjointSet = [-1] * (len(isConnected) + 1) # To offset zero indexing
+        disjointSet[0] = 0 # excludes zero index in calculations
+        totalProvince = 0 # calculate final sum of disjointArr
+        parentExclusiveTotal = 0 # calculate parent sum (to subtract)    
 
-        # Iterate through isConnected
-        for i in range(len(isConnected)): # O(n) operation
-            for j in range(len(isConnected[i])): # O(n) operation
-                
-                if isConnected[i][j] == 1:
+        for i in range(len(isConnected)):
+            for j in range(len(isConnected[i])):
+
+                if isConnected[i][j] == 1 and disjointSet[i + 1] == -1:
+
+                    if disjointSet[i + 1] < 0 and i != j: # if it is not designated as parent node yet
+                        # make i designated parent connection/node and count parent conversion
+                        disjointSet[i + 1] = j 
+                        parentExclusiveTotal += 1
+                        # decrement value at disjoint j index
+                        disjointSet[j + 1] -= 1
                     
-                    # Track provinces
-                    if i == j:
-                        adjMatrix[tuple(sorted((i,j)))] += 1
-                        countProvince += 1
-                        visitedSet.add((tuple(sorted((i,j)))))
-                    
-                    elif tuple(sorted((i,i))) not in visitedSet and tuple(sorted((i,j))) not in visitedSet and \
-                        adjMatrix[tuple(sorted((i,j)))] == 0:
-                        countProvince += 1 # to count them as one province
-                        adjMatrix[tuple(sorted((i,i)))] += 1
-                        visitedSet.add((tuple(sorted((i,j)))))
+                    elif disjointSet[i + 1] > 0 and i != j:
+                        disjointSet[j + 1] = i # to designate i as j's value
+                        disjointSet[disjointSet[i + 1]] -= 1
+                        parentExclusiveTotal += 1
+
+
+        for i in range(len(disjointSet)):
+
+            if disjointSet[i] < 0:
+                totalProvince += abs(disjointSet[i])
         
-        return countProvince
-        
+        return totalProvince - parentExclusiveTotal if totalProvince - parentExclusiveTotal > 0 else 1 # returns number of provinces
 
 
 class TestFindCircleNum(unittest.TestCase):
@@ -59,12 +64,12 @@ class TestFindCircleNum(unittest.TestCase):
     #     outPut = 1
     #     self.assertEqual(self.sol.findCircleNum(isConnected), outPut)
 
-    # def test4(self):  # Fully connected cities (One province)
+    # def test4(self):  # Fully connected cities (One province) 
     #     isConnected = [[1,1,1],[1,1,1],[1,1,1]]
     #     outPut = 1
     #     self.assertEqual(self.sol.findCircleNum(isConnected), outPut)
 
-    # def test5(self):  # Large n with a single province (Fully connected)
+    # def test5(self):  # Large n with a single province (Fully connected) 
     #     isConnected = [[1]*10 for _ in range(10)]
     #     outPut = 1
     #     self.assertEqual(self.sol.findCircleNum(isConnected), outPut)
@@ -97,7 +102,7 @@ class TestFindCircleNum(unittest.TestCase):
     #     outPut = 2
     #     self.assertEqual(self.sol.findCircleNum(isConnected), outPut)
 
-    # def test9(self):  # Alternating connections forming separate provinces
+    # def test9(self):  # Alternating connections forming separate provinces - FAILED
     #     isConnected = [
     #         [1,0,1,0,1],
     #         [0,1,0,1,0],
