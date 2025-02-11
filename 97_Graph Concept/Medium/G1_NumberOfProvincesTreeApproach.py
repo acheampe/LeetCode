@@ -2,46 +2,36 @@ from typing import List
 from collections import defaultdict
 import unittest
 
+from typing import List
+
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         """
         Return number of provinces
-
-        Arg: List of List[int]
-
-        Return: Int -> indicates number of provinces
         """
+
+        n = len(isConnected)
+        province = 0
+        visited = [False] * n
+
+        def dfs(city):
+            """
+            explore cities that are connected
+            """
+
+            visited[city] = True
+            for neighbor in range(n):
+
+                if isConnected[city][neighbor] == 1 and not visited[neighbor]:
+                    dfs(neighbor)
+            
         
-        # Establish variables needed for operation
-        disjointSet = [-1] * (len(isConnected) + 1) # To offset zero indexing
-        disjointSet[0] = 0 # excludes zero index in calculations
-        totalProvince = 0 # calculate final sum of disjointArr
-        parentExclusiveTotal = 0 # calculate parent sum (to subtract)    
+        for i in range(n):
+            if not visited[i]:
+                dfs(i)
+                province += 1
 
-        for i in range(len(isConnected)):
-            for j in range(len(isConnected[i])):
-
-                if isConnected[i][j] == 1 and disjointSet[i + 1] == -1:
-
-                    if disjointSet[i + 1] < 0 and i != j: # if it is not designated as parent node yet
-                        # make i designated parent connection/node and count parent conversion
-                        disjointSet[i + 1] = j 
-                        parentExclusiveTotal += 1
-                        # decrement value at disjoint j index
-                        disjointSet[j + 1] -= 1
-                    
-                    elif disjointSet[i + 1] > 0 and i != j:
-                        disjointSet[j + 1] = i # to designate i as j's value
-                        disjointSet[disjointSet[i + 1]] -= 1
-                        parentExclusiveTotal += 1
-
-
-        for i in range(len(disjointSet)):
-
-            if disjointSet[i] < 0:
-                totalProvince += abs(disjointSet[i])
-        
-        return totalProvince - parentExclusiveTotal if totalProvince - parentExclusiveTotal > 0 else 1 # returns number of provinces
+        return province
 
 
 class TestFindCircleNum(unittest.TestCase):

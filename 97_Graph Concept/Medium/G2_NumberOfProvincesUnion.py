@@ -1,47 +1,35 @@
 from typing import List
-from collections import defaultdict
 import unittest
 
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         """
-        Return number of provinces
-
-        Arg: List of List[int]
-
-        Return: Int -> indicates number of provinces
+        Return the number of provinces using the Disjoint Set (Union-Find) approach.
         """
-        
-        # Establish variables needed for operation
-        disjointSet = [-1] * (len(isConnected) + 1) # To offset zero indexing
-        disjointSet[0] = 0 # excludes zero index in calculations
-        totalProvince = 0 # calculate final sum of disjointArr
-        parentExclusiveTotal = 0 # calculate parent sum (to subtract)    
+        n = len(isConnected)
+        parent = list(range(n))  # Initially, each node is its own parent.
 
-        for i in range(len(isConnected)):
-            for j in range(len(isConnected[i])):
+        # Find function with path compression
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])  # Path compression
+            return parent[x]
 
-                if isConnected[i][j] == 1 and disjointSet[i + 1] == -1:
+        # Union function to merge two sets
+        def union(x, y):
+            rootX = find(x)
+            rootY = find(y)
+            if rootX != rootY:
+                parent[rootY] = rootX  # Merge Y into X
 
-                    if disjointSet[i + 1] < 0 and i != j: # if it is not designated as parent node yet
-                        # make i designated parent connection/node and count parent conversion
-                        disjointSet[i + 1] = j 
-                        parentExclusiveTotal += 1
-                        # decrement value at disjoint j index
-                        disjointSet[j + 1] -= 1
-                    
-                    elif disjointSet[i + 1] > 0 and i != j:
-                        disjointSet[j + 1] = i # to designate i as j's value
-                        disjointSet[disjointSet[i + 1]] -= 1
-                        parentExclusiveTotal += 1
+        # Process the adjacency matrix
+        for i in range(n):
+            for j in range(i + 1, n):  # Only check upper triangle to avoid redundancy
+                if isConnected[i][j] == 1:
+                    union(i, j)
 
-
-        for i in range(len(disjointSet)):
-
-            if disjointSet[i] < 0:
-                totalProvince += abs(disjointSet[i])
-        
-        return totalProvince - parentExclusiveTotal if totalProvince - parentExclusiveTotal > 0 else 1 # returns number of provinces
+        # Count unique roots (i.e., number of provinces)
+        return len(set(find(i) for i in range(n)))
 
 
 class TestFindCircleNum(unittest.TestCase):
