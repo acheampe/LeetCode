@@ -51,6 +51,9 @@ class Solution:
 
         and whenever we exit dfs, we count exploration as a province, since dfs 
         is integrated to explore one connected province at a time. 
+
+        Future use: This is a great approach to have when needing to explore all
+        connected paths at a time to solve a problem.
         """
 
 class TestFindCircleNum(unittest.TestCase):
