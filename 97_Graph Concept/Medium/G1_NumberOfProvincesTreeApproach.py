@@ -33,6 +33,25 @@ class Solution:
 
         return province
 
+    def solutionApproach(self):
+        """
+        Approaching this problem using DFS takes a bit of ingenuity...at least
+        for me. 
+
+        The first thing is to establish variables/memory needed for dfs operation.
+
+        This involves, a counter for province, an array containing False
+        (to mark visited) of length of isConnected array.
+
+        from here we create a for loop for isConnected, and if current city is
+        not visited, we call dfs function, to mark current city as visited, then
+        explore it's adjacent neighbors to if it is visited or not. 
+
+        if not visited, then we call dfs to explore that city and it's connections
+
+        and whenever we exit dfs, we count exploration as a province, since dfs 
+        is integrated to explore one connected province at a time. 
+        """
 
 class TestFindCircleNum(unittest.TestCase):
 
