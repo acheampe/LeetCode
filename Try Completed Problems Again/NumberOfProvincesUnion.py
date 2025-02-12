@@ -4,49 +4,64 @@ import unittest
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         """
-        Return the number of provinces using the Disjoint Set (Union-Find) approach.
+        return the number of provinces 
 
-        Time Complexity: nearly O(n) == O(n alpha(n))
+        Args: isConnected -> 2D array matrix (adjacent matrix) List with boolen
+        to indicate connection to neighbors 
 
-        Space Complexity: O(n), due to established space for parent
+        Return: Int -> number of individual provinces
         """
-        
-        # Establish space needed for operation
-        parent = [i for i in range(len(isConnected))]
-        
-        # Find head parent with path compression
-        def find(city): # nearly O(1) 0peration
 
-            if parent[city] != city:
+        # Establih space needed to solve problem:
+        n = len(isConnected)
+        parentCity = [i for i in range(n)]
 
-                parent[city] = find(parent[city])
-            
-            return parent[city]
+        def find(currentLead):
+            """
+            Utilize path compression to find province lead
+
+            Arg: current Lead, if not head of province -> Int
+
+            Return: Head of province -> Int
+            """
+
+            if parentCity[currentLead] != currentLead:
+                parentCity[currentLead] = find(parentCity[currentLead])
+   
+            return parentCity[currentLead]
         
-        # Merge two sets that are connected
         def union(city1, city2):
+            """
+            Unify both connected cities by establishing province lead
 
+            Arg: City1 and City2 --> Int
+
+            Return: Updates parent relationship
+            """
+            # Find head of each city
             root1 = find(city1)
             root2 = find(city2)
-            
-            if root1 != root2: # different sets
-                parent[root2] = root1 # merge into one set
+
+            if root1 != root2:
+                # Establish lead
+                parentCity[root2] = root1
         
-        # iterate and process through adjacent list:
-        for i in range(len(isConnected)):
+        for i in range(n):
+            for j in range(i+1, n): # To reduce redundancy
 
-            for j in range(i + 1, len(isConnected)): # only checks upper bound, avoids redundancy
-
+                # Unite connected neighbors
                 if isConnected[i][j] == 1:
                     union(i, j)
         
+        # Find and add head of each province to a set
         province = set()
-        # count and return unique roots as distinct provinces
-        for i in range(len(isConnected)):
+        for i in range(n):
             province.add(find(i))
-            
+        
+        # return number of province
         return len(province)
-
+        
+    
     def approachSolution(self):
         """
         Approaching this problem using Union Find is an excellent way to 
