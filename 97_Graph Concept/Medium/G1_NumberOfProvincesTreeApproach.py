@@ -54,6 +54,9 @@ class Solution:
 
         Future use: This is a great approach to have when needing to explore all
         connected paths at a time to solve a problem.
+
+        Space Complexity: O (n) complexity worse case. 
+        Time Complexity: O(n^2) due to matrix array
         """
 
 class TestFindCircleNum(unittest.TestCase):
