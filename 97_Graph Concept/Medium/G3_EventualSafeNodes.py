@@ -94,5 +94,18 @@ class TestEventualSafeNodes(unittest.TestCase):
         outPut = [3, 4, 5, 6]
         self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
 
+    # def test9(self):  # Large graph with multiple cycles
+    #     graph = [[1], [2], [3], [4, 0], [5], [6], [7], [3]]
+    #     # Multiple cycles, only 5, 6, and 7 are safe
+    #     outPut = [5, 6, 7]
+    #     self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
+
+    # def test10(self):  # Stress test with large n = 10^4
+    #     import random
+    #     n = 10**4
+    #     graph = [[(i+1) % n] for i in range(n)]  # Large cycle, no safe nodes
+    #     outPut = []  # No safe nodes due to cycle
+    #     self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
+
 if __name__ == '__main__':
     unittest.main()
