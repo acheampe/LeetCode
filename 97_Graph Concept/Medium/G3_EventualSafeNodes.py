@@ -24,7 +24,7 @@ class Solution:
             """
 
             if node in trackNode:
-                return trackNode[node] # node is safe (True), thus we must append to safe list
+                return trackNode[node] # if node is safe (True), thus we must append to safe list
             
             # Let's assume not safe
             trackNode[node] = False
