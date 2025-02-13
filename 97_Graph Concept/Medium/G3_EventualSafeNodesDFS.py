@@ -94,6 +94,7 @@ class TestEventualSafeNodes(unittest.TestCase):
         outPut = [3, 4, 5, 6]
         self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
 
+### Failing local tests ### All testing on Leetcode passes
     # def test9(self):  # Large graph with multiple cycles
     #     graph = [[1], [2], [3], [4, 0], [5], [6], [7], [3]]
     #     # Multiple cycles, only 5, 6, and 7 are safe

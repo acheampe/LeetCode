@@ -6,23 +6,6 @@ import unittest
 class Solution:
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
         """
-        return safe Nodes
-
-        Args: graph[List], indicative indexed-0 node connections as list
-
-        Return: A list of nodes that are safe. Safe Nodes are nodes, whose every
-        possible path leads to a terminal node
-
-        Time Complexity = O(V + E)
-        Space Complexity = O(V + E) # due to reversing grapsh
-        """
-
-from typing import List
-from collections import deque
-
-class Solution:
-    def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        """
         Return a list of eventual safe nodes using BFS (Kahn's Algorithm).
 
         Time Complexity: O(V + E)
@@ -116,6 +99,7 @@ class TestEventualSafeNodes(unittest.TestCase):
         outPut = [3, 4, 5, 6]
         self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
 
+### Failing local tests ### All testing on Leetcode passes
     # def test9(self):  # Large graph with multiple cycles
     #     graph = [[1], [2], [3], [4, 0], [5], [6], [7], [3]]
     #     # Multiple cycles, only 5, 6, and 7 are safe
