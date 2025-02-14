@@ -6,7 +6,8 @@ class Solution:
         """
         Return the number of provinces using the Disjoint Set (Union-Find) approach.
 
-        Time Complexity: nearly O(n) == O(n alpha(n))
+        Time Complexity: nearly O(n); Worst Case O(n^2) if there is a lot 
+        connections
 
         Space Complexity: O(n), due to established space for parent
         """
