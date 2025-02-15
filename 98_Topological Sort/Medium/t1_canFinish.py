@@ -3,7 +3,47 @@ import unittest
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        pass
+        """
+        func to decide if all courses can be finished
+
+        Args: Int --> number of courses; Prereq --> List of courses
+
+        Return: Bool
+
+        Time Complexity: O(n) for iter through prereqs
+        Space Complexity: O(n) for inDegree
+        """
+
+        # Address Edge Case:
+        if not prerequisites:
+            return True # No prereqs needed to complete number of courses 
+ 
+        inDegree = [0] * numCourses # to coubt inDegrees
+        trackDuplicate = set() # if duplicate tuple is seen, then unable to complete all courses
+
+        for courses in prerequisites: # O(n) Operation
+
+            #count inDegree
+            inDegree[courses[0]] += 1
+
+            if inDegree[courses[0]] == 2:
+                return False # Early Cycle detection
+
+            if courses[0] > courses[1]: # O(1) operation
+                courses[0], courses[1] = courses[1], courses[0]
+            if tuple(courses) in trackDuplicate:
+                return False
+            else:
+                trackDuplicate.add(tuple(courses))
+        
+        for edge in inDegree:
+            if edge ==  0:
+                return True # No cycle all courses can be taken
+        
+        return False # All ones in inDegree
+
+
+
 
 
 class TestCanFinish(unittest.TestCase):
@@ -23,7 +63,7 @@ class TestCanFinish(unittest.TestCase):
         output = False  # Cycle exists, impossible to finish
         self.assertEqual(self.sol.canFinish(numCourses, prerequisites), output)
 
-    def test3(self):  # No prerequisites (Minimum Constraint)
+    def test3(self):  # No prerequisites (M                                                                                                                                                                                                                                                                  inimum Constraint)
         numCourses = 3
         prerequisites = []
         output = True  # No dependencies, all courses can be taken
