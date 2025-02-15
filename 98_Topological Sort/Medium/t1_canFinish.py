@@ -4,43 +4,60 @@ import unittest
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         """
-        func to decide if all courses can be finished
+        Determines if all courses can be finished using DFS cycle detection.
 
-        Args: Int --> number of courses; Prereq --> List of courses
+        Args:
+            numCourses: Total number of courses.
+            prerequisites: List of prerequisite pairs [a, b] where b → a.
 
-        Return: Bool                                                                                                                                                                             
+        Returns:
+            True if all courses can be completed, False if there is a cycle.
 
-        Time Complexity: O(n) for iter through prereqs
-        Space Complexity: O(n) for inDegree
+        Time Complexity: O(V + E) (DFS processes each node and edge once)
+        Space Complexity: O(V) (for visited and visiting sets)
         """
 
-        # Address Edge Case:
-        if not prerequisites:
-            return True # No prereqs needed to complete number of courses 
- 
-        inDegree = [0] * numCourses # to coubt inDegrees
-        trackDuplicate = set() # if duplicate tuple is seen, then unable to complete all courses
+        # Create adjacency list (course dependency graph)
+        adjList = [[] for _ in range(numCourses)]
+        for course, preReq in prerequisites:
+            adjList[preReq].append(course)  # Course 'preReq' must be taken before 'course'
 
-        for courses in prerequisites: # O(n) Operation
+        visiting = set()  # Tracks nodes in the current DFS path (detects cycles)
+        visited = set()   # Tracks nodes that are confirmed to be cycle-free
 
-            #count inDegree
-            inDegree[courses[0]] += 1
+        def dfs(node):
+            """
+            Checks if there's a cycle using DFS.
+            
+            Args:
+                node (int): The current course being checked.
+            
+            Returns:
+                bool: False if a cycle is detected, True otherwise.
+            """
 
-            # if inDegree[courses[0]] == 2:
-            #     return False # Early Cycle detection
+            if node in visited:
+                return True  # Already confirmed as cycle-free
+            if node in visiting:
+                return False  # Cycle detected
 
-            if courses[0] > courses[1]: # O(1) operation
-                courses[0], courses[1] = courses[1], courses[0]
-            if tuple(courses) in trackDuplicate or courses[0] == courses[1]: # avoid self loop or duplicate
-                return False
-            else:
-                trackDuplicate.add(tuple(courses))
-        
-        for edge in inDegree:
-            if edge ==  0:
-                return True # No cycle all courses can be taken
-        
-        return False # All ones in inDegree
+            visiting.add(node)  # Mark node as visiting (part of current DFS path)
+
+            for neighbor in adjList[node]:
+                if not dfs(neighbor):  # If any neighbor leads to a cycle
+                    return False
+
+            visiting.remove(node)  # Remove from DFS path after all neighbors are checked
+            visited.add(node)  # Mark as safe (cycle-free)
+
+            return True
+
+        # Run DFS for each course
+        for i in range(numCourses):
+            if i not in visited and not dfs(i):
+                return False  # A cycle is detected
+
+        return True  # No cycles found, all courses can be finished
 
 class TestCanFinish(unittest.TestCase):
 
