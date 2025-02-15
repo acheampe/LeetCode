@@ -42,10 +42,6 @@ class Solution:
         
         return False # All ones in inDegree
 
-
-
-
-
 class TestCanFinish(unittest.TestCase):
 
     def setUp(self):
