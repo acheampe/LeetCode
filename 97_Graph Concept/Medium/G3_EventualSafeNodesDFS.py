@@ -112,10 +112,10 @@ class TestEventualSafeNodes(unittest.TestCase):
     #     outPut = [0]
     #     self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
 
-    # def test4(self):  # Fully connected cycle (No safe nodes)
-    #     graph = [[1],[2],[0]]  # 0 → 1 → 2 → 0 (cycle)
-    #     outPut = []  # No safe nodes
-    #     self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
+    def test4(self):  # Fully connected cycle (No safe nodes)
+        graph = [[1],[2],[0]]  # 0 → 1 → 2 → 0 (cycle)
+        outPut = []  # No safe nodes
+        self.assertEqual(self.sol.eventualSafeNodes(graph), outPut)
 
     # def test5(self):  # Multiple terminal nodes
     #     graph = [[],[],[],[],[],[]]  # All nodes are terminal
