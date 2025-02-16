@@ -58,6 +58,27 @@ class Solution:
                 return False  # A cycle is detected
 
         return True  # No cycles found, all courses can be finished
+    
+    def approachSolution(self):
+        """
+        If you are familiar with the algorithm to determine if a graph can 
+        be sorted topologically, then the most difficult part about this problem
+        is realizing that the input given needs to be turned into an adjacentlist
+        to represent a graph (I am ashamed to admit how long this took me to realize)
+
+        Once done, we then initiate two set variables, visiting and visited. 
+        We then recurse through adjacent graph nodes, if not in visited and or if not 
+        recursion (dfs(node) == false). 
+
+        During dfs function, we check to see if node is in visited, if so we return true,
+        if not we check if node is in visiting, if it is, we return False.
+
+        If neighter, we update node to add to visiting, recurse through it's neighbor (with if not dfs condition) 
+        till we return false, or remove node from visiting to visited, then return true
+
+        TC: O(V + E)
+        SC: O(V)
+        """
 
 class TestCanFinish(unittest.TestCase):
 

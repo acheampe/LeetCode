@@ -45,8 +45,32 @@ class Solution:
 
         # Step 4: If we processed all courses, return True; otherwise, cycle exists
         return count == numCourses
+    
+    def approachSolution(self):
+        """
+        Similar to my DFS summary, we much create an adjacent graph with Kahn's 
+        approach. In addition, we must track the sum of inDegrees and each node,
+        then add the nodes with zero inDegrees to a deque. Initiate a counter to
+        count how many nodes is popped off the stack
 
-# class Solution:
+        while deque is true, we popleft and recalculate all inDegrees that was connected
+        to popped node. Then add to queue if there are updated nodes with inDegree zero
+
+        Add +1 to counter since we popleft the deque. 
+
+        if all nodes are processed counter == numCourses, meaning True, or else
+        courses cannot be processed in order
+
+        TC: O(V + E)
+        SC: O(V + E)
+
+        The main difference between kahn's approach and dfs, is the utilization of
+        inDegrees in kahn's approach and counting edges instead of tracking if path leads
+        to a terminal/leaf node in DFS.
+        """
+    
+
+# class Solution: ### I was almost a genius to try to bruteforce an optimized solution ###
 #     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
 #         """
 #         Determines if all courses can be finished using DFS cycle detection.
