@@ -1,10 +1,14 @@
 from typing import List
+from collections import deque
 import unittest
+
+from typing import List
+from collections import deque
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         """
-        Determines if all courses can be finished using DFS cycle detection.
+        Determines if all courses can be finished using Kahn's Algorithm (BFS topological sorting).
 
         Args:
             numCourses: Total number of courses.
@@ -13,11 +17,90 @@ class Solution:
         Returns:
             True if all courses can be completed, False if there is a cycle.
 
-        Time Complexity: O(V + E) (DFS processes each node and edge once)
-        Space Complexity: O(V + E) (for visited and visiting sets)
+        Time Complexity: O(V + E) (Processing each node and edge once)
+        Space Complexity: O(V + E) (For adjacency list and in-degree tracking)
         """
 
-        pass
+        # Step 1: Create adjacency list & track in-degrees
+        adjList = [[] for _ in range(numCourses)]
+        inDegree = [0] * numCourses
+
+        for course, preReq in prerequisites:
+            adjList[preReq].append(course)  # Normal direction (preReq → course)
+            inDegree[course] += 1  # Count in-degrees for courses
+
+        # Step 2: Initialize queue with zero in-degree courses (starting points)
+        zeroDegreeQueue = deque([i for i in range(numCourses) if inDegree[i] == 0])
+
+        # Step 3: Process courses with zero in-degree
+        count = 0  # Tracks how many courses we have successfully taken
+        while zeroDegreeQueue:
+            course = zeroDegreeQueue.popleft()
+            count += 1  # One more course has been processed
+
+            for neighbor in adjList[course]:
+                inDegree[neighbor] -= 1  # Remove edge
+                if inDegree[neighbor] == 0:  # If no remaining prerequisites, add to queue
+                    zeroDegreeQueue.append(neighbor)
+
+        # Step 4: If we processed all courses, return True; otherwise, cycle exists
+        return count == numCourses
+
+# class Solution:
+#     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+#         """
+#         Determines if all courses can be finished using DFS cycle detection.
+
+#         Args:
+#             numCourses: Total number of courses.
+#             prerequisites: List of prerequisite pairs [a, b] where b → a.
+
+#         Returns:
+#             True if all courses can be completed, False if there is a cycle.
+
+#         Time Complexity: O(V + E) (DFS processes each node and edge once)
+#         Space Complexity: O(V + E) (for adjList space)
+#         """
+
+#         # create adjacent list with reversed edges
+#         adjList = [[] for _ in range(numCourses)] 
+#         inDegrees = [0 for _ in range(numCourses)]
+
+#         # populate reverse adjList and count degrees
+#         for connectedNodes in prerequisites:
+
+#             adjList[connectedNodes[0]].append(connectedNodes[1]) # reverse edge
+#             inDegrees[connectedNodes[1]] += 1
+        
+#         # Establish stack of nodes with zero indegrees
+#         zeroStack = deque()
+#         for i in range(len(inDegrees)):
+#             if inDegrees[i] == 0:
+#                 zeroStack.append(i)
+
+#         # tracked visited safeNodes
+#         visited = set()
+#         pendingVisit = set(range(numCourses))
+#         while zeroStack:
+
+#             safeNode = zeroStack.popleft()
+
+#             if safeNode in visited:
+#                 return False # cycle detected, course cannot be completed
+            
+#             pendingVisit.remove(safeNode)
+#             visited.add(safeNode)
+            
+#             for node in adjList[safeNode]:
+#                 inDegrees[node] -= 1
+
+#                 if inDegrees[node] == 0:
+#                     zeroStack.append(node)
+        
+#         return True if visited and not pendingVisit else False# course can be completed
+        
+
+            
 
 class TestCanFinish(unittest.TestCase):
 
@@ -95,5 +178,6 @@ class TestCanFinish(unittest.TestCase):
         prerequisites = [[1,4],[2,4],[3,1],[3,2]]
         output = True
         self.assertEqual(self.sol.canFinish(numCourses, prerequisites), output)
+
 if __name__ == '__main__':
     unittest.main()
