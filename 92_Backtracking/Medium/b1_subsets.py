@@ -28,6 +28,29 @@ class Solution:
         self.result = []
         exploreSet(nums, 0, [])
         return self.result
+    
+    def ApproachSolution(self):
+        """
+        To find all the powerset in the input array, the approach to this problem
+        will require exhaustive search which is perfect for a backtracking approach
+
+        first, write a backtracking algorithm with arguments that includes an empty array 
+        for potential sets, the input array and index initialized at 0.
+
+        Our base condition for this approach will be to take a copy of or current set
+        if index is equal to the length of our input array then return
+
+        From here we take two approaches for the recursion, the exclusive approach where
+        we decide not to add the current value of our input array and then our inclusive 
+        approach were we add the current value
+
+        On return we backtrack track by poping last add val in our subset
+
+        At end of recursion we should have all powersets to return as our result
+
+        Time Complexity: O(n * 2^n), we explore each value and decide make a choice if we should add or not --> 2^n
+        Space Complexity: No auxillary DS used except for recursion O(h) 
+        """
 
 class TestSubsets(unittest.TestCase):
     def setUp(self):
