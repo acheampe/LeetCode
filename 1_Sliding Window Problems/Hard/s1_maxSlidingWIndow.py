@@ -12,27 +12,57 @@ class Solution:
         """
 
         # Monotonic deque to store indices of elements in decreasing order
-        stack = deque()
+        dequeStack = deque()
         maxValues = []
 
         for i in range(len(nums)):
 
             # Make sure we are in valid sliding window range:
-            if stack and stack[0] < i - k + 1: # for a valid starting window range
-                stack.popleft() # no longer in valid window range
+            if dequeStack and dequeStack[0] < i - k + 1: # for a valid starting window range
+                dequeStack.popleft() # no longer in valid window range
             
             # To maintain a decreasing monotonic order
-            while stack and nums[stack[-1]] < nums[i]:
-                stack.pop()
+            while dequeStack and nums[dequeStack[-1]] < nums[i]:
+                dequeStack.pop()
             
             # Append current in monotonic order
-            stack.append(i)
+            dequeStack.append(i)
 
             # only append after we have iterated through atleast our first window
             if i >= k - 1:
-                maxValues.append(nums[stack[0]])
+                maxValues.append(nums[dequeStack[0]])
         
         return maxValues
+    
+    def approachSummary(self):
+        """
+        NOTE: I interchanged stack with the DS deque in my explanation
+
+        This hard problem is a great example of separating difficult problems into 
+        smaller areas of concern.
+
+        The first thing to take care of is establishing the data structure needed
+        to solve this problem, a monotonic stack (decreasing) and an array to
+        return our result
+
+        we initiate a for loop through our input array and then seperate our problem
+        into 3 seperate concerns. 
+
+        1) First if stack is True and is the value of our current index greater than
+        value of the index at our stack[0], if so update to maintain monotonic decreasing 
+        order while marking it as our pointer to our current maxVal 
+
+        2) if stack, does the last pointer to the value of our input array less than the current value
+        /pointer to the value that we are looking at. If so, pop stack and append current iterative pointer
+
+        3) add to stack if not stack if above conditions are not met
+
+        4) Create a condition that to start adding to result array from stack[0] when 
+        we have at least iterated through our first window.
+
+        Time Complexity = O(n)
+        Space Complexity = O(k)
+        """
 
 
 sol = Solution()
