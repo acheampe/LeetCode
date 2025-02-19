@@ -4,7 +4,7 @@ from collections import defaultdict
 import unittest
 
 
-class Solution:
+class Solution: # Failed attempt
     def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
         """
         Return an array of the median in each sliding window of size k.
