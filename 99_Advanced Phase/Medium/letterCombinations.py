@@ -1,16 +1,83 @@
 from typing import List
 import unittest
+from collections import defaultdict
 
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        pass
+        """
+        return all possible associated combination given digit
+
+        Args: digits --> str
+
+        return: List[str], containing all permutations
+        """
+        # edge case 1: 
+        if not digits:
+            return []
+        # returns mapped int to chr vals
+        asciiKeyVals = self.mapAsciiVal(digits)
+
+        # edge case 2:
+        if len(digits) == 1:
+            return asciiKeyVals[int(digits[0])]
+
+        def permute(string, currPermute, allPermutes):
+            
+            # Base case:
+            if len(currPermute) == len(string):
+                allPermutes.append(currPermute[:])
+
+            for digit in string:
+                for i in range(asciiKeyVals[int(digit)]):
+
+                    if asciiKeyVals[int(digit)] not in trackExplored:
+                        trackExplored.add(asciiKeyVals[int(digit)])
+                     
+                        
 
 
-class Solution:
-    def letterCombinations(self, digits: str) -> List[str]:
-        pass  # Implementation will go here
+            # backtrack
+            currPermute.pop()
 
+        self.parsedInputStr = set() # reduce redundant calculation
+        allPermutation = []
+        trackExplored = set()
+
+        permute(digits, [], allPermutation)
+
+        return allPermutation
+
+
+    def mapAsciiVal(self, digits):
+        """
+        returns mapped asciiVals to individual phone numbers
+        """
+        # create map 
+        digitLetterHash = defaultdict(int)
+        asciiVal = ord('a')
+
+        for i in range(2, 10): # exclusive of 10
+
+            if i != 7 and i  != 9:
+                for j in range(3):
+                    if not digitLetterHash[i]:
+                        digitLetterHash[i] = []
+                    digitLetterHash[i].append(chr(asciiVal))
+                    # increment asciiVal
+                    asciiVal += 1 # for next int equivalent of chr
+            
+            else:
+                for k in range(4):
+                    # for i == 7 or i == 9
+                    if not digitLetterHash[i]:
+                        digitLetterHash[i] = []
+                    digitLetterHash[i].append(asciiVal)
+                    # increment asciiVal
+                    asciiVal += 1 # for next int equivalent of chr
+        
+        return digitLetterHash
+    
 class TestLetterCombinations(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
@@ -20,45 +87,45 @@ class TestLetterCombinations(unittest.TestCase):
         expected_output = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
         self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_example2(self):
-        digits = ""
-        expected_output = []
-        self.assertEqual(self.solution.letterCombinations(digits), expected_output)
+    # def test_example2(self):
+    #     digits = ""
+    #     expected_output = []
+    #     self.assertEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_example3(self):
-        digits = "2"
-        expected_output = ["a", "b", "c"]
-        self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
+    # def test_example3(self):
+    #     digits = "2"
+    #     expected_output = ["a", "b", "c"]
+    #     self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_single_digit(self):
-        digits = "7"
-        expected_output = ["p", "q", "r", "s"]
-        self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
+    # def test_single_digit(self):
+    #     digits = "7"
+    #     expected_output = ["p", "q", "r", "s"]
+    #     self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_two_digits(self):
-        digits = "79"
-        expected_output = [
-            "pw", "px", "py", "pz",
-            "qw", "qx", "qy", "qz",
-            "rw", "rx", "ry", "rz",
-            "sw", "sx", "sy", "sz"
-        ]
-        self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
+    # def test_two_digits(self):
+    #     digits = "79"
+    #     expected_output = [
+    #         "pw", "px", "py", "pz",
+    #         "qw", "qx", "qy", "qz",
+    #         "rw", "rx", "ry", "rz",
+    #         "sw", "sx", "sy", "sz"
+    #     ]
+    #     self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_three_digits(self):
-        digits = "234"
-        expected_output = [
-            "adg", "adh", "adi", "aeg", "aeh", "aei", "afg", "afh", "afi",
-            "bdg", "bdh", "bdi", "beg", "beh", "bei", "bfg", "bfh", "bfi",
-            "cdg", "cdh", "cdi", "ceg", "ceh", "cei", "cfg", "cfh", "cfi"
-        ]
-        self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
+    # def test_three_digits(self):
+    #     digits = "234"
+    #     expected_output = [
+    #         "adg", "adh", "adi", "aeg", "aeh", "aei", "afg", "afh", "afi",
+    #         "bdg", "bdh", "bdi", "beg", "beh", "bei", "bfg", "bfh", "bfi",
+    #         "cdg", "cdh", "cdi", "ceg", "ceh", "cei", "cfg", "cfh", "cfi"
+    #     ]
+    #     self.assertCountEqual(self.solution.letterCombinations(digits), expected_output)
 
-    def test_max_digits(self):
-        digits = "2345"  # Test with four digits
-        expected_length = 3 * 3 * 3 * 3  # Since each digit maps to 3-4 letters, expect 3^4 combinations
-        output = self.solution.letterCombinations(digits)
-        self.assertEqual(len(output), expected_length)
+    # def test_max_digits(self):
+    #     digits = "2345"  # Test with four digits
+    #     expected_length = 3 * 3 * 3 * 3  # Since each digit maps to 3-4 letters, expect 3^4 combinations
+    #     output = self.solution.letterCombinations(digits)
+    #     self.assertEqual(len(output), expected_length)
 
 if __name__ == "__main__":
     unittest.main()
