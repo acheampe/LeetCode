@@ -5,49 +5,9 @@ from collections import defaultdict
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        """
-        return all possible associated combination given digit
+        pass
 
-        Args: digits --> str
-
-        return: List[str], containing all permutations
-        """
-        # edge case 1: 
-        if not digits:
-            return []
-        # returns mapped int to chr vals
-        asciiKeyVals = self.mapAsciiVal(digits)
-
-        # edge case 2:
-        if len(digits) == 1:
-            return asciiKeyVals[int(digits[0])]
-
-        def permute(string, currPermute, allPermutes):
-            
-            # Base case:
-            if len(currPermute) == len(string):
-                allPermutes.append(currPermute[:])
-
-            for digit in string:
-                for i in range(asciiKeyVals[int(digit)]):
-
-                    if asciiKeyVals[int(digit)] not in trackExplored:
-                        trackExplored.add(asciiKeyVals[int(digit)])
-                     
-                        
-
-
-            # backtrack
-            currPermute.pop()
-
-        self.parsedInputStr = set() # reduce redundant calculation
-        allPermutation = []
-        trackExplored = set()
-
-        permute(digits, [], allPermutation)
-
-        return allPermutation
-
+                
 
     def mapAsciiVal(self, digits):
         """
