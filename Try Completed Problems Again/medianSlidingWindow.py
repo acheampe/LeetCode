@@ -26,7 +26,7 @@ class Solution: # Failed attempt
             while len(min_heap) > len(max_heap): 
                 heapq.heappush(max_heap, -heapq.heappop(min_heap))
             
-            removeFromHeap() # Ensures removed elements are clearç
+            removeFromHeap() # Ensures removed elements are
 
         def getMedian():
             """returns median value in current window"""
