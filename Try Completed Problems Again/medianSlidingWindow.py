@@ -11,50 +11,7 @@ class Solution:
         Time Complexity: O(n log k) using two heaps.
         Space Complexity: O(k).
         """
-        
-        # Max heap (stores negative values to simulate max heap)
-        leftHalf = []
-        # Min heap (stores larger half)
-        RightHalf = []
-        # Dictionary to track numbers to be lazily removed
-        toRemove = defaultdict(int)
-        # List to store medians
-        medianCollection = []
-
-        # add initial window to heap
-        for i in range(k):
-            if len(leftHalf) == len(RightHalf):
-                heapq.heappush(leftHalf, -heapq.heappushpop(RightHalf, nums[i])) # maintain balance with value insertion (more efficent as well - O(log k))
-            
-            else:
-                heapq.heappush(RightHalf, -heapq.heappushpop(leftHalf, -nums[i]))
-        
-        # add median in initial window
-        medianCollection.append(float(-leftHalf[0]) if k & 1 else (RightHalf[0] + (-leftHalf[0])) / 2.0)
-
-        # iterate through rest of num array and push to heap accordingly
-        for j in range(k, len(nums)):
-            heapq.heappush(leftHalf, -heapq.heappushpop(RightHalf, nums[j])) # maintain balance with added inbound value
-
-            outBoundVal = nums[j - k]
-            toRemove[outBoundVal] += 1 # marked for lazy removal
-
-            if outBoundVal > -leftHalf[0]: # to maintain balance
-                heapq.heappush(RightHalf, -heapq.heappop(leftHalf))
-            
-            # Lazy remove process
-            while leftHalf and toRemove[-leftHalf[0]] > 0:
-                toRemove[-leftHalf[0]] -= 1
-                heapq.heappop(leftHalf)
-
-            while RightHalf and toRemove[RightHalf[0]] > 0:
-                toRemove[RightHalf[0]] -= 1
-                heapq.heappop(RightHalf)
-
-            # add median in initial window
-            medianCollection.append(float(-leftHalf[0]) if k & 1 else (RightHalf[0] + (-leftHalf[0])) / 2.0)
-    
-        return medianCollection
+        pass 
 
 # Unit Tests
 class TestMedianSlidingWindow(unittest.TestCase):
