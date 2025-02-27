@@ -46,6 +46,42 @@ class Solution:
 
         return self.allCombinations
     
+def approachSolution(self):
+    """
+    The approach to solving this problem relies on applying backtracking effectively.
+
+    **Step 1: Hardcode the digit-to-letter mapping using a dictionary.**
+      - This ensures efficient retrieval.
+      - Trade-off: Less modular but optimal for this specific problem.
+
+    **Step 2: Define a recursive backtracking function** with arguments:
+      - `digits` (input as an array),
+      - `index` (to track recursion depth),
+      - `currComb` (the current combination being formed).
+
+    **Step 3: Establish the base case for recursion.**
+      - If `index == len(digits)`, we have a complete combination.
+      - Append `currComb` (joined into a string) to our result array.
+
+    **Step 4: Loop through possible letters for the current digit.**
+      - Add each letter to `currComb`, then recursively call the function
+        while incrementing `index` to move to the next digit.
+      - After recursion, backtrack by popping the last letter.
+
+    **Step 5: The backtracking process ensures we explore all valid combinations.**
+      - Once all recursive calls finish, we have generated all letter combinations.
+
+    **Time Complexity: O(4^n)**
+      - This is a combination problem where each digit contributes up to 4 choices.
+      - The total number of recursive calls follows the branching factor of `4^n`.
+
+    **Space Complexity: O(n)**
+      - The recursive stack depth grows to at most `n` (the number of digits).
+      - There is no additional auxiliary data structure beyond the recursion stack.
+    """
+
+    pass
+    
 class TestLetterCombinations(unittest.TestCase):
     def setUp(self):
         self.solution = Solution()
