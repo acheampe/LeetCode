@@ -16,43 +16,81 @@ class Solution:
         Time Complexity: O(m * n * 4^n) (explores up to 4 paths per character)
         Space Complexity: O(n) (recursive depth of word length)
         """
-        rowLength, colLength = len(board), len(board[0])
+        rowLength = len(board)
+        colLength = len(board[0])
 
-        # Recursive DFS backtracking
-        def backtracking(rowIndex, colIndex, wordIndex, visitedCoordinates):
-            # Base case: word found
-            if wordIndex == len(word):
+        def backtracking(r, c, index, currPath):
+            """explores all paths to try to find valid path"""
+            
+            # Base case: True
+            if len(word) == index:
                 return True
             
-            # Boundary and invalid conditions
-            if not (0 <= rowIndex < rowLength and 0 <= colIndex < colLength):
+            # Base Cases: False
+            # Boundary validation check
+            if not (0 <= r < rowLength) or not (0 <= c < colLength):
                 return False
-            if (rowIndex, colIndex) in visitedCoordinates or board[rowIndex][colIndex] != word[wordIndex]:
+            # Valid path check
+            if board[r][c] != word[index] or (r, c) in currPath:
                 return False
             
-            # Mark as visited
-            visitedCoordinates.add((rowIndex, colIndex))
+            # after base conditions are not met we add coordinates to valid path
+            currPath.add((r, c))
 
-            # Explore all four directions
-            found = (
-                backtracking(rowIndex + 1, colIndex, wordIndex + 1, visitedCoordinates) or
-                backtracking(rowIndex - 1, colIndex, wordIndex + 1, visitedCoordinates) or
-                backtracking(rowIndex, colIndex + 1, wordIndex + 1, visitedCoordinates) or
-                backtracking(rowIndex, colIndex - 1, wordIndex + 1, visitedCoordinates)
+            isNextPath = (
+                # explore all paths O(4^n)
+                backtracking(r + 1, c, index + 1, currPath) or                
+                backtracking(r - 1, c, index + 1, currPath) or              
+                backtracking(r, c + 1, index + 1, currPath) or             
+                backtracking(r, c - 1, index + 1, currPath)  
             )
 
-            # Backtrack (undo visit)
-            visitedCoordinates.remove((rowIndex, colIndex))
-            return found
-        
-        # Try to start from every cell in the board
-        for i in range(rowLength):
-            for j in range(colLength):
-                if backtracking(i, j, 0, set()):  # Pass a new set for each path
+            # backtrack
+            currPath.remove((r, c))
+
+            return isNextPath
+
+        for row in range(rowLength):
+            for col in range(colLength):
+
+                if backtracking(row, col, 0, set()):
                     return True
         
-        return False  # No valid path found
+        return False # after exhausting all paths 
 
+    def approachSolution(self):
+        """
+        The approach to this problem requires exploration of all possible letters
+        and adjacent direction. Therefore the best approach will be through a bruteforce
+        solution to exhaust all paths. 
+
+        The first step to approach this is to declare length of row and length of 
+        column derived from board matrix. Followed by declaring a set to track
+        viable visited paths
+
+        from here we establish a backtracking algo to return a viable path with 
+        cell coordinates as arguments and current index of word search. Just like
+        any backtracking solution we must establish base case. In this particular 
+        case true and false return base cases.
+
+        A true base case returns true when index arg == len(word) and a false base case
+        occurs under exceed boundary conditions, or if current cell is already in visited and if
+        current letter in word does not match letter in cell.
+
+        if bases cases are not met, then we add current cell coordinates to valid path
+        the recall backtracking algo to explore all 4 directions for the next valid path and if no valid
+        path is scene we back track by removing the latest coordinates from set
+
+        From here we write a funct to iterate through board that initiate the backtracking
+        algo.
+
+        if a path is found we return true, if it isn't then we return false
+
+        Time Complexity: O(n * m * 4^n)
+        Space Complexity: O(n)
+        """
+
+        pass
 
 class TestWordSearch(unittest.TestCase):
     def setUp(self):
