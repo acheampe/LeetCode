@@ -10,51 +10,63 @@ class Solution:
             n (int): Size of the chessboard (n x n).
 
         Returns:
-            List[List[str]]: A list of valid chessboard configurations.
-
-        Space Complexity: O(n!)
-        Time Complexity: O(n + n!) worst case scenario
+                List[list[str]]
         """
 
-        allPossibleComb = []  # output of our final solution
-        chessPlacement = [['.'] * n for _ in range(n)]  # Initialize empty board
+        # Establish space needed for operation
+        allQueenPermutations = [] # O(n) space (will contain O(n!) distinct Q placements)
+        board = [['.' for _ in range(n)] for _  in range(n)] # O (n^2)
 
-        # Sets to track column and diagonal conflicts
-        usedColumns = set()
-        minorDiagonal = set()  # row + col
-        majorDiagonal = set()  # row - col
+        # Sets to track attacking positions
+        colSet = set()
+        minorDiag = set() # (r + c)
+        majorDiag = set() # (r - c)
 
+        # backtracking
         def backtracking(row):
-            """Recursive function to place queens row by row."""
-            # Base Case: All queens placed
+
+            # Base case:
             if row == n:
-                allPossibleComb.append(["".join(row) for row in chessPlacement])
-                return
-
+                # pass (join and return)
+                pass
+            
             for col in range(n):
-                # Check if placing a queen at (row, col) is safe
-                if col in usedColumns or (row + col) in minorDiagonal or (row - col) in majorDiagonal:
-                    continue  # Skip this placement
-
-                # Place the queen
-                chessPlacement[row][col] = 'Q'
-                usedColumns.add(col)
-                minorDiagonal.add(row + col)
-                majorDiagonal.add(row - col)
-
-                # Recur to place next queen
-                backtracking(row + 1)
-
-                # Backtrack: Remove the queen
-                chessPlacement[row][col] = '.'
-                usedColumns.remove(col)
-                minorDiagonal.remove(row + col)
-                majorDiagonal.remove(row - col)
-
-        # Start backtracking from row 0
+                pass
+        
         backtracking(0)
 
-        return allPossibleComb
+        return allQueenPermutations
+
+
+            
+    
+
+        pass
+
+    def approachSolution(self):
+        """
+        Solving N queens utilizes a backtracking approach that takes advantage of 
+        one queen per row and per col restriction. 
+
+        First step: Establish and output[List[str]]. Establish n arr of n '....' in each row
+        to simulate empty slot in each cell. Then establish 3 sets to track Q placement (col, posDiag, negDiag)
+
+        from here we will establish backtracking with row as the argument (this will take care
+        of one queen per row). After we will establish our base case: if row == n, we join each row into a
+        list and append the list into our output arr
+
+        After we will iterate through a column arr of n. 
+
+        If Q is not in all three establish sets, then we place Q in (r,c) coordinates, then 
+        update to all three sets accordingly. then call our bracktracking function. Before we 
+        pop (r, C) and remove from all sets to backpedal from invalid paths
+
+        By end of cycle we should have returned all possible distinct placement of queen.
+
+        Time Complexity: O(n!), first queen has n choices, 2nd has n - 1 choices....etc
+        Space Complexity: O(n * n!) --> there is n output space that stores n! of q distinct
+        placement.
+        """
 
 class TestSolveNQueens(unittest.TestCase):
     def setUp(self):
