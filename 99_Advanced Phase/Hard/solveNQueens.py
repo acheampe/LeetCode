@@ -28,20 +28,41 @@ class Solution:
             # Base case:
             if row == n:
                 # pass (join and return)
-                pass
+                currPermute = [''.join(row) for row in board]
+                allQueenPermutations.append(currPermute)
+                return
             
             for col in range(n):
-                pass
-        
+                
+                # check attacking positions
+                if (
+                    col in colSet or 
+                    (row + col) in minorDiag or
+                    (row - col) in majorDiag
+                ):
+                    continue # skip placement
+
+                # Add Q to board and update set
+                board[row][col] = 'Q'
+
+                colSet.add(col)
+                minorDiag.add(row + col)
+                majorDiag.add(row - col)
+
+                backtracking(row + 1)
+
+                # Backtrack to viable placements
+                board[row][col] = '.'
+
+                colSet.remove(col)
+                minorDiag.remove((row + col))
+                majorDiag.remove((row - col)) 
+
         backtracking(0)
 
         return allQueenPermutations
 
 
-            
-    
-
-        pass
 
     def approachSolution(self):
         """
@@ -67,6 +88,8 @@ class Solution:
         Space Complexity: O(n * n!) --> there is n output space that stores n! of q distinct
         placement.
         """
+
+        pass
 
 class TestSolveNQueens(unittest.TestCase):
     def setUp(self):
