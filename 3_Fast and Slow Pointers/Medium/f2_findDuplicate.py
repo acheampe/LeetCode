@@ -53,6 +53,43 @@ class Solution:
         
         return slowPointer
 
+    def solutionApproach(self):
+        """
+        This problem requires detecting a duplicate number in an array of size `n + 1`, 
+        where numbers range from `1` to `n`. The **Floyd’s Cycle Detection Algorithm** 
+        (also known as Tortoise and Hare) is the optimal solution, achieving **O(n) time 
+        complexity and O(1) space complexity** without auxiliary data structures.
+
+        🚀 **Steps to Solve the Problem Efficiently:**
+        
+        1️⃣ **Establish Two Pointers (Fast and Slow)**
+        - Initialize `slowPointer` and `fastPointer` to `nums[0]`.
+        - These pointers simulate a linked list traversal, treating each value as 
+            an index pointing to the next number.
+
+        2️⃣ **Detect the Cycle in the Array**
+        - Move:
+            - `slowPointer` one step at a time (`slowPointer = nums[slowPointer]`).
+            - `fastPointer` two steps at a time (`fastPointer = nums[nums[fastPointer]]`).
+        - If a duplicate exists (which is guaranteed), **slow and fast will meet** inside the cycle.
+
+        3️⃣ **Find the Cycle Entry Point (Duplicate Number)**
+        - Reset `slowPointer` to `nums[0]`.
+        - Move **both pointers one step at a time** until they meet again.
+        - The meeting point is the **entry point of the cycle**, which is the duplicate number.
+
+        4️⃣ **Return the Duplicate Number**
+        - Either `slowPointer` or `fastPointer` now holds the duplicate.
+
+        🔹 **Key Learnings:**
+        - **This problem is a cycle detection problem disguised as an array problem.**
+        - **The presence of a duplicate ensures a cycle exists.**
+        - **The cycle entry point corresponds to the duplicate number.**
+        
+        ⏳ **Time Complexity:** O(n)  
+        🏗 **Space Complexity:** O(1)
+        """
+
 class TestFindDuplicate(unittest.TestCase):
 
     def setUp(self):
