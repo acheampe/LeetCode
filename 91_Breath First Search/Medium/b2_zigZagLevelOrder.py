@@ -58,6 +58,44 @@ class Solution: # TC = O(n) SC = O(w) for width of tree and O(n) for result
                 qstack.append((currNode.right, currLevel + 1))
 
         return result
+
+    def solutionApproach(self):
+        """
+        🚀 **Approach Summary: Zigzag Level Order Traversal (BFS with Deque)**
+
+        **🔹 Key Insight:**  
+        - This problem is a **variation of level-order traversal (BFS)**  
+        - The **zigzag order** means:
+          - **Even levels** (0, 2, 4, ...): Append values **normally (left to right)**  
+          - **Odd levels** (1, 3, 5, ...): Append values **in reverse (right to left)**  
+
+        **💡 Steps to Solve:**
+        1️⃣ **Edge Case:** If the tree is empty, return `[]`.  
+        2️⃣ **Use a Deque (`dequeStack`) to perform BFS traversal**, storing `(node, level)` pairs.  
+        3️⃣ **Process nodes level by level:**  
+            - If a new level is encountered, **append a new empty list** to `outputOrder`.  
+            - If the level is **even**, append node values **normally**.  
+            - If the level is **odd**, **insert values at index 0** (to reverse the order).  
+        4️⃣ **Add child nodes to `dequeStack`** (left first, then right).  
+        5️⃣ **Continue until all levels are processed, then return `outputOrder`**.
+
+        **🔹 Time Complexity:**  
+        - **O(n)** → Each node is visited **once**.  
+        - The `insert(0, val)` operation for odd levels is **O(k)** where `k` is the level size.  
+        - In the worst case (complete tree), `k ≈ n`, making the worst case **O(n^2)** if using a list.  
+        - However, **using `deque` keeps it O(n)` in practice**.
+
+        **🔹 Space Complexity:**  
+        - **O(n)** → The worst case (skewed tree) stores all nodes in memory at once.
+        - The `outputOrder` list also requires **O(n)** space.
+
+        ✅ **Why This Works?**  
+        - **Using a deque ensures efficient level-order traversal.**  
+        - **Appending new lists at each level prevents index errors.**  
+        - **Reversing order only when necessary avoids unnecessary computations.**
+        """
+        
+        pass
         
 # Test cases for the zigzagLevelOrder method
 def run_tests():
