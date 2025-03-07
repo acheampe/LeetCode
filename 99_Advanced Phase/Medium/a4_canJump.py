@@ -1,8 +1,6 @@
 import unittest
 from typing import List
 
-from typing import List
-
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         """
