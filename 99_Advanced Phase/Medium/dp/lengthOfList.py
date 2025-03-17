@@ -1,9 +1,30 @@
 import unittest
-from typing import List
+from unittest import result
 
 class Solution:
-    def lengthOfLIS(self, nums: List[int]) -> int:
-        pass
+    def lengthOfLIS(self, nums: list[int]) -> int:
+        """
+        Compute the length of the longest increasing subsequence (LIS).
+        DP Approach: Bottom-Up
+        Time Complexity: O(n^2)
+        Space Complexity: O(n)
+        """
+        if not nums:
+            return 0
+        
+        # Step 1: Create DP array
+        dp = [1] * len(nums)  # Each number is a subsequence of length 1
+        
+        # Step 2: Build DP table
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[j] < nums[i]:  # If valid increasing sequence
+                    dp[i] = max(dp[i], dp[j] + 1)  # Take the longest sequence
+        
+        # Step 3: Return the longest LIS found
+        return max(dp)
+                     
+        
     
 class TestSolution(unittest.TestCase):
     def test_lengthOfLIS(self):
