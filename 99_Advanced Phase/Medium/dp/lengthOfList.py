@@ -1,31 +1,85 @@
 import unittest
 from unittest import result
 
+# class Solution:
+#     def lengthOfLIS(self, nums: list[int]) -> int:
+#         """
+#         Compute the length of the longest increasing subsequence (LIS).
+#         DP Approach: Bottom-Up
+#         Time Complexity: O(n^2)
+#         Space Complexity: O(n)
+#         """
+
+#         if not nums:
+#             return 0
+        
+#         memo = [1] * len(nums)
+        
+#         for i in range(len(nums)):
+#             for j in range(i):
+                
+#                 if nums[j] < nums[i]:
+#                     memo[i] = max(memo[j] + 1, memo[i])
+        
+#         return max(memo)
+    
+#     def ApproachSolution(self):
+#         """
+#         This problem can be solved with a couple approaches, binary search and 
+#         dynamic programming approach. 
+        
+#         Utilizing dynamic program:
+#         step 1: validate input nums and establish an array of length input nums with default values of int
+#         1.
+        
+#         step two: 
+#         establish a nested loop. Outer loop will be of len(nums) and inner loops
+#         will be of the current index.
+        
+#         Step three:
+#         Evaluate if nums[j] (inner loop) < outer loop index (nums[i]). if so add current
+#         value of index j of established array to current count of index i of established array
+        
+#         Step four: return the max val in the established array
+        
+#         TC: O(n^2) nested loop of the same input array
+#         SC: O(n) established space to find max subsequent increasing array
+#         """
 class Solution:
     def lengthOfLIS(self, nums: list[int]) -> int:
         """
-        Compute the length of the longest increasing subsequence (LIS).
-        DP Approach: Bottom-Up
-        Time Complexity: O(n^2)
-        Space Complexity: O(n)
+        Longest Increasing Subsequence (O(n log n))
+        Uses Greedy + Binary Search (without bisect module)
         """
-        if not nums:
-            return 0
         
-        # Step 1: Create DP array
-        dp = [1] * len(nums)  # Each number is a subsequence of length 1
+        def binary_search(sub, num):
+            """
+            Custom binary search to find the first index in `sub`
+            where `num` can be placed while keeping `sub` sorted.
+            """
+            left, right = 0, len(sub) - 1
+
+            while left <= right:
+                mid = (left + right) // 2
+                
+                if sub[mid] < num:
+                    left = mid + 1  # Search right half
+                else:
+                    right = mid - 1  # Search left half
+            
+            return left  # The position where num should be placed
+
+        sub = []  # Stores the potential LIS elements
         
-        # Step 2: Build DP table
-        for i in range(len(nums)):
-            for j in range(i):
-                if nums[j] < nums[i]:  # If valid increasing sequence
-                    dp[i] = max(dp[i], dp[j] + 1)  # Take the longest sequence
-        
-        # Step 3: Return the longest LIS found
-        return max(dp)
-                     
-        
-    
+        for num in nums:
+            pos = binary_search(sub, num)  # Find position manually
+            
+            if pos < len(sub):
+                sub[pos] = num  # Replace element at `pos`
+            else:
+                sub.append(num)  # Append num at the end if no replacement
+
+        return len(sub)  # The length of `sub` is the LIS length
 class TestSolution(unittest.TestCase):
     def test_lengthOfLIS(self):
         sol = Solution()
