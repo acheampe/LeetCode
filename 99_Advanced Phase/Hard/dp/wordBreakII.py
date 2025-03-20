@@ -1,67 +1,67 @@
 import unittest
 
-# class Solution:
-#     def wordBreak(self, s: str, wordDict: list[str]) -> list[str]:
-#         """
-#         Return all possible sentences that can be formed from s using words in wordDict.
-#         Uses recursion + manual memoization.
-        
-#         Time Complexity: O(2^n * n)
-#         Space Complexity: O(n) (recursion stack + memo storage)
-#         """
-#         wordDictSet: set = set(wordDict)  # Convert list to set for O(1) lookups
-#         memo = {}  # Manually implemented memoization
-
-#         def backtrack(i):
-#             if i in memo:  
-#                 return memo[i]
-            
-#             if i == len(s):
-#                 return [""]  # Base case: Found a valid split
-
-#             allSentences = []
-#             for j in range(i, len(s)):
-#                 word = s[i:j+1]
-#                 if word in wordDictSet:  # Check if valid word
-#                     rest_sentences = backtrack(j + 1)  # Recursive call
-#                     for sentence in rest_sentences:
-#                         allSentences.append(word + (" " + sentence if sentence else ""))  # Construct valid sentence
-            
-#             memo[i] = allSentences 
-#             return allSentences
-        
-#         return backtrack(0)
-
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> list[str]:
         """
-        return all possible sentences in any order
+        Return all possible sentences that can be formed from s using words in wordDict.
+        Uses recursion + manual memoization.
         
-        TC: O(n * 2^n)
-        SC: O(n)
+        Time Complexity: O(2^n * n)
+        Space Complexity: O(n) (recursion stack + memo storage)
         """
-        wordDictSet : set = set(wordDict)
-        def backtrack(index):
-            
-            # base case
-            if len(s) <= index:
-                allSentences.append(' '.join(currSentence))
-                return
-            
-            for i in range(index, len(s)):
-                word = s[index : i + 1]
+        wordDictSet: set = set(wordDict)  # Convert list to set for O(1) lookups
+        memo = {}  # Manually implemented memoization
 
-                if word in wordDictSet:
-                    currSentence.append(word)
-                    backtrack(i + 1)
-                    currSentence.pop()
+        def backtrack(i):
+            if i in memo:  
+                return memo[i]
+            
+            if i == len(s):
+                return [""]  # Base case: Found a valid split
+
+            allSentences = []
+            for j in range(i, len(s)):
+                word = s[i:j+1]
+                if word in wordDictSet:  # Check if valid word
+                    rest_sentences = backtrack(j + 1)  # Recursive call
+                    for sentence in rest_sentences:
+                        allSentences.append(word + (" " + sentence if sentence else ""))  # Construct valid sentence
+            
+            memo[i] = allSentences 
+            return allSentences
+        
+        return backtrack(0)
+
+# class Solution:
+#     def wordBreak(self, s: str, wordDict: list[str]) -> list[str]:
+#         """
+#         return all possible sentences in any order
+        
+#         TC: O(n * 2^n)
+#         SC: O(n)
+#         """
+#         wordDictSet : set = set(wordDict)
+#         def backtrack(index):
+            
+#             # base case
+#             if len(s) <= index:
+#                 allSentences.append(' '.join(currSentence))
+#                 return
+            
+#             for i in range(index, len(s)):
+#                 word = s[index : i + 1]
+
+#                 if word in wordDictSet:
+#                     currSentence.append(word)
+#                     backtrack(i + 1)
+#                     currSentence.pop()
 
         
-        currSentence = []
-        allSentences = []
-        backtrack(0)
+#         currSentence = []
+#         allSentences = []
+#         backtrack(0)
 
-        return allSentences
+#         return allSentences
     
 class TestSolution(unittest.TestCase):
     def test_wordBreak(self):
