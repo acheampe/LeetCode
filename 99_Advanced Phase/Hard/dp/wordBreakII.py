@@ -7,7 +7,7 @@ class Solution:
         Uses recursion + manual memoization.
         
         Time Complexity: O(2^n * n)
-        Space Complexity: O(n) (recursion stack + memo storage)
+        Space Complexity: O(n) (recursion stack + memoization storage) 
         """
         wordDictSet: set = set(wordDict)  # Convert list to set for O(1) lookups
         memo = {}  # Manually implemented memoization
