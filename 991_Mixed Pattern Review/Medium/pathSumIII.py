@@ -28,9 +28,10 @@ class Solution: ### RECURSIVE APPROACH ####
                 return 
 
             currSum += node.val
-            pathTotal[currSum] += 1    
-            
+   
             self.validCounter += pathTotal[currSum - targetSum]
+            
+            pathTotal[currSum] += 1 
             
             deepSearch(node.left, currSum)
             deepSearch(node.right, currSum)
