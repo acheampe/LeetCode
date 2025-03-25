@@ -2,7 +2,20 @@ import unittest
 
 class Solution:
     def lengthOfLIS(self, nums: list[int]) -> int:
-        pass
+        """
+        return the longest sebsequence in input nums
+        """
+        
+        countSubSequence = [1] * len(nums)
+        
+        for i in range(len(nums)):
+            for j in range(i):
+                
+                if nums[j] < nums[i]:
+                    countSubSequence[i] = max(countSubSequence[j] + 1, countSubSequence[i])
+        
+        return max(countSubSequence)
+        
 
 class TestSolution(unittest.TestCase):
     def test_lengthOfLIS(self):
