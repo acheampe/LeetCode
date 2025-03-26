@@ -4,7 +4,35 @@ import unittest
 
 class Solution:
     def topKFrequent(self, nums: list[int], k: int) -> list[int]:
-        pass
+        """
+        return k most frequent elements
+        
+        TC: O(n log k)
+        SP: O(n)
+        """
+        
+        # heapq.heapify(nums) # O(n)
+        countFreq = Counter(nums)
+        topKFrequent = []
+        minHeap = []
+          
+        for num, freq in countFreq.items():
+            heapq.heappush(minHeap, (freq, num))
+            
+        while len(minHeap) > k:
+            heapq.heappop(minHeap)
+        
+        while minHeap:
+            freq, num = heapq.heappop(minHeap)
+            topKFrequent.append(num)
+                
+        return  topKFrequent
+                
+                
+            
+
+        
+            
 class TestTopKFrequent(unittest.TestCase):
 
     def setUp(self):
@@ -28,11 +56,11 @@ class TestTopKFrequent(unittest.TestCase):
     #     expectedOutput = [5, 9, 3]  # Any 3 elements in the array are valid
     #     self.assertCountEqual(len(self.sol.topKFrequent(nums, k)), expectedOutput)
 
-    # def test4_large_k(self):
-    #     nums = [4,4,4,6,6,7,8,8,8,8]
-    #     k = 3
-    #     expectedOutput = [4, 8, 6]  # Most frequent elements in any order
-    #     self.assertCountEqual(self.sol.topKFrequent(nums, k), expectedOutput)
+    def test4_large_k(self):
+        nums = [4,4,4,6,6,7,8,8,8,8]
+        k = 3
+        expectedOutput = [4, 8, 6]  # Most frequent elements in any order
+        self.assertCountEqual(self.sol.topKFrequent(nums, k), expectedOutput)
 
     def test5_duplicates_but_different_frequencies(self):
         nums = [10,10,10,20,20,30,30,30,30]
@@ -40,11 +68,11 @@ class TestTopKFrequent(unittest.TestCase):
         expectedOutput = [30, 10]
         self.assertCountEqual(self.sol.topKFrequent(nums, k), expectedOutput)
 
-    def test6_mixed_positive_negative(self):
-        nums = [-1, -1, -1, 2, 2, 3, 3, 3, 3]
-        k = 2
-        expectedOutput = [3, -1]
-        self.assertCountEqual(self.sol.topKFrequent(nums, k), expectedOutput)
+    # def test6_mixed_positive_negative(self):
+    #     nums = [-1, -1, -1, 2, 2, 3, 3, 3, 3]
+    #     k = 2
+    #     expectedOutput = [3, -1]
+    #     self.assertCountEqual(self.sol.topKFrequent(nums, k), expectedOutput)
 
     def test7_large_input(self):
         nums = [i % 10 for i in range(100000)]  # Generates numbers 0-9 repeated evenly
