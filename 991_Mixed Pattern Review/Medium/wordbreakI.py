@@ -1,10 +1,33 @@
 import unittest
 
-
-# Assume the solution stub exists
 class Solution:
-        def wordBreak(self, s: str, wordDict: list[str]) -> bool:
-        pass
+    def wordBreak(self, s: str, wordDict: list[str]) -> bool:
+        """
+        Return True if s can be segmented into words in wordDict.
+        TC: O(n^2) – due to substring slicing and overlapping subproblems
+        SC: O(n) – for memoization table and recursion stack
+        """
+
+        wordSet = set(wordDict)
+        memo = {}
+
+        def dfs(startIndex):
+            if startIndex == len(s):
+                return True  # reached end successfully
+
+            if startIndex in memo:
+                return memo[startIndex]
+
+            for endIndex in range(startIndex + 1, len(s) + 1):
+                word = s[startIndex:endIndex]
+                if word in wordSet and dfs(endIndex):
+                    memo[startIndex] = True
+                    return True
+
+            memo[startIndex] = False
+            return False
+
+        return dfs(0)
 
 class TestWordBreak(unittest.TestCase):
     def setUp(self):
