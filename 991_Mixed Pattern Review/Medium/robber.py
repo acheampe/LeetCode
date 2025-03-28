@@ -1,4 +1,4 @@
-# import unittest 
+import unittest 
 # class Solution:
 #     def rob(self, nums: list[int]) -> int:
 #         """
@@ -67,22 +67,3 @@ class TestHouseRobber(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-# class Solution:
-#     def rob(self, nums: list[int]) -> int:
-#         """
-#         return max value without triggering an alarm
-#         """
-        
-#         def findSum(index):
-#             """find sum of current array skipping adj vals"""
-            
-#             if index >= len(nums):
-#                 return 0
-            
-#             return nums[index] + findSum(index + 2)
-        
-#         if len(nums) >= 2:
-#             return max(findSum(0), findSum(1))
-            
-#         return findSum(0)
