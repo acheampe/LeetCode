@@ -1,21 +1,21 @@
-import unittest 
-class Solution:
-    def rob(self, nums: list[int]) -> int:
-        """
-        return max value without triggering an alarm
-        TC: O(n)
-        SC: O(1)
-        """
+# import unittest 
+# class Solution:
+#     def rob(self, nums: list[int]) -> int:
+#         """
+#         return max value without triggering an alarm
+#         TC: O(n)
+#         SC: O(1)
+#         """
         
-        prev, curr = 0, 0
+#         prev, curr = 0, 0
         
-        # [prev, curr, n, n + 1, n + 2,...]
-        for num in nums:
-            total = max(num + prev, curr)
-            prev = curr
-            curr = total
+#         # [prev, curr, n, n + 1, n + 2,...]
+#         for num in nums:
+#             total = max(num + prev, curr)
+#             prev = curr
+#             curr = total
                     
-        return curr
+#         return curr
 
 class Solution:
     def rob(self, nums: list[int]) -> int:
