@@ -17,28 +17,28 @@ class Solution:
                     
         return curr
 
-# class Solution:
-#     def rob(self, nums: list[int]) -> int:
-#         """
-#         Recursive solution with memoization (Top-Down DP)
-#         TC: O(n)
-#         SC: O(n) for memoization and recursion stack
-#         """
-#         memo = {}
+class Solution:
+    def rob(self, nums: list[int]) -> int:
+        """
+        Recursive solution with memoization (Top-Down DP)
+        TC: O(n)
+        SC: O(n) for memoization and recursion stack
+        """
+        memo = {}
 
-#         def dfs(index):
-#             if index >= len(nums):
-#                 return 0
+        def dfs(index):
+            if index >= len(nums):
+                return 0
 
-#             if index in memo:
-#                 return memo[index]
+            if index in memo:
+                return memo[index]
 
-#             # Option 1: Rob current house and move to index + 2
-#             # Option 2: Skip current house and move to index + 1
-#             memo[index] = max(nums[index] + dfs(index + 2), dfs(index + 1))
-#             return memo[index]
+            # Option 1: Rob current house and move to index + 2
+            # Option 2: Skip current house and move to index + 1
+            memo[index] = max(nums[index] + dfs(index + 2), dfs(index + 1))
+            return memo[index]
 
-#         return dfs(0)
+        return dfs(0)
 
 class TestHouseRobber(unittest.TestCase):
     def setUp(self):
