@@ -19,27 +19,58 @@ def build_tree(values: list[int | None]) -> TreeNode | None:
                 node.right = kids.pop()
     return root
 
-class Solution:
-    def maxPathSum(self, root: TreeNode | None ) -> int:
+# class Solution:
+#     def maxPathSum(self, root: TreeNode | None ) -> int:
         
-        def maxPath(node):
+#         def maxPath(node):
+            
+#             if not node:
+#                 return 0
+        
+#             leftSum = max(maxPath(node.left), 0)
+#             rightSum = max(maxPath(node.right), 0)
+            
+#             totalSum = node.val + leftSum + rightSum
+            
+#             self.pathMax = max(self.pathMax, node.val + leftSum, node.val + rightSum, totalSum)
+            
+#             return max(node.val + leftSum, node.val + rightSum)
+
+#         self.pathMax = float('-inf')
+        
+#         maxPath(root)
+#         return self.pathMax
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxPathSum(self, root) -> int:
+        """
+        return the maximum path sum of non-empty tree
+        TC: O(n) explores all nodes ones
+        SP: O(h) h == n in this case for recursion stack.
+        """
+
+        self.totalSum = float('-inf')
+
+        def addPaths(node):
             
             if not node:
                 return 0
-        
-            leftSum = max(maxPath(node.left), 0)
-            rightSum = max(maxPath(node.right), 0)
             
-            totalSum = node.val + leftSum + rightSum
-            
-            self.pathMax = max(self.pathMax, node.val + leftSum, node.val + rightSum, totalSum)
-            
-            return max(node.val + leftSum, node.val + rightSum)
+            leftSum = max(addPaths(node.left), 0)
+            rightSum = max(addPaths(node.right), 0)
 
-        self.pathMax = float('-inf')
+            self.totalSum = max(self.totalSum, leftSum + rightSum + node.val, leftSum + node.val, rightSum + node.val)
+
+            return node.val + max(leftSum, rightSum)
         
-        maxPath(root)
-        return self.pathMax
+        addPaths(root)
+        return self.totalSum
 
 # Test cases
 def run_tests():
@@ -56,24 +87,24 @@ def run_tests():
             },
             "expected": 42
         },
-        # {
-        #     "input": {
-        #         "root": [-3]
-        #     },
-        #     "expected": -3
-        # },
-        # {
-        #     "input": {
-        #         "root": [1, -2, 3]
-        #     },
-        #     "expected": 4
-        # },
-        # {
-        #     "input": {
-        #         "root": [2, -1]
-        #     },
-        #     "expected": 2
-        # },
+        {
+            "input": {
+                "root": [-3]
+            },
+            "expected": -3
+        },
+        {
+            "input": {
+                "root": [1, -2, 3]
+            },
+            "expected": 4
+        },
+        {
+            "input": {
+                "root": [2, -1]
+            },
+            "expected": 2
+        },
         # {
         #     "input": {
         #         "root": [10, 2, 10, None, None, -20, 1]
