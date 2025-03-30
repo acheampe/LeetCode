@@ -53,4 +53,4 @@ class Solution:
         # Clarify if all values will be an integer, if not, how to handle 
         # the exceptions
         # If constraints are provided look at those to determine if there are any
-        # edge cases to worry about or to not worry about.
+        # edge cases to worry about or to not worry about (empty arrays)
