@@ -3,7 +3,7 @@ import unittest
 class Solution:
 
     def encode(self, strs: list[str]) -> str:
-        """TC and SC = O(n)"""
+        """TC & SC = O(n)"""
         encoded = ''
         for word in strs:
             currLength = len(word)
