@@ -24,8 +24,52 @@ def linkedlist_to_list(head):
 
 class Solution:
     def oddEvenList(self, head: ListNode) -> ListNode:
-        # TODO: Implement this method
-        pass
+        """return reordered list: odd indices are 
+        respectively to the left and even indices to the right
+        """
+        
+        def clarificationQuestions():
+            """
+            - are there cases where LL is empty?
+            - will ordering nodes by switching it's values acceptable? or
+            do we really want to switch the order of linked addresses?
+            - Is it safe to assume that all node vals will be integers?
+            - How big is our LL data?
+            """
+        
+        def Approach():
+            """The non-optimized approach to take is creating two dummy nodes and 
+            linking odd and even indice nodes to it's respective dummy as we
+            traverse the LL, then combine them at the end, however this will be O(n) TC and SC, especially 
+            if we are duplicating values in new memory
+            
+            I think it is possible to do it in O(1) SC with a similar approach if we just redirect the edges since we 
+            wont be using addition memory except dummy nodes but that will pass for O(1)
+            """
+            
+        
+        if not head: # Empty LL edge case
+            return None
+        startNode = head # we will return startNode
+        evenHead = startNode.next  # connect this to tail of odd LL
+        
+        currOdd, currEven = startNode, startNode.next
+            
+        while currEven and currEven.next:
+            
+            currOdd.next = currEven.next
+            currOdd = currOdd.next
+            
+            currEven.next = currOdd.next
+            currEven = currEven.next
+   
+        # Combine
+        currOdd.next = evenHead
+        
+        return startNode
+        
+        
+        
 
 class TestOddEvenList(unittest.TestCase):
     def setUp(self):
