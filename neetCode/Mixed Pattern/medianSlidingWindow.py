@@ -4,52 +4,102 @@ import heapq
 
 class Solution:
     def medianSlidingWindow(self, nums: list[int], k: int) -> list[float]:
-        """
-        return Median of each subarray k in input array
-        """
 
-        maxHeap, minHeap = [], []
-        collectMedians = []
+        leftSide = [] # maxHeap
+        rightSide = [] # minHeap
         toRemove = defaultdict(int)
+        collectMedians = []
 
         for i in range(k):
-
-            if len(maxHeap) == len(minHeap):
-                heapq.heappush(maxHeap, -heapq.heappushpop(minHeap, nums[i]))
-            
+            if len(leftSide) == len(rightSide):
+                heapq.heappush(leftSide, -heapq.heappushpop(rightSide, nums[i]))
             else:
-                heapq.heappush(minHeap, -heapq.heappushpop(maxHeap, -nums[i]))
-        
-        collectMedians.append(float(-maxHeap[0]) if k & 1 else (minHeap[0] + (-maxHeap[0])) / 2.0)
+                heapq.heappush(rightSide, -heapq.heappushpop(leftSide, -nums[i]))
+        collectMedians.append(float(-leftSide[0]) if k & 1 else ((-leftSide[0]) + rightSide[0]) / 2.0)
+
 
         for j in range(k, len(nums)):
+            heapq.heappush(leftSide, -heapq.heappushpop(rightSide, nums[j]))
 
-            # if len(maxHeap) == len(minHeap):
-            heapq.heappush(maxHeap, -heapq.heappushpop(minHeap, nums[j]))
-            
-            # find out of range val and add to hash
-            outBound = nums[j - k]
-            toRemove[outBound] += 1
+            outBoundVal = nums[j - k]
+            toRemove[outBoundVal] += 1
 
-            # balance for expecting removal of val from minHeap
-            if outBound > -maxHeap[0]:
-                heapq.heappush(minHeap, -heapq.heappop(maxHeap))
-            
-            # remove if conditions meet
-            while maxHeap and toRemove[-maxHeap[0]] > 0:
-                toRemove[-maxHeap[0]] -= 1
-                heapq.heappop(maxHeap)
-                
-                
-            while minHeap and toRemove[minHeap[0]] > 0:
-                toRemove[minHeap[0]] -= 1
-                heapq.heappop(minHeap)
-                
-            
-            collectMedians.append(float(-maxHeap[0]) if k & 1 else (minHeap[0] + (-maxHeap[0])) / 2.0)
-    
+            # to maintain length difference logic
+            if outBoundVal > -leftSide[0]:
+                heapq.heappush(rightSide, -heapq.heappop(leftSide))
+
+            while leftSide and toRemove[-leftSide[0]]:
+                toRemove[-leftSide[0]] -= 1
+                heapq.heappop(leftSide)
+
+
+            while rightSide and toRemove[rightSide[0]]:
+                toRemove[rightSide[0]] -= 1
+                heapq.heappop(rightSide)
+
+
+            collectMedians.append(float(-leftSide[0]) if k & 1 else ((-leftSide[0]) + rightSide[0]) / 2.0)                         
+
         return collectMedians
-         
+            
+
+# Unit Tests
+class TestMedianSlidingWindow(unittest.TestCase):
+    def test_median_sliding_window(self):
+        solution = Solution()
+        
+        # Test case 1: Example from the problem statement
+        nums = [1, 3, -1, -3, 5, 3, 6, 7]
+        k = 3
+        expected = [1.00000, -1.00000, -1.00000, 3.00000, 5.00000, 6.00000]
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected): 
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+        # Test case 2: Another example from the problem statement
+        nums = [1, 2, 3, 4, 2, 3, 1, 4, 2]
+        k = 3
+        expected = [2.00000, 3.00000, 3.00000, 3.00000, 2.00000, 3.00000, 2.00000]
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected):
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+        # Test case 3: Single element in the array
+        nums = [5]
+        k = 1
+        expected = [5.00000]
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected):
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+        # Test case 4: All identical elements
+        nums = [2, 2, 2, 2, 2]
+        k = 2
+        expected = [2.00000, 2.00000, 2.00000, 2.00000]
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected):
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+        # Test case 5: Large array, k = 1
+        nums = list(range(1, 1001))
+        k = 1
+        expected = [float(num) for num in nums]
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected):
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+        # Test case 6: Large array, k = len(nums)
+        nums = [1, 3, 2, 4]
+        k = 4
+        expected = [2.50000]  # Median of the entire array
+        result = solution.medianSlidingWindow(nums, k)
+        for r, e in zip(result, expected):
+            self.assertAlmostEqual(r, e, delta=1e-5)
+
+if __name__ == '__main__':
+    unittest.main()
+    
+
 # class Solution:
 #     def medianSlidingWindow(self, nums: list[int], k: int) -> list[float]:
 #         """return median array for each window in the original array"""
@@ -117,64 +167,3 @@ class Solution:
 #                 rebalance()
         
 #         return medianCollection
-                
-        
-                    
-    
-
-# Unit Tests
-class TestMedianSlidingWindow(unittest.TestCase):
-    def test_median_sliding_window(self):
-        solution = Solution()
-        
-        # Test case 1: Example from the problem statement
-        nums = [1, 3, -1, -3, 5, 3, 6, 7]
-        k = 3
-        expected = [1.00000, -1.00000, -1.00000, 3.00000, 5.00000, 6.00000]
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected): 
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-        # # Test case 2: Another example from the problem statement
-        nums = [1, 2, 3, 4, 2, 3, 1, 4, 2]
-        k = 3
-        expected = [2.00000, 3.00000, 3.00000, 3.00000, 2.00000, 3.00000, 2.00000]
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected):
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-        # Test case 3: Single element in the array
-        nums = [5]
-        k = 1
-        expected = [5.00000]
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected):
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-        # Test case 4: All identical elements
-        nums = [2, 2, 2, 2, 2]
-        k = 2
-        expected = [2.00000, 2.00000, 2.00000, 2.00000]
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected):
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-        # Test case 5: Large array, k = 1
-        nums = list(range(1, 1001))
-        k = 1
-        expected = [float(num) for num in nums]
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected):
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-        # Test case 6: Large array, k = len(nums)
-        nums = [1, 3, 2, 4]
-        k = 4
-        expected = [2.50000]  # Median of the entire array
-        result = solution.medianSlidingWindow(nums, k)
-        for r, e in zip(result, expected):
-            self.assertAlmostEqual(r, e, delta=1e-5)
-
-if __name__ == '__main__':
-    unittest.main()
-    
