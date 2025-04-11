@@ -12,6 +12,7 @@ class Solution:
             I can use a 3 pointer system to find the answer in O(n^2) TC and
             O(1) space complexity, not calculating for output array
             """
+            pass
         # Given that input arr can be sorted:
         nums.sort()
         result = [] # returns lists that sums to 0
