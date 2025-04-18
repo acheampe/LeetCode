@@ -1,31 +1,49 @@
 import unittest
 
+# class Solution:
+#     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
+        
+#         wordDictSet = set(wordDict)
+#         isWord = {}
+
+#         def dp(index):
+
+#             if index == len(s):
+#                 return True # able to get to the end of string iteration
+            
+#             if index in isWord:
+#                 return isWord[index] #bool val
+
+#             for i in range(index, len(s)):
+#                 currWord = s[index:i + 1] # slicing trigger O(n^2)
+
+#                 if currWord in wordDictSet and dp(i + 1):
+#                     isWord[index] = True
+#                     return True
+
+#             isWord[index] = False
+#             return False
+
+#         return dp(0)
+
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
+        wordSet = set(wordDict)
+        n = len(s)
         
-        wordDictSet = set(wordDict)
-        isWord = {}
+        # dp[i] means: can s[0:i] be segmented using words in wordDict
+        dp = [False] * (n + 1)
+        dp[0] = True  # empty string is "segmented" by default
 
-        def dp(index):
+        for i in range(1, n + 1):
+            for j in range(i):
+                if dp[j] and s[j:i] in wordSet:
+                    dp[i] = True
+                    break  # No need to check other j's if one worked
 
-            if index == len(s):
-                return True # able to get to the end of string iteration
-            
-            if index in isWord:
-                return isWord[index] #bool val
-
-            for i in range(index, len(s)):
-                currWord = s[index:i + 1] # slicing trigger O(n^2)
-
-                if currWord in wordDictSet and dp(i + 1):
-                    isWord[index] = True
-                    return True
-
-            isWord[index] = False
-            return False
-
-        return dp(0)
-
+        return dp[n]
+    
+    
 # class Solution:
 #     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
 #         wordSet = set(wordDict)
@@ -49,10 +67,10 @@ class TestWordBreak(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
-    # def test_example_1(self):
-    #     s = "leetcode"
-    #     wordDict = ["leet", "code"]
-    #     self.assertTrue(self.sol.wordBreak(s, wordDict))
+    def test_example_1(self):
+        s = "leetcode"
+        wordDict = ["leet", "code"]
+        self.assertTrue(self.sol.wordBreak(s, wordDict))
 
     # def test_example_2(self):
     #     s = "applepenapple"
