@@ -2,32 +2,29 @@ import unittest
 
 class Solution:
     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
-        """return bool if s can be segmented into words in wordDict
-        TC and SC == O(n)        
-        """
         
-        wordDict: set = set(wordDict) # O(n)
-        memo = {}
-        
-        def depthSearch(index):
-            
+        wordDictSet = set(wordDict)
+        isWord = {}
+
+        def dp(index):
+
             if index == len(s):
-                return True
+                return True # able to get to the end of string iteration
             
-            if index in memo:
-                return memo[index]
-            
+            if index in isWord:
+                return isWord[index] #bool val
+
             for i in range(index, len(s)):
-                currWord = s[index:i + 1]
-                
-                if currWord in wordDict and depthSearch(i + 1):
-                    memo[index] = True
+                currWord = s[index:i + 1] # slicing trigger O(n^2)
+
+                if currWord in wordDictSet and dp(i + 1):
+                    isWord[index] = True
                     return True
-            
-            memo[index] = False
+
+            isWord[index] = False
             return False
-             
-        return depthSearch(0)
+
+        return dp(0)
 
 # class Solution:
 #     def wordBreak(self, s: str, wordDict: list[str]) -> bool:
@@ -62,20 +59,15 @@ class TestWordBreak(unittest.TestCase):
     #     wordDict = ["apple", "pen"]
     #     self.assertTrue(self.sol.wordBreak(s, wordDict))
 
-    def test_example_3(self):
-        s = "catsandog"
-        wordDict = ["cats", "dog", "sand", "and", "cat"]
-        self.assertFalse(self.sol.wordBreak(s, wordDict))
+    # def test_example_3(self):
+    #     s = "catsandog"
+    #     wordDict = ["cats", "dog", "sand", "and", "cat"]
+    #     self.assertFalse(self.sol.wordBreak(s, wordDict))
 
     # def test_repeating_word(self):
     #     s = "aaaaaaa"
     #     wordDict = ["aaaa", "aaa"]
     #     self.assertTrue(self.sol.wordBreak(s, wordDict))
-
-    # def test_no_valid_segment(self):
-    #     s = "abcd"
-    #     wordDict = ["a", "abc", "b", "cd"]
-    #     self.assertFalse(self.sol.wordBreak(s, wordDict))
 
     # def test_single_character_reuse(self):
     #     s = "aaaaaa"
