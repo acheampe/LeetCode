@@ -14,30 +14,24 @@ class Solution:
             We can use a stack operation to compare current iteration of chr to last append value to
             see if there is a match, this will be O(n) TC and SC
             """
+        pairs = { '(': ')', '[': ']', '{': '}' }
         
-        def isParenthesis(firstParenthesis, secondParenthesis):
-            """return bool if brackets are appropriately paired or not"""
+        def isMatch(openB, closeB):
+            return pairs.get(openB) == closeB
 
-            isMatch = (
-                (firstParenthesis, secondParenthesis) == ('(', ')') or
-                (firstParenthesis, secondParenthesis) == ('[', ']') or
-                (firstParenthesis, secondParenthesis) == ('{', '}')
-            )
-
-            return isMatch
+        openBracket = []
         
-        stack = []
         for i in range(len(s)):
 
-            if stack:
-                print(isParenthesis(stack[-1], s[i]))
-                if isParenthesis(stack[-1], s[i]):
-                    stack.pop()
-                    continue
+            if openBracket:
 
-            stack.append(s[i])
+                if isMatch(openBracket[-1], s[i]):
+                    openBracket.pop()
+                    continue
+                
+            openBracket.append(s[i])
         
-        return not stack
+        return not openBracket
 
 
 class TestValidParentheses(unittest.TestCase):
