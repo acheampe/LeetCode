@@ -1,113 +1,123 @@
 import unittest
 
-# class Solution:
-#     def numIslands(self, grid: list[list[str]]) -> int:
-#         if not grid:
-#             return 0
-
-#         m, n = len(grid), len(grid[0])
-#         parent = {}
-#         count = 0  # number of land cells (each will start as its own island)
-
-#         def get_id(i, j):
-#             return i * n + j  # 2D → 1D mapping
-
-#         def find(x):
-#             if parent[x] != x:
-#                 parent[x] = find(parent[x])  # path compression
-#             return parent[x]
-
-#         def union(x, y):
-#             root_x = find(x)
-#             root_y = find(y)
-#             if root_x != root_y:
-#                 parent[root_y] = root_x
-
-#         # Step 1: Initialize parent for each land cell
-#         for i in range(m):
-#             for j in range(n):
-#                 if grid[i][j] == '1':
-#                     idx = get_id(i, j)
-#                     parent[idx] = idx  # initially, parent is itself
-#                     count += 1
-
-#         # Step 2: Union adjacent land cells (right, down)
-#         for i in range(m):
-#             for j in range(n):
-#                 if grid[i][j] == '1':
-#                     for dx, dy in [(1, 0), (0, 1)]:  # down and right
-#                         ni, nj = i + dx, j + dy
-#                         if 0 <= ni < m and 0 <= nj < n and grid[ni][nj] == '1':
-#                             union(get_id(i, j), get_id(ni, nj))
-
-#         # Step 3: Count distinct root parents (only for land)
-#         root_set = set()
-#         for node in parent:
-#             root_set.add(find(node))
-
-#         return len(root_set)
+class Solution:
+    def numIslands(self, grid: list[list[str]]) -> int:
+        """return number of islands;
+        Time complexity: O(mn), worst case(O(mn) and space complexity O(n) 
+        worse case for parent
+        """
         
+        if not grid:
+            return 0
+
+        parent = {} # 1D key to track 2D iteration
+
+        m, n = len(grid), len(grid[0])
+
+        def get_id(r, c):
+            return r * n + c # 2d -> 1d mapping
+        
+        #used to find parent
+        def find(isle):
+            """find parent"""
+            if parent[isle] != isle:
+                parent[isle] = find(parent[isle])
+            return parent[isle]
+        
+        def union(node1, node2):
+            """unit nodes through path compression"""
+            
+            root1, root2 = find(node1), find(node2)
+            
+            if root1 != root2:
+                parent[root2] = root1 
+        
+        # Initiate parent
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    idx = get_id(i, j)
+                    parent[idx] = idx
+
+        # Unionize adjacent grids
+        for i in range(m):
+            for j in range(n):
+
+                if grid[i][j] == '1':
+                    # Union set grid to cover only right and down direction
+                    for dx, dy in [(1, 0), (0, 1)]:
+                        mr, nc = dx + i, dy + j
+
+                        if (0 <= mr < m) and (0 <= nc < n) and grid[mr][nc] == '1':
+                            union(get_id(i, j), get_id(mr, nc))
+                    
+        distinctIsle = set()
+        
+        for node in parent:
+            distinctIsle.add(find(node))
+        
+        return len(distinctIsle)
 
 
 class TestNumIslands(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
-    # def test_single_large_island(self): 
-    #     grid = [
-    #         ["1","1","1","1","0"],
-    #         ["1","1","0","1","0"],
-    #         ["1","1","0","0","0"],
-    #         ["0","0","0","0","0"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 1)
+    def test_single_large_island(self): 
+        grid = [
+            ["1","1","1","1","0"],
+            ["1","1","0","1","0"],
+            ["1","1","0","0","0"],
+            ["0","0","0","0","0"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 1)
 
-    # def test_multiple_small_islands(self):
-    #     grid = [
-    #         ["1","1","0","0","0"],
-    #         ["1","1","0","0","0"],
-    #         ["0","0","1","0","0"],
-    #         ["0","0","0","1","1"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 3)
+    def test_multiple_small_islands(self):
+        grid = [
+            ["1","1","0","0","0"],
+            ["1","1","0","0","0"],
+            ["0","0","1","0","0"],
+            ["0","0","0","1","1"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 3)
 
-    # def test_single_cell_island(self):
-    #     grid = [["1"]]
-    #     self.assertEqual(self.sol.numIslands(grid), 1)
+    def test_single_cell_island(self):
+        grid = [["1"]]
+        self.assertEqual(self.sol.numIslands(grid), 1)
 
     def test_single_cell_water(self):
         grid = [["0"]]
         self.assertEqual(self.sol.numIslands(grid), 0)
 
-    # def test_all_water(self):
-    #     grid = [
-    #         ["0","0","0"],
-    #         ["0","0","0"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 0)
+    def test_all_water(self):
+        grid = [
+            ["0","0","0"],
+            ["0","0","0"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 0)
 
-    # def test_all_land(self):
-    #     grid = [
-    #         ["1","1"],
-    #         ["1","1"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 1)
+    def test_all_land(self):
+        grid = [
+            ["1","1"],
+            ["1","1"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 1)
 
-    # def test_vertical_islands(self):
-    #     grid = [
-    #         ["1","0","1","0"],
-    #         ["1","0","1","0"],
-    #         ["1","0","1","0"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 2)
+    def test_vertical_islands(self):
+        grid = [
+            ["1","0","1","0"],
+            ["1","0","1","0"],
+            ["1","0","1","0"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 2)
 
-    # def test_horizontal_islands(self):
-    #     grid = [
-    #         ["1","1","1"],
-    #         ["0","0","0"],
-    #         ["1","1","1"]
-    #     ]
-    #     self.assertEqual(self.sol.numIslands(grid), 2)
+    def test_horizontal_islands(self):
+        grid = [
+            ["1","1","1"],
+            ["0","0","0"],
+            ["1","1","1"]
+        ]
+        self.assertEqual(self.sol.numIslands(grid), 2)
 
 if __name__ == '__main__':
     unittest.main()
