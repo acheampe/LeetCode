@@ -10,7 +10,6 @@ class Solution:
             graph[num][den] = val
             graph[den][num] = 1 / val
 
-        print(graph)
         def bfs(start, end):
             if start not in graph or end not in graph:
                 return -1.0
