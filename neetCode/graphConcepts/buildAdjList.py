@@ -20,18 +20,18 @@ from collections import defaultdict
 #     ["E", "F"]
 # ]))
 
-# def buildAjGraphFromTuple(edges: list[tuple]) -> dict:
-#     undirectedGraph = defaultdict(set)
+def buildAjGraphFromTuple(edges: list[tuple]) -> dict:
+    undirectedGraph = defaultdict(set)
 
-#     for node1, node2, weight in edges:
-#         undirectedGraph[node1].add((node2, weight))
-#         undirectedGraph[node2].add((node1, weight))
+    for node1, node2, weight in edges:
+        undirectedGraph[node1].add((node2, weight))
+        undirectedGraph[node2].add((node1, weight))
     
-#     return {node : list(neighbors) for node, neighbors in undirectedGraph.items()}
+    return {node : list(neighbors) for node, neighbors in undirectedGraph.items()}
         
    
    		
-# print(buildAjGraphFromTuple([("A", "B", 3), ("A", "C", 4), ("B", "D", 5), ("C", "D", 8), ("E", "F", 6)]))
+print(buildAjGraphFromTuple([("A", "B", 3), ("A", "C", 4), ("B", "D", 5), ("C", "D", 8), ("E", "F", 6)]))
 
 def buildAjGraphFromMatrix(matrix: list[list[int]], nodes: list[str]) -> dict:
     assert len(matrix) == len(nodes), "Number of rows in matrix must match number of nodes."
