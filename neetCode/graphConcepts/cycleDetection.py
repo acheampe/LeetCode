@@ -1,3 +1,5 @@
+from collections import deque
+
 def hasCycleUndirectedBFS(graph):
     pass
 
@@ -41,10 +43,35 @@ graph = {
 print(hasCycleUndirectedDFS(graph))
 
 def hasCycleDirectedBFS(graph):
-    pass
+    pass # attempt tomorrow.
+            
 
 def hasCycleDirectedDFS(graph):
-    pass
+    recStack, visited = set(), set()
+    
+    def isCyclic(node):
+        
+        # visted marks fully explored nodes
+        visited.add(node) # nodes in visited can be visited from a different path
+        recStack.add(node) # tracks which nodes are in active path
+        
+        for nei in graph[node]:
+            if nei not in visited:
+                if isCyclic(nei):
+                    return True
+            if nei in recStack:
+                return True
+        
+        recStack.remove(node) #backtrack - removes nodes from active DFS path
+        return False
+    
+    # important for disconnected nodes
+    for node in graph:
+        if node not in visited:
+            if isCyclic(node):
+                return True
+    
+    return False
 
 cyclic_digraph = {
     "A": ["B"],
@@ -59,7 +86,7 @@ acyclic_digraph = {
     "D": []
 }
 
-print(hasCycleDirectedDFS(acyclic_digraph))
-print(hasCycleDirectedDFS(cyclic_digraph))
+# print(hasCycleDirectedDFS(acyclic_digraph))
+# print(hasCycleDirectedDFS(cyclic_digraph))
 print(hasCycleDirectedBFS(acyclic_digraph))
 print(hasCycleDirectedBFS(cyclic_digraph))
