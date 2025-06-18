@@ -43,7 +43,40 @@ graph = {
 print(hasCycleUndirectedDFS(graph))
 
 def hasCycleDirectedBFS(graph):
-    pass # attempt tomorrow.
+    
+    inDegree = {
+        
+    }
+    # initiate  in-degree
+    for node in graph:
+        inDegree[node] = 0
+    
+    # compute in-degree
+    for node in graph:
+        for nei in graph[node]:
+            inDegree[nei] += 1
+    
+    stack = deque()
+    
+    for node, count in inDegree.items():
+        if count == 0:
+            stack.append(node)
+    
+    order = []
+    
+    while stack:
+        
+        curr = stack.popleft()
+        
+        order.append(curr)
+        
+        for nei in graph[curr]:
+            inDegree[nei] -= 1
+            
+            if inDegree[nei] == 0:
+                stack.append(nei)
+    return len(order) != len(graph)
+        
             
 
 def hasCycleDirectedDFS(graph):
