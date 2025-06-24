@@ -3,39 +3,32 @@ from collections import defaultdict
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
-        
+        graph = defaultdict(list)
+        for a, b in prerequisites:
+            graph[b].append(a)
+
         visited = set()
         currPath = set()
-        graph = defaultdict(list)
 
-        for arr in prerequisites:
-            graph[arr[1]].append(arr[0])
-        
-        def cycle(course):
-            
+        def isCycle(course):
             if course in currPath:
-                return True # there is a cycle
-            
-            if course in visited: 
-                return False # previously explored path with no cycle 
-            
-            currPath.add(course)
-            visited.add(course)
-            for nextCourse in graph[course]:
-                if nextCourse not in visited:
-                    if cycle(nextCourse):
-                        return True
-                
-            currPath.remove(course)
-            visited.add(course) # added after it's whole path is proven acyclic. 
-            return False
-        
-        for course in range(numCourses):
-            if course not in visited:
-                if cycle(course): # if true that there is a cycle
-                    return False # cycle detected
+                return True  # cycle found
+            if course in visited:
+                return False  # already processed and no cycle
 
-        return True # course can be completed
+            currPath.add(course)
+            for neighbor in graph[course]:
+                if isCycle(neighbor):
+                    return True
+            currPath.remove(course)
+            visited.add(course)
+            return False
+
+        for course in range(numCourses):  # important: cover disconnected nodes
+            if isCycle(course):
+                return False  # cycle detected
+
+        return True
 
 class TestCourseSchedule(unittest.TestCase):
     def setUp(self):
