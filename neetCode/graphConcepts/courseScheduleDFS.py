@@ -3,32 +3,43 @@ from collections import defaultdict
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
-        graph = defaultdict(list)
-        for a, b in prerequisites:
-            graph[b].append(a)
+        
+        # turn list datastruct to adjlist
+        graph = defaultdict(list) # O(V + E) space
 
-        visited = set()
-        currPath = set()
+        for course, prereq in prerequisites:
+            graph[prereq].append(course)
+        
+        # declare visited and currPath DS as set
+        visited, currPath = set(), set() # O(V + E) space
 
-        def isCycle(course):
-            if course in currPath:
-                return True  # cycle found
-            if course in visited:
-                return False  # already processed and no cycle
+        def isCycle(currCourse):
+            
+            # Establish base cases here:
+            if currCourse in currPath:
+                return True # Cycle exist in this currPath
 
-            currPath.add(course)
-            for neighbor in graph[course]:
-                if isCycle(neighbor):
+            if currCourse in visited:
+                return False # wanna avoid redoing work already done
+            
+            currPath.add(currCourse)
+
+            for nextCourse in graph[currCourse]: # TC O(V + E)
+                if isCycle(nextCourse):
                     return True
-            currPath.remove(course)
-            visited.add(course)
+            
+            currPath.remove(currCourse)
+            visited.add(currCourse)
             return False
 
-        for course in range(numCourses):  # important: cover disconnected nodes
-            if isCycle(course):
-                return False  # cycle detected
-
+        for course in range(numCourses): # O(V + E) TC
+            #only explore courses that have not been explored
+            if course not in visited:
+                if isCycle(course):
+                    return False
+        # if no cycle is detected
         return True
+                
 
 class TestCourseSchedule(unittest.TestCase):
     def setUp(self):
