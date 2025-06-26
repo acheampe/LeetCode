@@ -3,36 +3,27 @@ from collections import defaultdict, deque
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
-    
-        graph = defaultdict(list)
-        inDegree = {
-            
-        }
-        stack = deque()
-        
-        for a, b in prerequisites:
-            graph[b].append(a)
-        
-        for course in graph:
-            inDegree[course] = 0
-            for _ in graph[course]:
-                inDegree[course] += 1
-        
-        for course, preq in inDegree.items():
-            if preq == 0:
-                stack.append(course)
-        
-        while stack:
-            pass
-                
-                
-            
-            
-            
-            
-        
-      
+        graph = defaultdict(set)
+        inDegree = {i: 0 for i in range(numCourses)}
 
+        for pre, course in prerequisites:
+            graph[pre].add(course)
+            inDegree[course] += 1
+
+        stack = deque([node for node in inDegree if inDegree[node] == 0])
+        count = 0
+
+        while stack:
+            curr = stack.popleft()
+            count += 1
+            for neighbor in graph[curr]:
+                inDegree[neighbor] -= 1
+                if inDegree[neighbor] == 0:
+                    stack.append(neighbor)
+
+        return count == numCourses
+                
+            
 class TestCourseSchedule(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
