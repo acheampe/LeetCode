@@ -9,28 +9,22 @@ class Solution:
         seen = set()
         count = 0 
         
-        def isIsland(x, y):
+        def formIsland(x, y):
             
-            # base cases
-            if  x < 0 or x >= m or y < 0 or y >= n:
-                return True # out of bounds are assumed to be zeros, and all coords need to be 0 to quantify adj surroundings as an Island
-
-            
-            if (x, y) not in seen:
-                for dr, dc in directions:
-                    while not grid[x][y] == "1" and isIsland( dr + x, dc + y ):
+            for dr, dc in directions:
+                if x + dr >= 0 and x + dr < m and y + dc >= 0 and y + dc < n:
+                    if grid[x + dr][y + dc] == "1" and (x + dr, y + dc) not in seen: # if true then it makes up part of the island  
                         seen.add((( dr + x, dc + y )))
-                        return False
-                    seen.add((( dr + x, dc + y )))
-            seen.add((x, y))
-            return True
+                        formIsland( dr + x, dc + y )
 
             
         for i in range(m):
             for j in range(n):
                 if (i, j) not in seen:
-                    if isIsland(i, j): # returns true if coord and it's adj forms a valid island
-                        count += 1
+                    seen.add((i, j))
+                    count += 1 # count as an island since not in seen
+                    formIsland(i, j) # find and add all coordinates to seen that makes the island 
+                        
         return count
         
 
@@ -39,15 +33,15 @@ class TestNumIslands(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
-    # def test_example1(self):
-    #     grid = [
-    #         ["1","1","1","1","0"],
-    #         ["1","1","0","1","0"],
-    #         ["1","1","0","0","0"],
-    #         ["0","0","0","0","0"]
-    #     ]
-    #     expected = 1
-    #     self.assertEqual(self.sol.numIslands(grid), expected)
+    def test_example1(self):
+        grid = [
+            ["1","1","1","1","0"],
+            ["1","1","0","1","0"],
+            ["1","1","0","0","0"],
+            ["0","0","0","0","0"]
+        ]
+        expected = 1
+        self.assertEqual(self.sol.numIslands(grid), expected)
 
     # def test_example2(self):
     #     grid = [
