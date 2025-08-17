@@ -6,12 +6,12 @@ class Solution:
         m, n = len(grid), len(grid[0])
         count = 0
         mapped = set() # meaning we have marked this as part of an island
-        directions = [[0, 1], [0,  -1], [1, 0], [-1, 0]]
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         
         def mapIsland(r , c):
             
             # create base case
-            if (r, c) in mapped or ( r < 0 or r >= m ) or ( c < 0 or c >= n) or grid[r][c] == "0":
+            if (r, c) in mapped or ( r < 0 or r >= m ) or ( c < 0 or c >= n ) or grid[r][c] == "0":
                 return 
             
             # add to mapped Island
