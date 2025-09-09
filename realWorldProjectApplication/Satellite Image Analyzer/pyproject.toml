@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gridtools"
 version = "0.1.0"
-description = "Flood-fill and grid-based algorithms: count islands, max area, water regions, capture regions"
+description = "Tool to detect body of water using satellite image - counts body of water, find largest body of water, detect enclosed lake, and determine flood risk zone"
 authors = [
     { name = "Emmanuel Acheampong", email = "acheampe@oregonstate.edu" }
 ]
