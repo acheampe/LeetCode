@@ -7,7 +7,7 @@ name = "gridtools"
 version = "0.1.0"
 description = "Flood-fill and grid-based algorithms: count islands, max area, water regions, capture regions"
 authors = [
-    { name = "Jayden Emmanuel", email = "jayden@example.com" }
+    { name = "Emmanuel Acheampong", email = "acheampe@oregonstate.edu" }
 ]
 readme = "README.md"
 license = { text = "MIT" }
