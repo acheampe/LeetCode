@@ -1,3 +1,16 @@
+Metadata-Version: 2.4
+Name: gridtools
+Version: 0.1.0
+Summary: Flood-fill and grid-based algorithms: count islands, max area, water regions, capture regions
+Author-email: Jayden Emmanuel <jayden@example.com>
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: black>=23.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+
 # 🌊 Satellite Image Analyzer: Grid & Flood Fill Practice  
 
 ## 📌 Problem Statement  
