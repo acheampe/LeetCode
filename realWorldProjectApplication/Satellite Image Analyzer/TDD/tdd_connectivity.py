@@ -14,6 +14,8 @@ class TestConnectivity(unittest.TestCase):
             [0, 0, 0],
         ]
         
+        self.empty_grid = [[]]
+        
     def test_neighbors_4_center(self):
         
         # nei of (1, 1), should be up, down, left, right
@@ -55,4 +57,10 @@ class TestConnectivity(unittest.TestCase):
         # test coord: (1, 2)
         expected = [(0,2), (2, 2), (1, 1)]
         result = neighbors_4(1, 2, self.grid)
+        self.assertCountEqual(result, expected, msg=f"neighbors_4 for right edge (1, 2) returned {result}, expected {expected}")
+
+    def test_empty_grid(self):
+        # test coord: (1, 2)
+        expected = []
+        result = neighbors_4(1, 2, self.empty_grid)
         self.assertCountEqual(result, expected, msg=f"neighbors_4 for right edge (1, 2) returned {result}, expected {expected}")
