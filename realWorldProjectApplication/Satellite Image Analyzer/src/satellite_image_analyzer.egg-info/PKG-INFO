@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: satellite-image-analyzer
+Version: 0.1.0
+Summary: Satellite Image Analyzer project using flood fill and grid algorithms
+Author-email: Emmanuel Acheampng <acheampe@oregonstate.edu>
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"

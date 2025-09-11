@@ -1,5 +1,5 @@
 import unittest
-from src.gridtools import predicates
+from gridtools import predicates
 
 class TestPredicates(unittest.TestCase):
     

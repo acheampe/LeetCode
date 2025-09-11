@@ -1,5 +1,5 @@
 import pytest
-from src.gridtools.predicates import (
+from gridtools.predicates import (
     is_within_bound,
     is_water,
     is_land,
