@@ -2,7 +2,7 @@ import unittest
 
 from gridtools.connectivity import (
     neighbors_4,
-    # neighbors_8,
+    neighbors_8,
 )
 
 class TestConnectivity(unittest.TestCase):
@@ -64,3 +64,30 @@ class TestConnectivity(unittest.TestCase):
         expected = []
         result = neighbors_4(1, 2, self.empty_grid)
         self.assertCountEqual(result, expected, msg=f"neighbors_4 for right edge (1, 2) returned {result}, expected {expected}")
+
+    def test_neighbors_8_center(self):
+        # (1,1) should return all 8 directions
+        expected = [
+            (0, 1), (2, 1), (1, 0), (1, 2),
+            (0, 0), (0, 2), (2, 0), (2, 2)
+        ]
+        result = neighbors_8(1, 1, self.grid)
+        self.assertCountEqual(result, expected, msg=f"neighbors_8 for center (1,1) returned {result}, expected {expected}")
+
+    def test_neighbors_8_top_left(self):
+        # (0,0) should return (0,1), (1,0), (1,1)
+        expected = [(0,1), (1,0), (1,1)]
+        result = neighbors_8(0, 0, self.grid)
+        self.assertCountEqual(result, expected, msg=f"neighbors_8 for center (0,0) returned {result}, expected {expected}")
+
+    def test_neighbors_8_bottom_right(self):
+        # (2,2) should return (1,2), (2,1), (1,1)
+        expected = [(1,2), (2,1), (1,1)]
+        result = neighbors_8(2, 2, self.grid)
+        self.assertCountEqual(result, expected, msg=f"neighbors_8 for center (2,2) returned {result}, expected {expected}")
+
+    def test_neighbors_8_edge_middle(self):
+        # (0,1) (top edge middle) should return (0,0), (0,2), (1,0), (1,1), (1,2)
+        expected = [(0,0), (0,2), (1,0), (1,1), (1,2)]
+        result = neighbors_8(0, 1, self.grid)
+        self.assertCountEqual(result, expected, msg=f"neighbors_8 for center (0,1) returned {result}, expected {expected}")
