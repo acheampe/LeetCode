@@ -21,6 +21,12 @@ class TestFloodfill(unittest.TestCase):
         result = floodfill(1, 1, self.grid)
         self.assertEqual(result, 
                             expected, 
-                            msg=f"floodfill_water for (1, 1) returned {result}, expected {expected}")
+                            msg=f"floodfill for (1, 1) returned {result}, expected {expected}")
         
         
+    def test_landfill_return_empty_on_water_cell(self):
+        expected: list[tuple[int, int]] = []
+        result = landfill(0, 0, self.grid)
+        self.assertEqual(expected,
+                         result,
+                         msg=f"landfill for (0, 0) return {result}, expected {expected}")
