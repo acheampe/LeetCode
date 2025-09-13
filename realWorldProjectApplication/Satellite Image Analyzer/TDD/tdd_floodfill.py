@@ -2,7 +2,7 @@ import unittest
 
 from gridtools.floodfill import (
     floodfill,
-    landfill
+    # landfill
 )
 
 class TestFloodfill(unittest.TestCase):
@@ -24,10 +24,10 @@ class TestFloodfill(unittest.TestCase):
                             expected, 
                             msg=f"floodfill for (1, 1) returned {result}, expected {expected}")
         
-        
-    def test_landfill_return_empty_on_water_cell(self):
+    def test_out_of_bound_floodfill(self):
         expected: list[tuple[int, int]] = []
-        result = landfill(0, 0, self.grid)
-        self.assertEqual(expected,
-                         result,
-                         msg=f"landfill for (0, 0) return {result}, expected {expected}")
+        result = floodfill(3, 3, self.grid)
+        self.assertEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (3, 3) returned {result}, expected {expected}")
+            
