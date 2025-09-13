@@ -2,6 +2,7 @@ import unittest
 
 from gridtools.floodfill import (
     floodfill,
+    landfill
 )
 
 class TestFloodfill(unittest.TestCase):
