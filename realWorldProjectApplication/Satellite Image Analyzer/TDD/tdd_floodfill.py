@@ -47,4 +47,11 @@ class TestFloodfill(unittest.TestCase):
         self.assertCountEqual(result, 
                             expected, 
                             msg=f"floodfill for (3, 3) returned {result}, expected {expected}")
-                       
+
+    def test_two_diag_water_cells_neigh_8(self):
+        expected: list[tuple[int, int]] = [(5, 1), (4, 0)]
+        result = floodfill(5, 1, self.grid)
+        self.assertCountEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (5, 1) returned {result}, expected {expected}")
+                                   
