@@ -11,7 +11,7 @@ from gridtools.predicates import (
 )
 
 def fill(i: int, j: int, grid: list[list[int]]):
-    return 
+    return []
 
 def floodfill(k: int, l: int, curr_grid: list[list[int]]):
     return fill(k, l, curr_grid)
