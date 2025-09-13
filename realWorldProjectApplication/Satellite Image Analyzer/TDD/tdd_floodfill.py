@@ -14,6 +14,8 @@ class TestFloodfill(unittest.TestCase):
             [1, 0, 0, 1],
             [0, 1, 0, 0],
             [0, 0, 1, 1],
+            [1, 0, 0, 0],
+            [0, 1, 0, 0]
         ]
         
         # Legend: 0 = land, 1 = water
