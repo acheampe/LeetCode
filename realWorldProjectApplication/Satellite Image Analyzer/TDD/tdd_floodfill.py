@@ -27,10 +27,10 @@ class TestFloodfill(unittest.TestCase):
         
     def test_out_of_bound_floodfill(self):
         expected: list[tuple[int, int]] = []
-        result = floodfill(4, 4, self.grid)
+        result = floodfill(10, 10, self.grid)
         self.assertEqual(result, 
                             expected, 
-                            msg=f"floodfill for (4, 4) returned {result}, expected {expected}")
+                            msg=f"floodfill for (10, 10) returned {result}, expected {expected}")
             
     def test_isolated_water_cell(self):
         expected: list[tuple[int, int]] = [(1, 3)]
@@ -38,4 +38,11 @@ class TestFloodfill(unittest.TestCase):
         self.assertEqual(result, 
                             expected, 
                             msg=f"floodfill for (1, 3) returned {result}, expected {expected}")
-            
+
+    def test_two_adjacent_water_cells(self):
+        expected: list[tuple[int, int]] = [(1, 3)]
+        result = floodfill(1, 3, self.grid)
+        self.assertEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (1, 3) returned {result}, expected {expected}")
+                       
