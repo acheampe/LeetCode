@@ -13,7 +13,7 @@ class TestFloodfill(unittest.TestCase):
             [1, 1, 0, 0],
             [1, 0, 0, 1],
             [0, 1, 0, 0],
-            [0, 0, 1, 1]
+            [0, 0, 1, 1],
         ]
         
         # Legend: 0 = land, 1 = water
@@ -39,10 +39,10 @@ class TestFloodfill(unittest.TestCase):
                             expected, 
                             msg=f"floodfill for (1, 3) returned {result}, expected {expected}")
 
-    def test_two_adjacent_water_cells(self):
-        expected: list[tuple[int, int]] = [(1, 3)]
+    def test_two_adjacent_water_cells_neigh_4(self):
+        expected: list[tuple[int, int]] = [(3, 2), (3, 3)]
         result = floodfill(3, 3, self.grid)
-        self.assertEqual(result, 
+        self.assertCountEqual(result, 
                             expected, 
                             msg=f"floodfill for (3, 3) returned {result}, expected {expected}")
                        
