@@ -41,8 +41,8 @@ class TestFloodfill(unittest.TestCase):
 
     def test_two_adjacent_water_cells(self):
         expected: list[tuple[int, int]] = [(1, 3)]
-        result = floodfill(1, 3, self.grid)
+        result = floodfill(3, 3, self.grid)
         self.assertEqual(result, 
                             expected, 
-                            msg=f"floodfill for (1, 3) returned {result}, expected {expected}")
+                            msg=f"floodfill for (3, 3) returned {result}, expected {expected}")
                        
