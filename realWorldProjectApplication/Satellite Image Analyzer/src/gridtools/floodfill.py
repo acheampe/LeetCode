@@ -19,7 +19,7 @@ def floodfill(k: int, l: int, curr_grid: list[list[int]]):
     valid_nei: list[tuple[int, int]] = []
     
     # check curr coords if land (0) or water (1)
-    if curr_grid[k][l] == 1:
+    if is_within_bound(k, l, curr_grid) and curr_grid[k][l] == 1:
         valid_nei.append((k, l))
         curr_nei = fill(k, l, curr_grid)
     
