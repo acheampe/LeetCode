@@ -35,6 +35,10 @@ class TestFloodfill(unittest.TestCase):
             [0, 1, 1, 0],
             [1, 0, 1, 0]
         ]
+        
+        self.empty_grid = [
+            []
+        ]
         # Legend: 0 = land, 1 = water
         
     def test_floodfill_returns_empty_on_land_cell(self):
@@ -109,4 +113,11 @@ class TestFloodfill(unittest.TestCase):
         self.assertCountEqual(result, 
                             expected, 
                             msg=f"floodfill for (1, 2) returned {result}, expected {expected}")
-                                                  
+
+    def test_empty_grid(self):
+        expected: list[tuple[int, int]] = []
+        result = floodfill(1, 2, self.complex_grid, neighbors_8)
+        self.assertCountEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (1, 2) returned {result}, expected {expected}")
+                                                   

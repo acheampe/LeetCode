@@ -48,5 +48,29 @@ def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborF
     return valid_nei
                 
 
-# def landfill(k: int, l: int, curr_grid: list[list[int]]):
-#     return fill(k, l, curr_grid)
+### DFS APPROACH ###
+# def floodfill_recursive(
+#     r: int,
+#     c: int,
+#     grid: list[list[int]],
+#     neighbor_fn: NeighborFn,
+#     visited: set[tuple[int, int]] | None = None
+# ) -> list[tuple[int, int]]:
+#     """Recursive DFS floodfill returning all connected water cells."""
+
+#     if visited is None:
+#         visited = set()
+
+#     # base case: out of bounds, not water, or already seen
+#     if not is_within_bound(r, c, grid) or not is_water(r, c, grid) or (r, c) in visited:
+#         return []
+
+#     # mark current as visited
+#     visited.add((r, c))
+#     cells = [(r, c)]
+
+#     # recursively explore neighbors
+#     for nr, nc in neighbor_fn(r, c, grid):
+#         cells.extend(floodfill_recursive(nr, nc, grid, neighbor_fn, visited))
+
+#     return cells
