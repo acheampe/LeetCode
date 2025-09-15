@@ -116,7 +116,7 @@ class TestFloodfill(unittest.TestCase):
 
     def test_empty_grid(self):
         expected: list[tuple[int, int]] = []
-        result = floodfill(1, 2, self.complex_grid, neighbors_8)
+        result = floodfill(1, 2, self.empty_grid, neighbors_8)
         self.assertCountEqual(result, 
                             expected, 
                             msg=f"floodfill for (1, 2) returned {result}, expected {expected}")

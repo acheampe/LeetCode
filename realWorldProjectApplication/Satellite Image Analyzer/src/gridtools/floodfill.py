@@ -20,10 +20,6 @@ NeighborFn = Callable[[int, int, list[list[int]]], list[tuple[int, int]]]
 def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborFn):
     """returns all connected lake cells in grid"""
     
-    # defensive assertions
-    assert len(curr_grid) > 0, f"No rows found in {curr_grid}"
-    assert len(curr_grid[0]) > 0, f"No column found in {curr_grid}"
-    
     explore_nei = deque()
     valid_nei: list[tuple[int, int]] = []
     
