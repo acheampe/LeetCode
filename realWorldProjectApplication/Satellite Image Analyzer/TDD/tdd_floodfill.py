@@ -77,7 +77,7 @@ class TestFloodfill(unittest.TestCase):
                                            (1, 0), (1, 1), (1, 2),
                                            (2, 0), (2, 1), (2, 2),
                                            ]
-        result = floodfill(1, 1, self.basic_grid, neighbors_8)
+        result = floodfill(1, 1, self.uniformed_grid, neighbors_4)
         self.assertCountEqual(result, 
                             expected, 
                             msg=f"floodfill for (1, 1) returned {result}, expected {expected}")
