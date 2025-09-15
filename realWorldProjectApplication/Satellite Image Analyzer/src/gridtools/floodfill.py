@@ -18,7 +18,47 @@ NeighborFn = Callable[[int, int, list[list[int]]], list[tuple[int, int]]]
 
 # utilizing BFS approach to overcome python's 1,000 recursion depth limit
 def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborFn):
-    """returns all connected lake cells in grid"""
+    """
+    Floodfill traversal for water regions in a grid.
+
+    DESIGN INTENT
+    -------------
+    - This function is deliberately kept *generic and minimal*:
+      it only finds and returns all connected water cells starting
+      from a given coordinate (k, l).
+    - "Connected" is defined by the `neighbor_fn` passed in
+      (e.g., `neighbors_4` for 4-directional adjacency, 
+      or `neighbors_8` for 8-directional adjacency).
+    - The function does not:
+        * check whether a region touches the grid edge
+        * compute sizes, counts, or enclosed status
+        * mutate the grid beyond visitation bookkeeping
+      Those concerns belong in higher-level feature modules
+      (e.g., `count_water_bodies`, `max_water_area`, etc.).
+
+    PARAMETERS
+    ----------
+    k, l : int
+        Starting row and column coordinates.
+    curr_grid : list[list[int]]
+        The binary grid (0 = land, 1 = water).
+    neighbor_fn : Callable
+        Function returning neighbors of a cell given (i, j, grid).
+        Typically `neighbors_4` or `neighbors_8`.
+
+    RETURNS
+    -------
+    list[tuple[int, int]]
+        A list of coordinates belonging to the connected water
+        region. Returned order is traversal-dependent and not guaranteed.
+
+    NOTES
+    -----
+    - BFS implementation is used here for clarity and to avoid 
+      recursion depth limits.
+    - Caller is responsible for interpreting the returned list
+      (e.g., computing area, marking cells, or checking edge-contact).
+    """
     
     explore_nei = deque()
     valid_nei: list[tuple[int, int]] = []
