@@ -16,6 +16,7 @@ from gridtools.predicates import (
 # calling a function with args [int, int, list[list[int]]] that returns a list[tuple[int, int]]
 NeighborFn = Callable[[int, int, list[list[int]]], list[tuple[int, int]]]
 
+# utilizing BFS approach to overcome python's 1,000 recursion depth limit
 def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborFn):
     """returns all connected lake cells in grid"""
     

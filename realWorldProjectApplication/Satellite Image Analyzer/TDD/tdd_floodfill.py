@@ -82,4 +82,25 @@ class TestFloodfill(unittest.TestCase):
                             expected, 
                             msg=f"floodfill for (1, 1) returned {result}, expected {expected}")
         
-                                   
+    def test_grid_with_all_water_cells_nei_8(self):
+        expected: list[tuple[int, int]] = [(0, 0), (0, 1), (0, 2),
+                                           (1, 0), (1, 1), (1, 2),
+                                           (2, 0), (2, 1), (2, 2),
+                                           ]
+        result = floodfill(1, 1, self.uniformed_grid, neighbors_8)
+        self.assertCountEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (1, 1) returned {result}, expected {expected}")
+
+            # [1, 1, 0, 1],
+            # [0, 0, 1, 0],
+            # [0, 1, 1, 0],
+            # [1, 0, 1, 0]
+    def test_complex_grid_with_water_cells_nei_4(self):
+        expected: list[tuple[int, int]] = [(1, 2), (2, 1), (2, 2), (3, 2)
+                                           ]
+        result = floodfill(1, 2, self.complex_grid, neighbors_4)
+        self.assertCountEqual(result, 
+                            expected, 
+                            msg=f"floodfill for (1, 2) returned {result}, expected {expected}")
+                                                  
