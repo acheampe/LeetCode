@@ -28,6 +28,15 @@ class TestCountWaterBodies(unittest.TestCase):
         self.empty_grid = [
             []
         ]
+
+        self.complex_gridv2 = [
+            [1, 1, 0, 1],
+            [0, 0, 1, 0],
+            [0, 1, 1, 0],
+            [1, 0, 1, 0],
+            [0, 0, 0, 0],
+            [1, 1, 0, 0]
+        ]
         
     def test_empty_grid_returns_zero_with_neighbors_4(self):
         expected: int = 0
@@ -69,4 +78,11 @@ class TestCountWaterBodies(unittest.TestCase):
         result: int = count_water_bodies(self.complex_grid, neighbors_8)
         self.assertEqual(result, expected, 
                             msg=f"Amount of bodies of water returned {result}, expected {expected}"
-                            )       
+                            )  
+
+    def test_uniformed_grid_return_2_with_neighbors_8(self):
+        expected: int = 2
+        result: int = count_water_bodies(self.complex_gridv2, neighbors_8)
+        self.assertEqual(result, expected, 
+                            msg=f"Amount of bodies of water returned {result}, expected {expected}"
+                            )     
