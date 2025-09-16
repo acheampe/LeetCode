@@ -12,6 +12,11 @@ class TestCountWaterBodiesBlackBox(unittest.TestCase):
         result = count_water_bodies(grid, neighbors_4)
         self.assertEqual(result, expected)
 
+    def test_empty_gridv2(self):
+        grid = []
+        result = count_water_bodies(grid, neighbors_4)
+        self.assertEqual(result, 0)
+
     def test_no_water(self):
         grid = [
             [0, 0],
