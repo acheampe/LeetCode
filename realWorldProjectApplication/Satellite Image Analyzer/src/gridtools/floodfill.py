@@ -10,7 +10,7 @@ from gridtools.predicates import (
 NeighborFn = Callable[[int, int, list[list[int]]], list[tuple[int, int]]]
 
 # utilizing BFS approach to overcome python's 1,000 recursion depth limit
-def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborFn):
+def floodfill(k: int, l: int, curr_grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tuple[int, int]]:
     """
     Floodfill traversal for water regions in a grid.
 
