@@ -14,23 +14,22 @@ def count_water_bodies(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
         int: returns the amount of separate bodies of water provides in image
     """
     
-    m, n = len(grid), len(grid[0])
-    body_count: int = 0
+    m = len(grid)
+    if not m:
+        return 0
+    n = len(grid[0])
+    if not n:
+        return 0
     
-    if not m or not n:
-        return 0 
-    
-    explored_path: set = set()
+    body_count = 0
+    visited: set[tuple[int, int]] = set()
     
     for i in range(m):
         for j in range(n):
-            
-            if (i, j) not in explored_path:
-                accrued_body: list[tuple[int, int]] = floodfill(i, j, grid, neighbor_fn)
-                if accrued_body:
+            if (i, j) not in visited:
+                region = floodfill(i, j, grid, neighbor_fn)
+                if region:
                     body_count += 1
-                    for coord in accrued_body:
-                        explored_path.add(coord)
-                    
+                    visited.update(region)
     
     return body_count
