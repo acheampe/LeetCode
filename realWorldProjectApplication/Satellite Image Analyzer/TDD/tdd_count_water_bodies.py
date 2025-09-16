@@ -35,4 +35,11 @@ class TestCountWaterBodies(unittest.TestCase):
         self.assertEqual(result, expected, 
                             msg=f"Amount of bodies of water returned {result}, expected {expected}"
                             )
+
+    def test_empty_grid_returns_zero_with_neighbors_8(self):
+        expected: int = 0
+        result: int = count_water_bodies(self.empty_grid, neighbors_8)
+        self.assertEqual(result, expected, 
+                            msg=f"Amount of bodies of water returned {result}, expected {expected}"
+                            )
         
