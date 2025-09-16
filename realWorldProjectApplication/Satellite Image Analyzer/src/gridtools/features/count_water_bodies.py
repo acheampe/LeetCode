@@ -1,6 +1,8 @@
-from gridtools.floodfill import floodfill
+from gridtools.floodfill import NeighborFn, floodfill
+from collections.abc import Callable
 
-def count_water_bodies(i: int, j: int, grid: list[list[int]]) -> int:
+
+def count_water_bodies(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     """_summary_
 
     Args:
