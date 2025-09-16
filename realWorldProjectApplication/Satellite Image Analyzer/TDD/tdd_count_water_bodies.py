@@ -56,3 +56,17 @@ class TestCountWaterBodies(unittest.TestCase):
         self.assertEqual(result, expected, 
                             msg=f"Amount of bodies of water returned {result}, expected {expected}"
                             )
+
+    def test_uniformed_grid_return_4_with_neighbors_4(self):
+        expected: int = 4
+        result: int = count_water_bodies(self.complex_grid, neighbors_4)
+        self.assertEqual(result, expected, 
+                            msg=f"Amount of bodies of water returned {result}, expected {expected}"
+                            )
+
+    def test_uniformed_grid_return_1_with_neighbors_8(self):
+        expected: int = 1
+        result: int = count_water_bodies(self.complex_grid, neighbors_8)
+        self.assertEqual(result, expected, 
+                            msg=f"Amount of bodies of water returned {result}, expected {expected}"
+                            )       
