@@ -1,15 +1,14 @@
 from gridtools.floodfill import NeighborFn, floodfill
-from collections.abc import Callable
+from gridtools.predicates import is_water
 
 
 def count_water_bodies(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     """_summary_
 
     Args:
-        i (int): row number of grid coordinate
-        j (int): col number of grid coordinate
-        grid (list[list[int]]): grid image to analyze count_water bodies
-
+        grid (list[list[int]]): Count distinct water bodies (connected groups of 1s) in the grid, 
+        using the given neighbor function.
+        
     Returns:
         int: returns the amount of separate bodies of water provides in image
     """
@@ -26,7 +25,7 @@ def count_water_bodies(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     
     for i in range(m):
         for j in range(n):
-            if (i, j) not in visited:
+            if (i, j) not in visited and is_water(i, j, grid):
                 region = floodfill(i, j, grid, neighbor_fn)
                 if region:
                     body_count += 1
