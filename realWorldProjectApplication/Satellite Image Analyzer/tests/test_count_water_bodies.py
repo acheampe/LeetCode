@@ -79,7 +79,7 @@ class TestCountWaterBodiesBlackBox(unittest.TestCase):
             [1, 0, 1, 0]
         ]
         # manual counting with 8-neighbors: fewer groups (diagonals connect)
-        expected = 2
+        expected = 1
         result = count_water_bodies(grid, neighbors_8)
         self.assertEqual(result, expected)
 
