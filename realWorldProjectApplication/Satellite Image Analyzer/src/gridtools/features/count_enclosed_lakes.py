@@ -36,15 +36,16 @@ def count_enclosed_lakes(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     for i in range(m):
         for j in range(n):
             if (i, j) not in visited and is_water(i, j, grid) and is_interior_coord(i, j, grid):
-                region = floodfill(i, j, grid, neighbor_fn)
-                visited.update(region)
+                cells_to_check = floodfill(i, j, grid, neighbor_fn)
+                visited.update(cells_to_check)
+                touches_edge: bool = False
                 
-                while region:
-                    r, c = region.pop()
+                while cells_to_check:
+                    r, c = cells_to_check.pop()
                     if is_edge_coord(r, c, grid):
-                        break # wonder if this is appropriate way to handle a production level loop
+                        touches_edge = True
                 
-                else:
+                if not touches_edge:
                     count_enclosed += 1
                         
     return count_enclosed

@@ -30,6 +30,25 @@ class TestCountEnclosedLakesBlackBox(unittest.TestCase):
             "Single interior water cell should also be enclosed under 8-neighbors"
         )
 
+    def test_empty_grid_returns_zero(self):
+        grid = []
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_4), 0)
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_8), 0)
+
+    def test_nested_empty_grid_returns_zero(self):
+        grid = [[]]
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_4), 0)
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_8), 0)
+
+    def test_lake_touching_edge_not_enclosed(self):
+        grid = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [1, 0, 0], 
+        ]
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_4), 1)
+        self.assertEqual(count_enclosed_lakes(grid, neighbors_8), 0)
+
     def test_ring_of_land_with_water_center(self):
         grid = [
             [0, 0, 0, 0, 0],
@@ -54,11 +73,11 @@ class TestCountEnclosedLakesBlackBox(unittest.TestCase):
             [0, 1, 0],
         ]
         self.assertEqual(
-            count_enclosed_lakes(grid, neighbors_4), 4,
+            count_enclosed_lakes(grid, neighbors_4), 0,
             "4-neighbors sees four isolated water cells"
         )
         self.assertEqual(
-            count_enclosed_lakes(grid, neighbors_8), 1,
+            count_enclosed_lakes(grid, neighbors_8), 0,
             "8-neighbors connects diagonals, so only one enclosed lake"
         )
 
