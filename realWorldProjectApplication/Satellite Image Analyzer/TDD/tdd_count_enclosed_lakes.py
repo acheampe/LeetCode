@@ -125,4 +125,13 @@ class TestCountEnclosedLakes(unittest.TestCase):
         self.assertEqual(expected,
                             returned,
                             msg=f"expected {expected} but returned {returned}"
+                            )
+        
+    def test_complex_gridv2_return_one_nei_4(self):
+        expected: int = 1
+        returned: int = count_enclosed_lakes(self.empty_nested_grid, neighbors_4)
+        
+        self.assertEqual(expected,
+                            returned,
+                            msg=f"expected {expected} but returned {returned}"
                             )               
