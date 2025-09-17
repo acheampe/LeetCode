@@ -45,7 +45,7 @@ class TestCountEnclosedLakes(unittest.TestCase):
             [1, 1, 0, 0],
         ]
 
-        # 3 enclosed for neighbor_4, 2 enclosed for neighbor_8
+        # 3 enclosed for neighbor_4, 1 enclosed for neighbor_8
         self.complex_gridv3 = [
             [1, 0, 0, 0, 1, 0, 0, 0],
             [0, 0, 1, 0, 0, 0, 1, 0],
@@ -153,3 +153,30 @@ class TestCountEnclosedLakes(unittest.TestCase):
                             returned,
                             msg=f"expected {expected} but returned {returned}"
                             )  
+        
+    def test_complex_gridv3_return_one_nei_8(self):
+        expected: int = 1
+        returned: int = count_enclosed_lakes(self.complex_gridv3, neighbors_8)
+        
+        self.assertEqual(expected,
+                            returned,
+                            msg=f"expected {expected} but returned {returned}"
+                            ) 
+    
+    def test_cornered_water_grid_return_zero_nei_4(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.cornered_water_grid, neighbors_4)
+        
+        self.assertEqual(expected,
+                            returned,
+                            msg=f"expected {expected} but returned {returned}"
+                            )    
+        
+    def test_cornered_water_grid_return_zero_nei_8(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.cornered_water_grid, neighbors_8)
+        
+        self.assertEqual(expected,
+                            returned,
+                            msg=f"expected {expected} but returned {returned}"
+                            )             
