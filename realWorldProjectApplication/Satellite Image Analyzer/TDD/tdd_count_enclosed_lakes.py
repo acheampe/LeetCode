@@ -54,3 +54,12 @@ class TestCountEnclosedLakes(unittest.TestCase):
             [0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 0, 0, 1, 1, 0, 0],
         ]
+    
+    def test_empty_grid_return_zero_nei_4(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.empty_grid, neighbors_4)
+        
+        self.assertEqual(expected,
+                         returned,
+                         msg=f"expected {expected} but returned {returned}"
+                         )
