@@ -1,5 +1,11 @@
 import unittest
 
+from gridtools.features.count_enclosed_lakes import count_enclosed_lakes
+
+from gridtools.connectivity import (
+    neighbors_4,
+    neighbors_8,
+)
 class TestCountEnclosedLakes(unittest.TestCase):
     
     def setUp(self) -> None:
