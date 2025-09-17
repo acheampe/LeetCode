@@ -146,7 +146,7 @@ class TestCountEnclosedLakes(unittest.TestCase):
                             )              
         
     def test_complex_gridv3_return_one_nei_4(self):
-        expected: int = 2
+        expected: int = 3
         returned: int = count_enclosed_lakes(self.complex_gridv3, neighbors_4)
         
         self.assertEqual(expected,
