@@ -90,3 +90,39 @@ class TestCountEnclosedLakes(unittest.TestCase):
                          returned,
                          msg=f"expected {expected} but returned {returned}"
                          )
+
+    def test_uniformed_grid_return_zero_nei_4(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.empty_nested_grid, neighbors_4)
+        
+        self.assertEqual(expected,
+                         returned,
+                         msg=f"expected {expected} but returned {returned}"
+                         )
+        
+    def test_uniformed_grid_return_zero_nei_8(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.empty_nested_grid, neighbors_8)
+        
+        self.assertEqual(expected,
+                         returned,
+                         msg=f"expected {expected} but returned {returned}"
+                         )  
+ 
+    def test_complex_grid_no_enclosed_zero_nei_4(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.empty_nested_grid, neighbors_4)
+        
+        self.assertEqual(expected,
+                         returned,
+                         msg=f"expected {expected} but returned {returned}"
+                         )  
+    
+    def test_complex_grid_no_enclosed_return_zero_nei_8(self):
+        expected: int = 0
+        returned: int = count_enclosed_lakes(self.empty_nested_grid, neighbors_8)
+        
+        self.assertEqual(expected,
+                            returned,
+                            msg=f"expected {expected} but returned {returned}"
+                            )               
