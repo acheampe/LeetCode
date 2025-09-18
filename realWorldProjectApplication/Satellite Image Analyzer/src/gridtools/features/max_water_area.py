@@ -18,4 +18,7 @@ def max_water_area(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     Returns:
         int: returns the max area of body of water in grid
     """
-    return None
+    
+    max_area: int = 0
+    
+    return max_area

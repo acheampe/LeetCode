@@ -17,7 +17,7 @@ class TestMaxWaterBodies(unittest.TestCase):
                             msg = f"expected 0 since grid is empty"
                             )
 
-        # self.assertEqual(max_water_bodies(grid, neighbors_8),
-        #                     0,
-        #                     msg = f", expected 0 since grid is empty"
-        #                     )       
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            0,
+                            msg = f"expected 0 since grid is empty"
+                            )       
