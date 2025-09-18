@@ -12,10 +12,11 @@ def max_water_area(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
     Return the maximum area (size in cells) of any connected water body (1s)
     in the given grid, using the chosen neighbor function.
     """
-    if not grid or not grid[0]:
-        return 0
-
+    
     max_area = 0
+    if not grid or not grid[0]:
+        return max_area
+
     visited: set[tuple[int, int]] = set()
     m, n = len(grid), len(grid[0])
 
