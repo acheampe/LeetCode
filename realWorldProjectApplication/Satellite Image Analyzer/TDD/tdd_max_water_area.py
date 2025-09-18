@@ -113,12 +113,46 @@ class TestMaxWaterBodies(unittest.TestCase):
 
         self.assertEqual(max_water_area(grid, neighbors_4),
                             1,
-                            msg = f"expected 4 since grid does not traverse diagonally"
+                            msg = f"expected 1"
                             )
 
         self.assertEqual(max_water_area(grid, neighbors_8),
                             1,
-                            msg = f"expected 5 since grid traverses diagonally"
+                            msg = f"expected 1"
                             )          
 
-             
+    def test_grid_with_edge_cluster(self):
+        grid = [
+            [1, 1, 0, 0],
+            [1, 0, 0, 1],
+            [0, 0, 0, 1],
+            [0, 1, 1, 1]
+        ]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            5,
+                            msg = f"expected 5"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            5,
+                            msg = f"expected 5"
+                            )    
+        
+    def test_grid_with_checkered_pattern(self):
+        grid = [
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1]
+        ]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            1,
+                            msg = f"expected 5"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            5,
+                            msg = f"expected 5"
+                            )            
+                 
