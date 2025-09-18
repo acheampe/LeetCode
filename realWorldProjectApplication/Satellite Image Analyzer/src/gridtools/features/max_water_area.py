@@ -1,6 +1,5 @@
 from gridtools.predicates import (
     is_water,
-    is_land
 )
 
 from gridtools.floodfill import (

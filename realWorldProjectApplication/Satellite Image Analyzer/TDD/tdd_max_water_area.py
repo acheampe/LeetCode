@@ -67,4 +67,58 @@ class TestMaxWaterBodies(unittest.TestCase):
                             1,
                             msg = f"expected 1 since grid contains one water cell"
                             )                   
-              
+
+    def test_uniformed_grid_with_all_water_cells(self):
+        grid = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1],
+        ]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            9,
+                            msg = f"expected 9 since grid contains nine water cells"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            9,
+                            msg = f"expected 1 since grid contains nine water cells"
+                            )    
+
+    def test_grid_with_mixed_cluster(self):
+        grid = [
+            [1, 1, 0],
+            [1, 1, 0],
+            [0, 0, 1],
+            [1, 0, 0],
+            [1, 1, 0],
+        ]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            4,
+                            msg = f"expected 4 since grid does not traverse diagonally"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            5,
+                            msg = f"expected 5 since grid traverses diagonally"
+                            )   
+        
+    def test_grid_with_disjoint_cluster(self):
+        grid = [
+            [1, 0, 1],
+            [0, 0, 0],
+            [1, 0, 1]
+]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            1,
+                            msg = f"expected 4 since grid does not traverse diagonally"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            1,
+                            msg = f"expected 5 since grid traverses diagonally"
+                            )          
+
+             
