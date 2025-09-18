@@ -53,5 +53,18 @@ class TestMaxWaterBodies(unittest.TestCase):
                             msg = f"expected 0 since grid only contains land"
                             ) 
         
-                  
+    def test_grid_with_one_water_cell_return_one(self):
+        grid = [
+            [1]
+        ]
+
+        self.assertEqual(max_water_area(grid, neighbors_4),
+                            1,
+                            msg = f"expected 1 since grid contains one water cell"
+                            )
+
+        self.assertEqual(max_water_area(grid, neighbors_8),
+                            1,
+                            msg = f"expected 1 since grid contains one water cell"
+                            )                   
               
