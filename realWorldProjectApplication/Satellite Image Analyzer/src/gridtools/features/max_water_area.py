@@ -7,3 +7,15 @@ from gridtools.floodfill import (
     floodfill
 )
 
+def max_water_area(grid: list[list[int]], neighbor_fn: NeighborFn) -> int:
+    """_summary_
+
+    Args:
+        grid (list[list[int]]): Count area of distinct lake bodies 
+        (connected groups of 1s - area is sum of distinct region cells) that, 
+        using the given neighbor function.
+        
+    Returns:
+        int: returns the max area of body of water in grid
+    """
+    return None
