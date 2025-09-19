@@ -11,7 +11,7 @@ class TestFloodRiskExpand(unittest.TestCase):
     
     def test_empty_grid(self):
         grid: list[list[int]] = []
-        expected: list[tuple[int, int]] | int = 0 # returns zero if invalid grid
+        expected: list[tuple[int, int]] = []
         
         self.assertEqual(flood_risk_expand(grid, neighbors_4), expected,
                                            msg=f"Empty Grid Should return 0"

@@ -8,7 +8,7 @@ from gridtools.floodfill import (
     floodfill
 )
 
-def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tuple[int, int]] | int:
+def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tuple[int, int]]:
     """returns a list of flood risk zones in grid"""
     
-    return None
+    return []
