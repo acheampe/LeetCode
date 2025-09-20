@@ -11,19 +11,20 @@ from gridtools.floodfill import (
 def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tuple[int, int]]:
     """returns a list of flood risk zones in grid"""
     
-    global_flood_risk_areas: list[tuple[int, int]] = []
+    global_flood_risk_zones: list[tuple[int, int]] = []
     m: int = len(grid)
     
     if not m:
         print("not m")
-        return global_flood_risk_areas
+        return global_flood_risk_zones
     
     n: int = len(grid[0])
     if not n:
         print("not n")
-        return global_flood_risk_areas
+        return global_flood_risk_zones
     
     visited: set = set()
+    marked_risk_zones: set = set()
     
     for i in range(m):
         for j in range(n):
@@ -33,11 +34,12 @@ def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tu
                 
                 for r, c in next_neighbor:
                     
-                    if is_land(r, c, grid):
-                        global_flood_risk_areas.append((r, c)) 
+                    if (r, c) not in marked_risk_zones and is_land(r, c, grid):
+                        global_flood_risk_zones.append((r, c))
+                        marked_risk_zones.add((r, c))
                     
                     else:
                         visited.update((r, c))
                 
     
-    return global_flood_risk_areas
+    return global_flood_risk_zones
