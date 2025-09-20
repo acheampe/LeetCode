@@ -21,5 +21,35 @@ class TestFloodRiskExpand(unittest.TestCase):
                                            msg=f"Empty Grid Should return 0"
                                            )
     
+    def test_single_cell_water_grid(self):
+        grid: list[list[int]] = [[1]]
+        expected: list[tuple[int, int]] = []
     
+        self.assertEqual(expected, flood_risk_expand(grid, neighbors_4), 
+                         msg=f"expected {expected}, no neighbors in grid")
+
+        self.assertEqual(expected, flood_risk_expand(grid, neighbors_8), 
+                         msg=f"expected {expected}, no neighbors in grid") 
         
+              
+    def test_single_cell_land_grid(self):
+        grid: list[list[int]] = [[0]]
+        expected: list[tuple[int, int]] = []
+    
+        self.assertEqual(expected, flood_risk_expand(grid, neighbors_4), 
+                         msg=f"expected {expected}, no valid water cell in grid")     
+        
+        self.assertEqual(expected, flood_risk_expand(grid, neighbors_8), 
+                         msg=f"expected {expected}, no valid water cell in grid")    
+
+    def test_one_flood_risk_cell(self):
+        grid: list[list[int]] = [[0, 1]]
+        expected: list[tuple[int, int]] = [(0, 1)]
+       
+        nei_4_return = flood_risk_expand(grid, neighbors_8)
+        self.assertEqual(expected, flood_risk_expand(grid, neighbors_4), 
+                         msg=f"expected {expected}, returned {nei_4_return}")     
+        
+        nei_8_return = flood_risk_expand(grid, neighbors_8)
+        self.assertEqual(expected, nei_8_return, 
+                         msg=f"expected {expected}, returned {nei_8_return}")         
