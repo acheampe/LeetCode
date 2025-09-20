@@ -44,12 +44,12 @@ class TestFloodRiskExpand(unittest.TestCase):
 
     def test_one_flood_risk_cell(self):
         grid: list[list[int]] = [[0, 1]]
-        expected: list[tuple[int, int]] = [(0, 1)]
+        expected: list[tuple[int, int]] = [(0, 0)]
        
-        nei_4_return = flood_risk_expand(grid, neighbors_8)
-        self.assertEqual(expected, flood_risk_expand(grid, neighbors_4), 
+        nei_4_return = flood_risk_expand(grid, neighbors_4)
+        self.assertEqual(expected, nei_4_return, 
                          msg=f"expected {expected}, returned {nei_4_return}")     
         
-        # nei_8_return = flood_risk_expand(grid, neighbors_8)
-        # self.assertEqual(expected, nei_8_return, 
-        #                  msg=f"expected {expected}, returned {nei_8_return}")         
+        nei_8_return = flood_risk_expand(grid, neighbors_8)
+        self.assertEqual(expected, nei_8_return, 
+                         msg=f"expected {expected}, returned {nei_8_return}")         

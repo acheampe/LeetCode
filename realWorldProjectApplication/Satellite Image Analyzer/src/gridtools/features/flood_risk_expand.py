@@ -15,10 +15,12 @@ def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tu
     m: int = len(grid)
     
     if not m:
+        print("not m")
         return global_flood_risk_areas
     
     n: int = len(grid[0])
     if not n:
+        print("not n")
         return global_flood_risk_areas
     
     visited: set = set()
@@ -27,9 +29,9 @@ def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tu
         for j in range(n):
             
             if (i, j) not in visited and is_water(i, j, grid):
-                region = floodfill(i, j, grid, neighbor_fn)
+                next_neighbor: list[tuple[int, int]] = neighbor_fn(i, j, grid)
                 
-                for r, c in region:
+                for r, c in next_neighbor:
                     
                     if is_land(r, c, grid):
                         global_flood_risk_areas.append((r, c)) 
