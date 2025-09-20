@@ -112,4 +112,20 @@ class TestFloodRiskExpand(unittest.TestCase):
         expected_nei_8: list[tuple[int, int]] = [(0, 1), (1,0), (2, 1), (1, 2), (1, 1)]       
         nei_8_return = flood_risk_expand(grid, neighbors_8)
         self.assertCountEqual(expected_nei_8, nei_8_return, 
-                         msg=f"expected {expected_nei_8}, returned {nei_8_return}")             
+                         msg=f"expected {expected_nei_8}, returned {nei_8_return}")     
+        
+    def test_middle_water_cells(self):
+        grid: list[list[int]] = [[0, 0, 0],
+                                 [0, 1, 0],
+                                 [0, 0, 0]
+                                 ]
+        
+        expected_nei_4: list[tuple[int, int]] = [(0, 1), (1,0), (2, 1), (1, 2)]
+        nei_4_return = flood_risk_expand(grid, neighbors_4)
+        self.assertCountEqual(expected_nei_4, nei_4_return, 
+                         msg=f"expected {expected_nei_4}, returned {nei_4_return}")     
+
+        expected_nei_8: list[tuple[int, int]] = [(0, 1), (1,0), (2, 1), (1, 2), (0, 0), (0, 2), (2, 0), (2, 2)]       
+        nei_8_return = flood_risk_expand(grid, neighbors_8)
+        self.assertCountEqual(expected_nei_8, nei_8_return, 
+                         msg=f"expected {expected_nei_8}, returned {nei_8_return}")         
