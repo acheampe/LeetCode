@@ -13,6 +13,11 @@ Your analyzer should implement algorithms that:
 3. **Detect enclosed lakes** (water bodies not touching the grid border)  
 4. **Simulate flood risk zones** by expanding from border-connected water bodies  
 
+Input Grid:      Flood Risk Zones (neighbors_4)
+1 0 1            X 1 X
+0 0 0     =>     1 1 1
+1 0 1            X 1 X
+
 Connectivity is defined as **8-directional adjacency**:  
 - Horizontal: up, down  
 - Vertical: left, right  
@@ -40,3 +45,10 @@ grid-project/
    ├─ test_max_water_area.py
    ├─ test_count_enclosed_lakes.py
    └─ test_flood_risk_expand.py
+
+# Future Extension
+- Rewrite in Golang for performance (concurrency)
+- Add visualization
+- Integrate real sattelite raster data (e.g., from GeoTIFFs)
+- Wrap features in API for end-user interaction
+- Integrate real world data (flood terrain elevation, probabilistic flood modeling)
