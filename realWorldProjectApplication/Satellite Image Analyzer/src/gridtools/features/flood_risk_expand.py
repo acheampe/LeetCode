@@ -19,11 +19,8 @@ def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tu
 
     for i in range(m):
         for j in range(n):
-            if (i, j) in visited:
-                continue
 
             if is_water(i, j, grid):
-                visited.add((i, j))
                 for r, c in neighbor_fn(i, j, grid):
                     if is_land(r, c, grid):
                         risk_zones.add((r, c))
