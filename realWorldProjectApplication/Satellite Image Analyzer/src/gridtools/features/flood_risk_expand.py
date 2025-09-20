@@ -5,41 +5,27 @@ from gridtools.predicates import (
 
 from gridtools.floodfill import (
     NeighborFn,
-    floodfill
 )
 
 def flood_risk_expand(grid: list[list[int]], neighbor_fn: NeighborFn) -> list[tuple[int, int]]:
-    """returns a list of flood risk zones in grid"""
-    
-    global_flood_risk_zones: list[tuple[int, int]] = []
-    m: int = len(grid)
-    
-    if not m:
-        print("not m")
-        return global_flood_risk_zones
-    
-    n: int = len(grid[0])
-    if not n:
-        print("not n")
-        return global_flood_risk_zones
-    
-    visited: set = set()
-    marked_risk_zones: set = set()
-    
+    """Return list of unique flood risk land cells adjacent to any water cell."""
+
+    if not grid or not grid[0]:
+        return []
+
+    m, n = len(grid), len(grid[0])
+    risk_zones: set[tuple[int, int]] = set()
+    visited: set[tuple[int, int]] = set()  # tracks visited water cells
+
     for i in range(m):
         for j in range(n):
-            
-            if (i, j) not in visited and is_water(i, j, grid):
-                next_neighbor: list[tuple[int, int]] = neighbor_fn(i, j, grid)
-                
-                for r, c in next_neighbor:
-                    
-                    if (r, c) not in marked_risk_zones and is_land(r, c, grid):
-                        global_flood_risk_zones.append((r, c))
-                        marked_risk_zones.add((r, c))
-                    
-                    else:
-                        visited.update((r, c))
-                
-    
-    return global_flood_risk_zones
+            if (i, j) in visited:
+                continue
+
+            if is_water(i, j, grid):
+                visited.add((i, j))
+                for r, c in neighbor_fn(i, j, grid):
+                    if is_land(r, c, grid):
+                        risk_zones.add((r, c))
+
+    return list(risk_zones)
