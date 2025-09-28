@@ -8,26 +8,24 @@ class Solution:
         
         def findMinDistance(r, c, currMinDist) -> int:
             
-            if (0 > r >= m) or (0 > c >= n) or mat[r][c] == 0:
+            if (0 > r or r >= m) or (0 > c or c >= n) or mat[r][c] == 0 or (r, c) in trackVisited:
                 return 0
             
-            currMinDist += min(
-                findMinDistance(r + 0, c + 1, currMinDist), # right
-                findMinDistance(r + 0, c - 1, currMinDist), # left
-                findMinDistance(r + 1, c + 0, currMinDist), # up
-                findMinDistance(r - 1, c + 0, currMinDist), # down
-            )
-            
-            mat[r][c] = currMinDist
             trackVisited.add((r, c))
+            currMinDist += (findMinDistance(r, c + 1, currMinDist + 1) + 
+                            findMinDistance(r, c - 1, currMinDist + 1) + 
+                            findMinDistance(r - 1, c, currMinDist + 1) + 
+                            findMinDistance(r + 1, c, currMinDist + 1))
+    
+            mat[r][c] = currMinDist
             
-            return 1
+            return currMinDist + 1
                 
         
         for i in range(m):
             for j in range(n):
                 if (i, j) not in trackVisited:
-                    minDistance = float('inf')
+                    minDistance = 0
                     findMinDistance(i, j, minDistance)
         
         return mat
@@ -39,18 +37,18 @@ class TestUpdateMatrix(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
-#     def test_case_1(self):
-#         mat = [
-#             [0, 0, 0],
-#             [0, 1, 0],
-#             [0, 0, 0]
-#         ]
-#         expected = [
-#             [0, 0, 0],
-#             [0, 1, 0],
-#             [0, 0, 0]
-#         ]
-#         self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_1(self):
+        mat = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0]
+        ]
+        expected = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0]
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
 
 #     def test_case_2(self):
 #         mat = [
@@ -78,14 +76,14 @@ class TestUpdateMatrix(unittest.TestCase):
 #         ]
 #         self.assertEqual(self.sol.updateMatrix(mat), expected)
 
-    def test_case_4(self):
-        mat = [
-            [1, 1, 0],
-        ]
-        expected = [
-            [2, 1, 0],
-        ]
-        self.assertEqual(self.sol.updateMatrix(mat), expected)
+    # def test_case_4(self):
+    #     mat = [
+    #         [1, 1, 0],
+    #     ]
+    #     expected = [
+    #         [2, 1, 0],
+    #     ]
+    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
         
 if __name__ == '__main__':
     unittest.main()
