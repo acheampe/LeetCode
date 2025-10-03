@@ -3,58 +3,76 @@ import unittest
 
 
 class Solution:
+    # Not that a DFS does not gaurantee shortest path
     def updateMatrix(self, mat: list[list[int]]) -> list[list[int]]:
-
-        m, n = len(mat), len(mat[0]) # if this was a production code, I would be more defensive here
         
-        memo: dict[tuple[int, int], float] = {}
+        # first cacl the len of rows and len
+        m, n = len(mat), len(mat[0])
+        
+        # initialize current_path DS (set) and memoization (dic)
+        memo: dict[tuple[int, int], float] = dict()
         curr_path: set[tuple[int, int]] = set()
         
-        def findMinDistance(r, c) -> float:
-            
-            # if OOB
+        # set up recur func with coordination as an argument
+        def dfs(r, c):
+        
+            # first condition: if OOB or in curr_path return 'inf'
             if (0 > r or r >= m) or (0 > c or c >= n) or (r, c) in curr_path:
                 return float('inf')
             
-            # if cell is zero
+            # second condition: if coord points to cell with zero, return zero
             if mat[r][c] == 0:
                 return 0
             
-            # utilize memo to reduce recursive dependence
+            # third condition: if coord in memo: return value from memo
             if (r, c) in memo:
                 return memo[(r, c)]
             
+            ### Otherwise lets set up recursion
+            
+            # add coord to current path
             curr_path.add((r, c))
-            result = [
-                findMinDistance(r, c + 1),
-                            findMinDistance(r, c - 1),
-                            findMinDistance(r - 1, c),
-                            findMinDistance(r + 1, c,)
-            ]
+            # then calc distance:
+              # dist = [4 recur calls in each direction]
+            
+            distance = [
+                dfs(r, c + 1),
+                dfs(r, c - 1),
+                dfs(r + 1, c),
+                dfs(r - 1, c),
+                ]
             
             curr_path.remove((r, c))
+            min_dist = min(distance)
             
-            min_dist =  min(result)
+            # calc min distance:
+            if min_dist == float('inf'): # it shouldnt under given conditions for problem
+                return min_dist
             
-            if min_dist == float('inf'):
-                return float('inf')
-
-            dist = min_dist + 1.0
-            memo[(r, c)] = dist
+            memo[(r, c)] = min_dist + 1
             
-            return dist
+            return min_dist + 1
+            
         
+        # iter through mat
+        # if coord points to a cell with zero, then skip, else initiate dfs
         for i in range(m):
             for j in range(n):
+                
                 if mat[i][j] != 0:
-                    findMinDistance(i, j)
-
+                    dfs(i, j)
+        
+        # iterate through mat and if coord is not zero - reference memo to update mat accordingly
         for i in range(m):
             for j in range(n):
+                
                 if mat[i][j] != 0:
                     mat[i][j] = int(memo[(i, j)])
-        
+                    
+        # return mat
         return mat
+
+
 
 
 class TestUpdateMatrix(unittest.TestCase):
