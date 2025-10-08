@@ -22,7 +22,7 @@ class Solution:
                     
                     queue.append((i, j))
                     resultMatrix[i][j] = 0.0
-                
+                    
                     while queue:
                         
                         r, c = queue.popleft()
@@ -33,15 +33,17 @@ class Solution:
                             nr, nc = dr + r, dc + c
                             
                             if (0 <= nr < m)  and (0 <= nc < n): # if within bound
-                                
-                                countDistance += 1.0
-                                if mat[nr][nc] == 1:
-                                    resultMatrix[nr][nc] = min(resultMatrix[nr][nc], countDistance)
-                                
-                                elif resultMatrix[i][j] == float('inf'):
-                                    queue.append((nr, nc))
-                                    resultMatrix[nr][nc] = 0.0
-        
+                                sr, sc = nr, nc
+                                while (0 <= sr < m)  and (0 <= sc < n): # if within bound
+                                    if mat[sr][sc] == 1:
+                                        countDistance += 1.0
+                                        resultMatrix[sr][sc] = min(resultMatrix[sr][sc], countDistance)
+                                    
+                                    elif resultMatrix[i][j] == float('inf'):
+                                        queue.append((sr, sc))
+                                        resultMatrix[sr][sc] = 0.0
+                                        
+                                    sr, sc = sr + dr, sc + dc 
         for i in range(m):
             for j in range(n):
                 
@@ -64,14 +66,14 @@ class TestUpdateMatrix(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
-    # def test_case_4(self):
-    #     mat = [
-    #         [1, 1, 0],
-    #     ]
-    #     expected = [
-    #         [2, 1, 0],
-    #     ]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_4(self):
+        mat = [
+            [1, 1, 0],
+        ]
+        expected = [
+            [2, 1, 0],
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
         
     def test_case_0(self):
         mat = [
