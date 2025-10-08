@@ -1,9 +1,6 @@
 # Leetcode 542
-from itertools import count
-from re import L
 import unittest
 from collections import deque
-
 class Solution:
     def updateMatrix(self, mat: list[list[int]]) -> list[list[int]]:
         
@@ -15,41 +12,24 @@ class Solution:
         
         for i in range(m):
             for j in range(n):
+               
+               if mat[i][j] == 0:
+                   resultMatrix[i][j] = 0
+                   queue.append((i, j))
+                   
+        while queue:
+            
+            r, c = queue.popleft()
+            
+            for dr, dc in directions:
+                nr, nc = r + dr, c + dc
                 
-                isZero = mat[i][j]
-                
-                if isZero == 0 and resultMatrix[i][j] == float('inf'):
-                    
-                    queue.append((i, j))
-                    resultMatrix[i][j] = 0.0
-                    
-                    while queue:
-                        
-                        r, c = queue.popleft()
-                        
-                        countDistance = 0
-                        for dr, dc in directions:
+                if (0 <= nr < m) and (0 <= nc < n) and resultMatrix[nr][nc] > \
+                resultMatrix[r][c] + 1:
+                    resultMatrix[nr][nc] = resultMatrix[r][c] + 1
+                    queue.append((nr, nc))
                             
-                            nr, nc = dr + r, dc + c
-                            
-                            if (0 <= nr < m)  and (0 <= nc < n): # if within bound
-                                sr, sc = nr, nc
-                                while (0 <= sr < m)  and (0 <= sc < n): # if within bound
-                                    if mat[sr][sc] == 1:
-                                        countDistance += 1.0
-                                        resultMatrix[sr][sc] = min(resultMatrix[sr][sc], countDistance)
-                                    
-                                    elif resultMatrix[i][j] == float('inf'):
-                                        queue.append((sr, sc))
-                                        resultMatrix[sr][sc] = 0.0
-                                        
-                                    sr, sc = sr + dr, sc + dc 
-        for i in range(m):
-            for j in range(n):
-                
-                mat[i][j] = int(resultMatrix[i][j])
-                            
-        return mat
+        return resultMatrix
                     
                     
         
@@ -66,6 +46,17 @@ class TestUpdateMatrix(unittest.TestCase):
     def setUp(self):
         self.sol = Solution()
 
+    def test_case_5(self):
+        mat = [
+            [1, 1, 0],
+            [1, 1, 1]
+        ]
+        expected = [
+            [2, 1, 0],
+            [3, 2, 1]
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
+    
     def test_case_4(self):
         mat = [
             [1, 1, 0],
@@ -84,60 +75,49 @@ class TestUpdateMatrix(unittest.TestCase):
         ]
         self.assertEqual(self.sol.updateMatrix(mat), expected)
 
-    # def test_case_1(self):
-    #     mat = [
-    #         [0, 0, 0],
-    #         [0, 1, 0], 
-    #         [0, 0, 0] 
-    #     ]
-    #     expected = [
-    #         [0, 0, 0],
-    #         [0, 1, 0],
-    #         [0, 0, 0]
-    #     ]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_1(self):
+        mat = [
+            [0, 0, 0],
+            [0, 1, 0], 
+            [0, 0, 0] 
+        ]
+        expected = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0]
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
 
-    # def test_case_2(self):
-    #     mat = [
-    #         [0, 0, 0],
-    #         [0, 1, 0],
-    #         [1, 1, 1]
-    #     ]
-    #     expected = [
-    #         [0, 0, 0],
-    #         [0, 1, 0],
-    #         [1, 2, 1]
-    #     ]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_2(self):
+        mat = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [1, 1, 1]
+        ]
+        expected = [
+            [0, 0, 0],
+            [0, 1, 0],
+            [1, 2, 1]
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
 
-    # def test_case_3(self):
-    #     mat = [
-    #         [1, 1, 1],
-    #         [1, 1, 1],
-    #         [0, 1, 1]
-    #     ]
-    #     expected = [
-    #         [2, 3, 4],
-    #         [1, 2, 3],
-    #         [0, 1, 2]
-    #     ]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
-    
-    # def test_case_5(self):
-    #     mat = [
-    #         [1, 1, 0],
-    #         [1, 1, 1]
-    #     ]
-    #     expected = [
-    #         [2, 1, 0],
-    #         [3, 2, 1]
-    #     ]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_3(self):
+        mat = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [0, 1, 1]
+        ]
+        expected = [
+            [2, 3, 4],
+            [1, 2, 3],
+            [0, 1, 2]
+        ]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
         
-    # def test_case_6(self):
-    #     mat = [[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,1,1,1,0,1],[1,1,1,1,1,1,1,0,1,0],[1,1,1,1,0,1,0,0,1,1]]
-    #     expected = [[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,2,1,1,0,1],[2,1,1,1,1,2,1,0,1,0],[3,2,2,1,0,1,0,0,1,1]]
-    #     self.assertEqual(self.sol.updateMatrix(mat), expected)
+    def test_case_6(self):
+        mat = [[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,1,1,1,0,1],[1,1,1,1,1,1,1,0,1,0],[1,1,1,1,0,1,0,0,1,1]]
+        expected = [[1,0,1,1,0,0,1,0,0,1],[0,1,1,0,1,0,1,0,1,1],[0,0,1,0,1,0,0,1,0,0],[1,0,1,0,1,1,1,1,1,1],[0,1,0,1,1,0,0,0,0,1],[0,0,1,0,1,1,1,0,1,0],[0,1,0,1,0,1,0,0,1,1],[1,0,0,0,1,2,1,1,0,1],[2,1,1,1,1,2,1,0,1,0],[3,2,2,1,0,1,0,0,1,1]]
+        self.assertEqual(self.sol.updateMatrix(mat), expected)
         
 if __name__ == '__main__':
     unittest.main()
