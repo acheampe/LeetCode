@@ -28,7 +28,7 @@ class Solution:
             (-1, 0) # up
         ]
         
-        while queue:
+        while queue and freshOranges > 0:
             
             level, r, c = queue.popleft()
             level += 1
