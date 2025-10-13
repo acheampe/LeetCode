@@ -6,14 +6,18 @@ class Solution:
         # TC == O(m x n), SC == (m x n)
         
         m, n = len(grid), len(grid[0])
-        queue: deque[tuple[int, int]] = deque() # SC == (m x n) worst case scenario
+        queue: deque[tuple[int, int, int]] = deque() # SC == (m x n) worst case scenario
+        freshOranges: int = 0
         
         # multisource BFS approach
         for i in range(m): # TC == O(m x n)
             for j in range(n):
                 
                 if self.isRottenFruit(i, j, grid):
-                    queue.append((i, j))
+                    queue.append((0, i, j))
+                
+                if self.isFreshFruit(i, j, grid):
+                    freshOranges += 1
         
         minutesForAllToRot: int = 0 # shortest path will be counted
         
@@ -26,28 +30,20 @@ class Solution:
         
         while queue:
             
-            r, c = queue.popleft()
-            validPath: bool  = False
+            level, r, c = queue.popleft()
+            level += 1
             
             for dr, dc in directions:
                 nr, nc = dr + r, dc + c
                 
                 if self.isFreshFruit(nr, nc, grid):
-                    validPath = True
                     grid[nr][nc] = 2 # will rot in a minute and also marks as visited
-                    queue.append((nr, nc))
-                    
-            
-            if validPath:
-                minutesForAllToRot += 1
-        
-        for i in range(m):
-            for j in range(n):
+                    freshOranges -= 1
+                    queue.append((level, nr, nc))
+                    if level > minutesForAllToRot:
+                        minutesForAllToRot += 1
                 
-                if self.isFreshFruit(i, j, grid):
-                    return -1 # no valid adjacent cell to rot this cell (fresh fruit)
-                
-        return minutesForAllToRot
+        return minutesForAllToRot if freshOranges == 0 else -1
                 
     def isFreshFruit(self, row: int, col: int, grid: list[list[int]]):
         
@@ -69,9 +65,6 @@ class Solution:
             return True
         
         return False
-    
-    # def isEmpty(self, row: int, col: int, grid: list[list[int]]):
-    #         return grid[row][col] == 0 # no fruit in cell
         
         
 class TestOrangesRotting(unittest.TestCase):
@@ -86,47 +79,47 @@ class TestOrangesRotting(unittest.TestCase):
         self.assertEqual(result, expected, 
                          msg=f"Expected {expected} but got {result} for grid {grid}")
         
-    # def test_example_1(self):
-    #     grid = [[2,1,1],[1,1,0],[0,1,1]]
-    #     expected = 4
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected, 
-    #                      msg=f"Expected {expected} but got {result} for grid {grid}")
+    def test_example_1(self):
+        grid = [[2,1,1],[1,1,0],[0,1,1]]
+        expected = 4
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected, 
+                         msg=f"Expected {expected} but got {result} for grid {grid}")
     
-    # def test_example_2(self):
-    #     grid = [[2,1,1],[0,1,1],[1,0,1]]
-    #     expected = -1
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected, 
-    #                      msg=f"Expected {expected} but got {result} for grid {grid}")
+    def test_example_2(self):
+        grid = [[2,1,1],[0,1,1],[1,0,1]]
+        expected = -1
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected, 
+                         msg=f"Expected {expected} but got {result} for grid {grid}")
     
-    # def test_example_3(self):
-    #     grid = [[0,2]]
-    #     expected = 0
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected, 
-    #                      msg=f"Expected {expected} but got {result} for grid {grid}")
+    def test_example_3(self):
+        grid = [[0,2]]
+        expected = 0
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected, 
+                         msg=f"Expected {expected} but got {result} for grid {grid}")
     
-    # def test_all_rotten(self):
-    #     grid = [[2,2,2],[2,2,2]]
-    #     expected = 0
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected,
-    #                      msg="All oranges already rotten, should return 0")
+    def test_all_rotten(self):
+        grid = [[2,2,2],[2,2,2]]
+        expected = 0
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected,
+                         msg="All oranges already rotten, should return 0")
     
-    # def test_no_rotten(self):
-    #     grid = [[1,1,1],[1,1,1]]
-    #     expected = -1
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected,
-    #                      msg="No rotten orange to start infection, should return -1")
+    def test_no_rotten(self):
+        grid = [[1,1,1],[1,1,1]]
+        expected = -1
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected,
+                         msg="No rotten orange to start infection, should return -1")
     
-    # def test_mixed_empty(self):
-    #     grid = [[0,1,0],[2,0,1],[0,0,0]]
-    #     expected = -1
-    #     result = self.sol.orangesRotting(grid)
-    #     self.assertEqual(result, expected,
-    #                      msg="Disconnected fresh orange should return -1")
+    def test_mixed_empty(self):
+        grid = [[0,1,0],[2,0,1],[0,0,0]]
+        expected = -1
+        result = self.sol.orangesRotting(grid)
+        self.assertEqual(result, expected,
+                         msg="Disconnected fresh orange should return -1")
 
 if __name__ == "__main__":
     unittest.main()
