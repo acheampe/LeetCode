@@ -3,7 +3,7 @@ import unittest
 class Solution:
     def allPathsSourceTarget(self, graph: list[list[int]]) -> list[list[int]]:
         # we use backtracking approach here because we have to explore all paths
-        # worst case TC is if each node connects to last node via its individual path O(n)
+        # worst case TC is if each node connects to last node via its individual path O(2^n * n)
         # worst SC O(h)
         
         # length of graph
@@ -13,15 +13,18 @@ class Solution:
         
         def backtracking(currNode, currList):
             
-            currList.append(currNode)
+            updatedCurrList: list[int] = currList + [currNode]
             
             # base case
-            if currList[-1] == m - 1:
-                resultList.append(currList)
+            if updatedCurrList[-1] == m - 1:
+                resultList.append(updatedCurrList)
                 return # to back track
             
+            # currList.append(currNode)
             for nextNode in graph[currNode]:
-                backtracking(nextNode, currList)
+                backtracking(nextNode, updatedCurrList)
+            
+            # currList.pop()
         
         backtracking(0, [])
         
