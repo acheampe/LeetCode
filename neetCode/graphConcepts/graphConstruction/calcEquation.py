@@ -18,7 +18,7 @@ class Solution:
             graph[num][den] = weight
             graph[den][num] = (1/weight)
         
-        def findProduct(src, target, currProduct) -> float | None:
+        def findProduct(src, target, currProduct, visited) -> float | None:
             
             if src not in graph or target not in graph:
                 return None
@@ -27,16 +27,21 @@ class Solution:
                 return currProduct * graph[src][target]
             
             if target == src:
-                return 1
+                return currProduct
 
+            visited.add(src)
             for key, val in graph[src].items():
-                queryProduct = findProduct(key, target, val * currProduct)
-                
-            return queryProduct
-
+                if key not in visited:
+                    queryProduct = findProduct(key, target, val * currProduct, visited)
+                    if queryProduct is not None:
+                        return queryProduct
+            
+            return None
+        
         for i in range(len(queries)):
+            visited: set[int] = set()
             num, den = queries[i]
-            product = findProduct(num, den, 1)
+            product = findProduct(num, den, 1, visited)
             if product:
                 result[i] = product
 
