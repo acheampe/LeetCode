@@ -36,7 +36,7 @@ class Solution:
                     if queryProduct is not None:
                         return queryProduct
             
-            return None
+            return None  
         
         for i in range(len(queries)):
             visited: set[int] = set()
