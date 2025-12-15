@@ -11,7 +11,7 @@ class TTLCacheLRU:
         
         expires_at = time.perf_counter() + ttl
         
-        if len(self._storage) >= self.capacity and key not in self.capacity:
+        if len(self._storage) >= self.capacity and key not in self._storage:
             # remove least recently used
             self._storage.popitem(last=False) 
         
