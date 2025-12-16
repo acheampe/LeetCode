@@ -7,7 +7,7 @@ class RateLimiter:
     def __init__(self, max_request: int = 5, window_seconds: float = 10):
         self.max_request = max_request
         self.window_seconds = window_seconds
-        self._rate_tracker: dict[Any, deque[float]] = {}
+        self._rate_tracker: dict[Any, deque[float]] = {} # higher memory usage compared to fixed window
 
     def hit(self, key: Any) -> bool:
         now = time.perf_counter()
