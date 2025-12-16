@@ -1,6 +1,8 @@
 import time
 from typing import Any
 
+# fixed window. Simple to implement but allows for burst at edge timed window
+
 class RateLimiter:
     def __init__(self, max_request=5, window_seconds = 10):
         
