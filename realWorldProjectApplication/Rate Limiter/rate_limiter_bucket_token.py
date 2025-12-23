@@ -43,7 +43,7 @@ class TokenBucketRateLimiter:
 
         if to_add > 0:
             total_token = min(self.capacity, total_token + to_add)
-            last_filled = last_filled + (to_add / self.refill_rate)
+            last_filled = last_filled + (to_add / self.refill_rate) # resets last_filled to now
 
         self._track_rate[user_id] = (last_filled, total_token)
         
